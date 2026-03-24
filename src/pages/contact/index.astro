@@ -1,0 +1,22 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ContactForm from '../../components/ContactForm';
+---
+
+<Layout title="お問い合わせ">
+  <section class="py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <p class="text-sm font-medium tracking-widest text-electric-blue uppercase mb-4">Contact</p>
+        <h1 class="text-4xl sm:text-5xl font-bold mb-6">お問い合わせ</h1>
+        <p class="text-lg text-gray-500 max-w-2xl mx-auto">
+          無料相談のご予約やご質問など、お気軽にお問い合わせください。<br class="hidden sm:block" />
+          2営業日以内にご返信いたします。
+        </p>
+      </div>
+
+      <!-- React interactive contact form -->
+      <ContactForm client:load />
+    </div>
+  </section>
+</Layout>

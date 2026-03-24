@@ -1,0 +1,71 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="relative bg-gray-950 text-gray-400 overflow-hidden">
+  <!-- Blueprint grid overlay -->
+  <div class="absolute inset-0 opacity-5">
+    <div class="w-full h-full" style="background-image: linear-gradient(rgba(0,102,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(0,102,255,0.3) 1px, transparent 1px); background-size: 40px 40px;"></div>
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+      <!-- Brand -->
+      <div class="md:col-span-1">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-electric-blue to-deep-purple flex items-center justify-center">
+            <span class="text-white font-bold text-lg">B</span>
+          </div>
+          <div>
+            <span class="text-sm font-bold tracking-wider text-white">BizArch Design</span>
+            <span class="block text-[10px] text-gray-500 tracking-widest uppercase">Architecture × AI</span>
+          </div>
+        </div>
+        <p class="text-sm leading-relaxed">
+          ビジネスアーキテクチャとAIの融合で、<br />
+          企業の未来を設計する。
+        </p>
+      </div>
+
+      <!-- Services -->
+      <div>
+        <h3 class="text-white text-sm font-bold mb-4 tracking-wider">サービス</h3>
+        <ul class="space-y-3">
+          <li><a href="/services/" class="text-sm hover:text-electric-blue transition-colors">BizArch コンサルティング</a></li>
+          <li><a href="/services/" class="text-sm hover:text-electric-blue transition-colors">GTM エンジニアリング</a></li>
+          <li><a href="/services/" class="text-sm hover:text-electric-blue transition-colors">AI Ops</a></li>
+        </ul>
+      </div>
+
+      <!-- Resources -->
+      <div>
+        <h3 class="text-white text-sm font-bold mb-4 tracking-wider">リソース</h3>
+        <ul class="space-y-3">
+          <li><a href="/methodology/" class="text-sm hover:text-electric-blue transition-colors">方法論</a></li>
+          <li><a href="/insights/" class="text-sm hover:text-electric-blue transition-colors">インサイト</a></li>
+          <li><a href="/showcase/bizbok-demo/" class="text-sm hover:text-electric-blue transition-colors">BIZBOK デモ</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h3 class="text-white text-sm font-bold mb-4 tracking-wider">お問い合わせ</h3>
+        <ul class="space-y-3">
+          <li><a href="/contact/" class="text-sm hover:text-electric-blue transition-colors">無料相談</a></li>
+          <li><a href="mailto:info@bizarch-design.com" class="text-sm hover:text-electric-blue transition-colors">info@bizarch-design.com</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="mt-12 pt-8 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p class="text-xs text-gray-500">
+        &copy; {year} BizArch Design Inc. All rights reserved.
+      </p>
+      <div class="flex items-center gap-6">
+        <a href="#" class="text-xs text-gray-500 hover:text-gray-300 transition-colors">プライバシーポリシー</a>
+        <a href="#" class="text-xs text-gray-500 hover:text-gray-300 transition-colors">利用規約</a>
+      </div>
+    </div>
+  </div>
+</footer>

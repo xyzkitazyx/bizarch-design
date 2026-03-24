@@ -1,0 +1,99 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getHeroContent } from '../lib/microcms';
+
+// microCMSからヒーローコンテンツを取得（ビルド時/dev時）
+const hero = await getHeroContent();
+
+// フォールバック値
+const heroTitle = hero?.title ?? 'ビジネスの未来を、設計する。';
+const heroSubtitle = hero?.subtitle ?? 'BIZBOKフレームワークとAI Opsの力で、組織のケイパビリティを可視化し、戦略実行を加速させます。';
+const heroCta = hero?.cta ?? '無料相談を予約する';
+
+// カッコ内テキストにグラデーション適用（半角・全角両対応、カッコは非表示）
+const heroTitleHtml = heroTitle
+  .replace(/[（(](.+?)[）)]/g, '<span class="text-gradient">$1</span>');
+---
+
+<Layout title="ホーム">
+  <!-- Hero Section (microCMSから動的取得) -->
+  <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+    <!-- Background gradient orbs -->
+    <div class="absolute top-1/4 -left-32 w-96 h-96 bg-electric-blue/10 rounded-full blur-3xl animate-pulse"></div>
+    <div class="absolute bottom-1/4 -right-32 w-96 h-96 bg-deep-purple/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-sm font-medium tracking-widest text-electric-blue uppercase mb-6">
+        Architecture × AI
+      </p>
+      <h1 class="text-4xl sm:text-5xl lg:text-7xl font-black leading-tight mb-8 whitespace-pre-line" set:html={heroTitleHtml} />
+      <p class="text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto mb-12 leading-relaxed">
+        {heroSubtitle}
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/contact/"
+          class="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-electric-blue to-deep-purple text-white font-medium rounded-xl hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300"
+        >
+          {heroCta}
+        </a>
+        <a
+          href="/showcase/bizbok-demo/"
+          class="inline-flex items-center justify-center px-8 py-4 border border-gray-200 text-gray-700 font-medium rounded-xl hover:border-electric-blue hover:text-electric-blue transition-all duration-300"
+        >
+          デモを体験する
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Preview -->
+  <section class="py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <p class="text-sm font-medium tracking-widest text-electric-blue uppercase mb-4">Services</p>
+        <h2 class="text-3xl sm:text-4xl font-bold">3つの柱で企業変革を支援</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- BizArch -->
+        <div class="group p-8 rounded-2xl border border-gray-100 hover:border-electric-blue/20 hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-300">
+          <div class="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center mb-6 group-hover:bg-electric-blue/10 transition-colors">
+            <svg class="w-7 h-7 text-electric-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25a2.25 2.25 0 0 1-2.25-2.25v-2.25Z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3">BizArch コンサルティング</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            BIZBOKフレームワークに基づき、戦略・ケイパビリティ・バリューストリームを体系的に可視化。経営と現場をつなぐ設計図を提供します。
+          </p>
+        </div>
+
+        <!-- GTM Engineering -->
+        <div class="group p-8 rounded-2xl border border-gray-100 hover:border-deep-purple/20 hover:shadow-xl hover:shadow-purple-500/5 transition-all duration-300">
+          <div class="w-14 h-14 rounded-xl bg-purple-50 flex items-center justify-center mb-6 group-hover:bg-deep-purple/10 transition-colors">
+            <svg class="w-7 h-7 text-deep-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3">GTM エンジニアリング</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Go-To-Market戦略をエンジニアリングの視点で再構築。データドリブンな市場参入と成長の仕組みを設計します。
+          </p>
+        </div>
+
+        <!-- AI Ops -->
+        <div class="group p-8 rounded-2xl border border-gray-100 hover:border-electric-blue/20 hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-300">
+          <div class="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center mb-6 group-hover:bg-electric-blue/10 transition-colors">
+            <svg class="w-7 h-7 text-electric-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3">AI Ops</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            AI/LLMを業務プロセスに統合し、オペレーションを自動化・最適化。人間の判断力とAIの処理力を掛け合わせます。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

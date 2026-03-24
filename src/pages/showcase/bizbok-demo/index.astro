@@ -1,0 +1,22 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import BizbokDemo from '../../../components/BizbokDemo';
+---
+
+<Layout title="BIZBOK 体験デモ">
+  <section class="py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <p class="text-sm font-medium tracking-widest text-electric-blue uppercase mb-4">Interactive Demo</p>
+        <h1 class="text-4xl sm:text-5xl font-bold mb-6">BIZBOK 体験デモ</h1>
+        <p class="text-lg text-gray-500 max-w-2xl mx-auto">
+          業界を選択して「解析開始」を押すと、<br class="hidden sm:block" />
+          あなたの組織に最適なケイパビリティマップを自動生成します。
+        </p>
+      </div>
+
+      <!-- React interactive demo (client:load for full interactivity) -->
+      <BizbokDemo client:load />
+    </div>
+  </section>
+</Layout>
