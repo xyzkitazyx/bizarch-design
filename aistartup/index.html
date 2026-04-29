@@ -5,12 +5,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AIで一人起業の教科書 シミュレーター v1.0</title>
 
+  <!-- SEO / AIO -->
+  <meta name="description" content="AIで一人法人を立ち上げる人向けの税・手取りシミュレーター。業種・年商を入力すると、3パターン（節税最適／手取り最大／マイクロ法人型）の税負担と経営者総手取りを2026年4月時点の最新税率で即計算。">
+  <link rel="canonical" href="https://aistartup.bizarch-design.com/">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- OGP / Twitter Card -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AI起業シミュレーター | AIで一人起業の教科書">
+  <meta property="og:description" content="業種・年商を入力すると3パターンの税・手取りを即計算。2026年4月時点の最新税率対応。">
+  <meta property="og:url" content="https://aistartup.bizarch-design.com/">
+  <meta property="og:site_name" content="BizArch Design Inc.">
+  <meta property="og:image" content="https://aistartup.bizarch-design.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI起業シミュレーター">
+  <meta name="twitter:description" content="業種・年商で3パターンの税・手取りを即計算">
+  <meta name="twitter:image" content="https://aistartup.bizarch-design.com/og-image.png">
+
   <!-- Noto Sans JP (bizarch-design tone & manner) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
+
+  <!-- Structured data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "AI起業シミュレーター",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Any",
+    "description": "AIで一人法人を立ち上げる人向けの税・手取りシミュレーター。3パターンで経営者総手取りを比較計算。",
+    "url": "https://aistartup.bizarch-design.com/",
+    "publisher": {
+      "@type": "Organization",
+      "name": "BizArch Design Inc.",
+      "url": "https://bizarch-design.com/"
+    },
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+    "datePublished": "2026-04-30",
+    "inLanguage": "ja"
+  }
+  </script>
 </head>
 <body class="bg-blueprint">
 
@@ -225,7 +265,7 @@
       </div>
       <div class="optional-input-row">
         <label for="rentMonth" class="form-label-inline">家賃月額（万円・社宅利用時）</label>
-        <input type="number" id="rentMonth" class="form-control number-narrow" min="0" step="1" value="15">
+        <input type="number" id="rentMonth" class="form-control number-narrow" min="0" step="1" value="15" disabled>
       </div>
     </section>
 
@@ -260,6 +300,20 @@
 
     <!-- 結果カード -->
     <div class="result-card">
+      <div class="card-actions">
+        <button type="button" class="card-action-btn" id="btn-copy-result" title="結果をテキストでコピー">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75"/>
+          </svg>
+          <span class="card-action-label">結果をコピー</span>
+        </button>
+        <button type="button" class="card-action-btn" id="btn-copy-url" title="URLをコピー（共有用）">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"/>
+          </svg>
+          <span class="card-action-label">URLをコピー</span>
+        </button>
+      </div>
       <div class="card-label">経営者の年間総手取り</div>
       <div class="card-amount" id="total-take-home">-</div>
       <div class="card-breakdown">
@@ -271,6 +325,7 @@
         <span id="pattern-label">①節税最適</span>
         <span id="salary-label">役員報酬：月-万円・年-万円</span>
       </div>
+      <div id="copy-toast" class="copy-toast" role="status" aria-live="polite"></div>
     </div>
 
     <!-- 警告表示 -->
@@ -285,7 +340,7 @@
         </svg>
         3パターン比較
       </h2>
-      <div class="table-wrap">
+      <div class="table-wrap compare-table-wrap">
         <table class="compare-table" id="compare-table">
           <thead>
             <tr>
@@ -374,7 +429,7 @@
         </svg>
         感度分析（役員報酬を±10万円変えると）
       </h2>
-      <div class="table-wrap">
+      <div class="table-wrap sens-table-wrap">
         <table class="sens-table" id="sens-table">
           <thead>
             <tr>
@@ -418,6 +473,13 @@
   </section>
 
 </main>
+
+<!-- 先頭に戻るボタン -->
+<button type="button" id="scroll-top-btn" class="scroll-top-btn" aria-label="ページ先頭へ戻る" title="ページ先頭へ戻る">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75 12 8.25l7.5 7.5"/>
+  </svg>
+</button>
 
 <!-- サイトフッター -->
 <footer class="site-footer">

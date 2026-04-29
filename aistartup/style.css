@@ -162,6 +162,14 @@ html, body {
     top: auto !important;
     max-height: none !important;
   }
+  /* iOS auto-zoom 対策：input は最低 16px を強制 */
+  .form-control {
+    font-size: 16px;
+  }
+  /* 980px以下では数値入力欄をスライダーと並んだ際に窮屈にしない */
+  .form-control.number-narrow {
+    width: 100%;
+  }
 }
 
 /* ---------- Left column: Input panel ---------- */
@@ -172,6 +180,7 @@ html, body {
   padding: 28px;
   position: sticky;
   top: 100px;
+  align-self: start;
   max-height: calc(100vh - 120px);
   overflow-y: auto;
   transition: border-color 0.3s, box-shadow 0.3s;
@@ -737,10 +746,25 @@ html, body {
 }
 
 /* ---------- Disabled state ---------- */
-.form-control:disabled {
+.form-control:disabled,
+input:disabled {
+  opacity: 0.4;
   background: #F9FAFB;
   color: #9CA3AF;
   cursor: not-allowed;
+}
+
+/* ---------- Focus visible (keyboard a11y) ---------- */
+*:focus-visible {
+  outline: 2px solid #0066FF;
+  outline-offset: 2px;
+}
+
+/* ---------- Responsive table wrappers ---------- */
+.compare-table-wrap,
+.sens-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* ---------- Smooth number-change transitions ---------- */
@@ -883,4 +907,135 @@ html, body {
   font-size: 0.82rem;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Result card action buttons (Copy / Share URL) ---------- */
+.card-actions {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.card-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #0066FF;
+  background: rgba(0, 102, 255, 0.05);
+  border: 1px solid rgba(0, 102, 255, 0.20);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.15s;
+  letter-spacing: 0.01em;
+}
+.card-action-btn:hover {
+  background: rgba(0, 102, 255, 0.10);
+  border-color: rgba(0, 102, 255, 0.45);
+  color: #0050CC;
+}
+.card-action-btn:active {
+  transform: translateY(1px);
+}
+.card-action-btn.is-success {
+  background: rgba(16, 185, 129, 0.10);
+  border-color: rgba(16, 185, 129, 0.45);
+  color: #047857;
+}
+.icon-sm {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+@media (max-width: 600px) {
+  .card-actions {
+    position: static;
+    margin-bottom: 12px;
+    justify-content: flex-start;
+  }
+  .card-action-label {
+    display: inline;
+  }
+}
+
+/* ---------- Copy toast (one-shot feedback) ---------- */
+.copy-toast {
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  background: linear-gradient(to right, #0066FF, #8A2BE2);
+  color: #FFFFFF;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 0.5rem;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 8px 16px -4px rgba(0, 102, 255, 0.30);
+  z-index: 2;
+}
+.copy-toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Scroll-to-top floating button ---------- */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0066FF, #8A2BE2);
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 10px 20px -6px rgba(0, 102, 255, 0.35),
+              0 6px 10px -4px rgba(138, 43, 226, 0.25);
+  z-index: 200;
+}
+.scroll-top-btn.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.scroll-top-btn:hover {
+  box-shadow: 0 14px 28px -6px rgba(0, 102, 255, 0.45),
+              0 8px 14px -4px rgba(138, 43, 226, 0.35);
+}
+.scroll-top-btn:active {
+  transform: translateY(1px);
+}
+.scroll-top-btn svg {
+  width: 22px;
+  height: 22px;
+}
+@media (max-width: 600px) {
+  .scroll-top-btn {
+    bottom: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+  }
+  .scroll-top-btn svg {
+    width: 20px;
+    height: 20px;
+  }
 }

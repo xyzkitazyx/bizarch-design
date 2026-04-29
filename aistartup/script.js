@@ -851,15 +851,282 @@ function setupEvents() {
     });
   });
 
-  // チェックボックス
-  document.querySelectorAll('#opt-tousanboshi, #opt-shokibo, #opt-ideco, #opt-shataku, #ct-taxable').forEach(el => {
+  // チェックボックス（社宅チェック ON/OFF で家賃月額入力の disabled 切替）
+  const shatakuCheckbox = document.getElementById('opt-shataku');
+  const rentMonthInput  = document.getElementById('rentMonth');
+  if (shatakuCheckbox && rentMonthInput) {
+    rentMonthInput.disabled = !shatakuCheckbox.checked;
+    shatakuCheckbox.addEventListener('change', () => {
+      rentMonthInput.disabled = !shatakuCheckbox.checked;
+      triggerRecompute();
+    });
+  }
+
+  // 残りのチェックボックス
+  document.querySelectorAll('#opt-tousanboshi, #opt-shokibo, #opt-ideco, #ct-taxable').forEach(el => {
     el.addEventListener('change', triggerRecompute);
   });
+
+  // 結果コピー / URLコピー / 先頭に戻るボタン
+  setupCopyButtons();
+  setupScrollTopButton();
+}
+
+/* =========================================================
+ * 24.1 URLパラメータ ⇔ 入力欄の双方向同期
+ * ======================================================== */
+const URL_PARAM_KEYS = [
+  'industry', 'revenue', 'sga', 'age', 'pattern', 'customSalary',
+  'aiTier',
+  'tousanboshi', 'shokibo', 'ideco', 'shataku', 'rentMonth',
+  'ctTaxable', 'ctMethod'
+];
+
+function getStateFromInputs() {
+  const input = getInputs();
+  return {
+    industry: input.industry,
+    revenue: input.revenueMan,
+    sga: input.sgaMan,
+    age: input.age40Plus ? 'over40' : 'under40',
+    pattern: input.pattern,
+    customSalary: input.customSalaryMan,
+    aiTier: (document.querySelector('input[name="aiTier"]:checked') || {}).value || 'standard',
+    tousanboshi: input.options.tousanboshi ? '1' : '0',
+    shokibo:     input.options.shokibo     ? '1' : '0',
+    ideco:       input.options.ideco       ? '1' : '0',
+    shataku:     input.options.shataku     ? '1' : '0',
+    rentMonth:   input.rentMonthMan,
+    ctTaxable:   input.ctTaxable ? '1' : '0',
+    ctMethod:    input.ctMethod
+  };
+}
+
+function applyStateToInputs(state) {
+  if (!state) return;
+  const setVal = (id, v) => {
+    const el = document.getElementById(id);
+    if (el && v !== undefined && v !== null && v !== '') el.value = v;
+  };
+  const setRadio = (name, v) => {
+    if (v === undefined || v === null || v === '') return;
+    const el = document.querySelector(`input[name="${name}"][value="${v}"]`);
+    if (el) el.checked = true;
+  };
+  const setCheck = (id, v) => {
+    const el = document.getElementById(id);
+    if (el && v !== undefined && v !== null) {
+      el.checked = (v === '1' || v === true || v === 'true');
+    }
+  };
+
+  if (state.industry) {
+    setVal('industry', state.industry);
+    // 業種コメント等の同期は applyIndustryDefaults が消すので、直後に他の値を上書きする
+  }
+  setVal('revenue', state.revenue);
+  setVal('revenue-slider', state.revenue);
+  setVal('sga', state.sga);
+  setVal('customSalary', state.customSalary);
+  setVal('rentMonth', state.rentMonth);
+  setRadio('age', state.age);
+  setRadio('pattern', state.pattern);
+  setRadio('aiTier', state.aiTier);
+  setRadio('ctMethod', state.ctMethod);
+  setCheck('opt-tousanboshi', state.tousanboshi);
+  setCheck('opt-shokibo', state.shokibo);
+  setCheck('opt-ideco', state.ideco);
+  setCheck('opt-shataku', state.shataku);
+  setCheck('ct-taxable', state.ctTaxable);
+
+  // pattern=custom 以外は customSalary を disabled にする
+  const isCustom = (document.querySelector('input[name="pattern"]:checked') || {}).value === 'custom';
+  const cs = document.getElementById('customSalary');
+  if (cs) cs.disabled = !isCustom;
+
+  // 社宅チェック状態と家賃月額の disabled を同期
+  const sh = document.getElementById('opt-shataku');
+  const rm = document.getElementById('rentMonth');
+  if (sh && rm) rm.disabled = !sh.checked;
+}
+
+function readUrlParams() {
+  const params = new URLSearchParams(window.location.search);
+  if ([...params.keys()].length === 0) return null;
+  const state = {};
+  for (const key of URL_PARAM_KEYS) {
+    if (params.has(key)) state[key] = params.get(key);
+  }
+  return Object.keys(state).length > 0 ? state : null;
+}
+
+function buildShareUrl() {
+  const state = getStateFromInputs();
+  const params = new URLSearchParams();
+  for (const key of URL_PARAM_KEYS) {
+    if (state[key] !== undefined && state[key] !== null && state[key] !== '') {
+      params.set(key, state[key]);
+    }
+  }
+  const base = `${window.location.origin}${window.location.pathname}`;
+  return `${base}?${params.toString()}`;
+}
+
+function syncUrl() {
+  try {
+    const url = buildShareUrl();
+    window.history.replaceState(null, '', url);
+  } catch (e) {
+    /* ignore */
+  }
+}
+
+/* =========================================================
+ * 24.2 localStorage で前回入力保持
+ * ======================================================== */
+const LS_KEY = 'aistartup-state';
+
+function saveStateToLocalStorage() {
+  try {
+    const state = getStateFromInputs();
+    localStorage.setItem(LS_KEY, JSON.stringify(state));
+  } catch (e) {
+    /* ignore quota / unavailable */
+  }
+}
+
+function readStateFromLocalStorage() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch (e) {
+    return null;
+  }
+}
+
+/* =========================================================
+ * 24.3 結果コピー / URLコピー
+ * ======================================================== */
+function showCopyToast(message) {
+  const toast = document.getElementById('copy-toast');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.classList.add('is-visible');
+  clearTimeout(showCopyToast._t);
+  showCopyToast._t = setTimeout(() => {
+    toast.classList.remove('is-visible');
+  }, 1800);
+}
+
+async function copyTextToClipboard(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch (e) { /* fallback */ }
+  }
+  // フォールバック：textarea で execCommand
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.top = '-9999px';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    return ok;
+  } catch (e) {
+    return false;
+  }
+}
+
+function buildResultText() {
+  const input = getInputs();
+  const totalEl    = document.getElementById('total-take-home');
+  const personalEl = document.getElementById('personal-take-home');
+  const retainedEl = document.getElementById('retained-earnings');
+  const patternEl  = document.getElementById('pattern-label');
+  const salaryEl   = document.getElementById('salary-label');
+  const lines = [
+    '【AI起業シミュレーター 試算結果】',
+    `業種: ${input.industry}`,
+    `年商: ${input.revenueMan.toLocaleString()}万円`,
+    `販管費: ${input.sgaMan.toLocaleString()}万円`,
+    `役員報酬パターン: ${patternEl ? patternEl.textContent : '-'}`,
+    `${salaryEl ? salaryEl.textContent : ''}`,
+    '',
+    `経営者総手取り: ${totalEl ? totalEl.textContent : '-'}`,
+    `　個人手取り: ${personalEl ? personalEl.textContent : '-'} 万円`,
+    `　内部留保: ${retainedEl ? retainedEl.textContent : '-'} 万円`,
+    '',
+    `詳細: ${buildShareUrl()}`
+  ];
+  return lines.filter(l => l !== undefined).join('\n');
+}
+
+function setupCopyButtons() {
+  const btnResult = document.getElementById('btn-copy-result');
+  if (btnResult) {
+    btnResult.addEventListener('click', async () => {
+      const text = buildResultText();
+      const ok = await copyTextToClipboard(text);
+      if (ok) {
+        btnResult.classList.add('is-success');
+        setTimeout(() => btnResult.classList.remove('is-success'), 1600);
+        showCopyToast('結果をコピーしました');
+      } else {
+        showCopyToast('コピーに失敗しました');
+      }
+    });
+  }
+  const btnUrl = document.getElementById('btn-copy-url');
+  if (btnUrl) {
+    btnUrl.addEventListener('click', async () => {
+      const url = buildShareUrl();
+      const ok = await copyTextToClipboard(url);
+      if (ok) {
+        btnUrl.classList.add('is-success');
+        setTimeout(() => btnUrl.classList.remove('is-success'), 1600);
+        showCopyToast('URLをコピーしました');
+      } else {
+        showCopyToast('コピーに失敗しました');
+      }
+    });
+  }
+}
+
+/* =========================================================
+ * 24.4 先頭に戻るボタン
+ * ======================================================== */
+function setupScrollTopButton() {
+  const btn = document.getElementById('scroll-top-btn');
+  if (!btn) return;
+  const onScroll = () => {
+    if (window.pageYOffset > 100) {
+      btn.classList.add('is-visible');
+    } else {
+      btn.classList.remove('is-visible');
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  onScroll();
 }
 
 function triggerRecompute() {
   if (DEBOUNCE_TIMER) clearTimeout(DEBOUNCE_TIMER);
-  DEBOUNCE_TIMER = setTimeout(recompute, 200);
+  DEBOUNCE_TIMER = setTimeout(() => {
+    recompute();
+    // 入力変更ごとに URL と localStorage を同期
+    syncUrl();
+    saveStateToLocalStorage();
+  }, 200);
 }
 
 /* =========================================================
@@ -954,7 +1221,26 @@ async function init() {
 
   setupEvents();
   applyIndustryDefaults();
+
+  // 優先順位: URLパラメータ > localStorage > デフォルト
+  const urlState = readUrlParams();
+  const lsState  = readStateFromLocalStorage();
+  const initialState = urlState || lsState;
+  if (initialState) {
+    // industry が指定されている場合は先に業種デフォルトを適用してから上書き
+    if (initialState.industry) {
+      const sel = document.getElementById('industry');
+      if (sel) sel.value = initialState.industry;
+      applyIndustryDefaults();
+    }
+    applyStateToInputs(initialState);
+    // AIツール表示を更新
+    updateAIToolsDisplay();
+  }
+
   recompute();
+  // 起動時に URL を正規化（無いキーは追加）
+  syncUrl();
   runTestCases();
 }
 
