@@ -620,6 +620,15 @@ function renderPL(res) {
   // 会社サイド
   $('pl-revenue').textContent       = fmtMan(res.revenue);
   $('pl-sga').textContent           = fmtMan(res.sga);
+  // うちAIツール代（業種×Tierから推定）
+  const aiInfo = getAIToolsCost();
+  if (aiInfo) {
+    const annual = aiInfo.annualMid;
+    const ratio = res.sga > 0 ? Math.round((annual / (res.sga / 10000)) * 100) : 0;
+    $('pl-ai-tools').textContent = `約${annual.toFixed(0)}万円（販管費の約${ratio}%）`;
+  } else {
+    $('pl-ai-tools').textContent = '-';
+  }
   $('pl-salary').textContent        = fmtMan(res.salaryYr);
   $('pl-corp-si').textContent       = fmtMan(res.si.corporateYearly);
   $('pl-corp-deduct').textContent   = fmtMan(res.corpDeduction);
@@ -735,6 +744,64 @@ function applyIndustryDefaults() {
   document.getElementById('sga').value            = data.default_sga;
   document.getElementById('customSalary').value   = data.default_salary_monthly;
   document.getElementById('industry-comment').textContent = data.comment;
+  updateAIToolsDisplay();
+}
+
+/* =========================================================
+ * 23.5 AIツール代の試算表示（業種×Tier）
+ * ======================================================== */
+function getAIToolsCost() {
+  const ind = document.getElementById('industry').value;
+  const tierEl = document.querySelector('input[name="aiTier"]:checked');
+  const tier = tierEl ? tierEl.value : 'standard';
+  const stack = DATA.ai_tools && DATA.ai_tools.industry_stacks[ind];
+  if (!stack) return null;
+  const range = stack.monthly_man[tier]; // [min, max] in 万円
+  return {
+    industry: ind,
+    tier: tier,
+    stackText: stack.stack,
+    monthlyMin: range[0],
+    monthlyMax: range[1],
+    monthlyMid: (range[0] + range[1]) / 2,
+    annualMin: range[0] * 12,
+    annualMax: range[1] * 12,
+    annualMid: (range[0] + range[1]) / 2 * 12,
+    tierMeta: DATA.ai_tools.tiers[tier],
+  };
+}
+
+function updateAIToolsDisplay() {
+  const info = getAIToolsCost();
+  const $ = id => document.getElementById(id);
+  if (!info) {
+    $('ai-tools-stack').textContent = '業種を選択...';
+    $('ai-tools-monthly-amount').textContent = '-';
+    $('ai-tools-annual-amount').textContent = '-';
+    $('ai-tools-fit').textContent = '-';
+    return;
+  }
+  $('ai-tools-stack').textContent = info.stackText;
+  $('ai-tools-monthly-amount').textContent =
+    info.monthlyMin === info.monthlyMax
+      ? info.monthlyMin.toFixed(1)
+      : `${info.monthlyMin.toFixed(1)}〜${info.monthlyMax.toFixed(1)}`;
+  $('ai-tools-annual-amount').textContent =
+    info.annualMin === info.annualMax
+      ? info.annualMin.toFixed(1)
+      : `${info.annualMin.toFixed(0)}〜${info.annualMax.toFixed(0)}`;
+  $('ai-tools-fit').textContent = `${info.tierMeta.label}：${info.tierMeta.subtitle}（${info.tierMeta.fit}）`;
+
+  // 販管費との整合性チェック
+  const sga = parseFloat($('sga').value) || 0;
+  const warningEl = $('ai-tools-warning');
+  if (sga < info.annualMin) {
+    warningEl.textContent =
+      `⚠ 販管費 ${sga}万円 が AIツール代の最低想定 ${info.annualMin.toFixed(0)}万円 を下回っています。販管費に他の固定費（事務・通信・税理士等）も含まれるため、${(info.annualMin + 5).toFixed(0)}万円以上を推奨。`;
+    warningEl.classList.add('is-active');
+  } else {
+    warningEl.classList.remove('is-active');
+  }
 }
 
 /* =========================================================
@@ -760,7 +827,10 @@ function setupEvents() {
   // その他の入力すべて
   const ids = ['sga', 'customSalary', 'rentMonth'];
   ids.forEach(id => {
-    document.getElementById(id).addEventListener('input', triggerRecompute);
+    document.getElementById(id).addEventListener('input', () => {
+      if (id === 'sga') updateAIToolsDisplay();
+      triggerRecompute();
+    });
   });
 
   // ラジオボタン
@@ -769,6 +839,14 @@ function setupEvents() {
       // パターン=customのときだけカスタム入力欄を有効化
       const isCustom = document.querySelector('input[name="pattern"]:checked').value === 'custom';
       document.getElementById('customSalary').disabled = !isCustom;
+      triggerRecompute();
+    });
+  });
+
+  // AIツール代 Tier 切替
+  document.querySelectorAll('input[name="aiTier"]').forEach(el => {
+    el.addEventListener('change', () => {
+      updateAIToolsDisplay();
       triggerRecompute();
     });
   });

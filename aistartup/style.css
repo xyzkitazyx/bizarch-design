@@ -751,3 +751,136 @@ html, body {
 .sens-table td:not(:first-child) {
   transition: color 0.3s ease, background-color 0.3s ease;
 }
+
+/* ---------- AI Tools Cost Card ---------- */
+.ai-tools-card {
+  margin-top: 14px;
+  padding: 16px 18px;
+  background: linear-gradient(135deg,
+    rgba(0, 102, 255, 0.04),
+    rgba(138, 43, 226, 0.04));
+  border: 1px solid rgba(0, 102, 255, 0.15);
+  border-radius: 0.75rem;
+  position: relative;
+  overflow: hidden;
+}
+.ai-tools-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(0,102,255,0.30), rgba(138,43,226,0.30));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
+.ai-tools-stack-label,
+.ai-tools-amount-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: #0066FF;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.ai-tools-stack {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 14px;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+.ai-tools-amount-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  padding-top: 12px;
+  margin-top: 4px;
+  border-top: 1px solid rgba(0, 102, 255, 0.12);
+}
+.ai-tools-monthly-block,
+.ai-tools-annual-block {
+  flex: 1;
+}
+
+.ai-tools-amount-value {
+  font-weight: 900;
+  font-size: 1.7rem;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(to right, #0066FF, #8A2BE2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -0.02em;
+}
+.ai-tools-amount-value-sub {
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #4B5563;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+.ai-tools-amount-value .unit,
+.ai-tools-amount-value-sub .unit {
+  font-size: 0.65em;
+  font-weight: 600;
+  color: #6B7280;
+  margin-left: 4px;
+  background: none;
+  -webkit-text-fill-color: #6B7280;
+}
+
+.ai-tools-fit {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(0, 102, 255, 0.15);
+  font-size: 0.78rem;
+  color: #4B5563;
+  font-weight: 500;
+}
+.ai-tools-fit::before {
+  content: "→ ";
+  color: #0066FF;
+  font-weight: 700;
+}
+
+.ai-tools-warning {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: rgba(245, 158, 11, 0.10);
+  border-left: 3px solid #F59E0B;
+  border-radius: 0.375rem;
+  font-size: 0.76rem;
+  color: #92400E;
+  font-weight: 500;
+  display: none;
+}
+.ai-tools-warning.is-active {
+  display: block;
+}
+
+/* ---------- P&L sub-detail row (うちAIツール代) ---------- */
+.pl-table tr.row-sub td {
+  padding-top: 2px;
+  padding-bottom: 6px;
+  border-bottom: none;
+}
+.pl-table tr.row-sub td:first-child {
+  color: #9CA3AF;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+.pl-table td.sub-detail {
+  color: #6B7280;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
