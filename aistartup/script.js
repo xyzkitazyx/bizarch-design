@@ -421,10 +421,20 @@ function findOptimalSalary(baseScn) {
  * 14. パターン②手取り最大：個人手取り最大点を全探索
  * ======================================================== */
 function findMaxTakeHomeSalary(baseScn) {
+  // EBITDA上限ガード：会社が赤字にならない範囲で探索
+  // EBITDA = 売上 - 販管費。均等割7万円と最低内部留保（売上の5%）を引いた残りが
+  // 役員報酬+会社負担社保の上限。会社負担社保＝役員報酬×14.2%(40歳未満)or15.0%(40歳以上)
+  const ebitdaYen = Math.max(0, (baseScn.revenueMan - baseScn.sgaMan) * 10000);
+  const minRetention = (baseScn.revenueMan * 10000) * 0.05; // 売上の5%
+  const ageMultiplier = baseScn.age40Plus ? 1.150 : 1.142;
+  const maxSalaryYen = Math.max(0, (ebitdaYen - 70000 - minRetention) / 12 / ageMultiplier);
+  const upperBoundMan = Math.min(250, Math.floor(maxSalaryYen / 10000));
+
   let bestMan = 0;
   let bestPersonal = -Infinity;
 
-  for (let m = 0; m <= 250; m += 10) {
+  // 第1段階：10万円刻みで粗探索
+  for (let m = 0; m <= upperBoundMan; m += 10) {
     const sc = { ...baseScn, salaryMonthlyMan: m, pattern: 'maxTakeHome' };
     const r = calcScenario(sc);
     if (r.pers.takeHome > bestPersonal) {
@@ -432,9 +442,9 @@ function findMaxTakeHomeSalary(baseScn) {
       bestMan = m;
     }
   }
-  // 第2段階
+  // 第2段階：1万円刻みで精探索（±10万円範囲）
   const lo = Math.max(0, bestMan - 10);
-  const hi = Math.min(250, bestMan + 10);
+  const hi = Math.min(upperBoundMan, bestMan + 10);
   for (let m = lo; m <= hi; m += 1) {
     const sc = { ...baseScn, salaryMonthlyMan: m, pattern: 'maxTakeHome' };
     const r = calcScenario(sc);

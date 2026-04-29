@@ -352,6 +352,10 @@ html, body {
   -webkit-overflow-scrolling: touch;
   padding-right: 4px;
 }
+/* output-panel 内の子要素を flex shrink で潰さない */
+.output-panel > * {
+  flex-shrink: 0;
+}
 
 /* ---------- Result card (main number) ---------- */
 .result-card {
@@ -395,11 +399,23 @@ html, body {
   letter-spacing: -0.025em;
   margin-bottom: 18px;
   font-variant-numeric: tabular-nums;
-  background: linear-gradient(to right, #0066FF, #8A2BE2);
+  /* 単色フォールバック（グラデーション失敗時用） */
+  color: #0066FF;
+  /* グラデーションテキスト */
+  background-image: linear-gradient(to right, #0066FF, #8A2BE2);
   -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
   transition: opacity 0.3s;
+}
+/* グラデーション非対応ブラウザ用フォールバック */
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .card-amount {
+    color: #0066FF;
+    -webkit-text-fill-color: #0066FF;
+    background: none;
+  }
 }
 .card-breakdown {
   font-size: 0.92rem;
