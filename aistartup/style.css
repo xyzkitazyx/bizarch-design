@@ -139,27 +139,33 @@ html, body {
   text-transform: uppercase;
 }
 
-/* ---------- Main layout ---------- */
+/* ---------- Main layout (Split-pane) ---------- */
 .container {
   max-width: 80rem;
   margin: 0 auto;
-  padding: 32px 24px 80px;
+  padding: 24px 24px 24px;
   display: grid;
   grid-template-columns: minmax(320px, 1fr) 2fr;
   gap: 28px;
-  align-items: flex-start;
+  align-items: stretch;
   position: relative;
   z-index: 1;
+  /* Split-pane: ヘッダー + フッター 引いた残り高さ */
+  height: calc(100vh - 80px - 64px);
+  min-height: 500px;
 }
 
 @media (max-width: 980px) {
   .container {
     grid-template-columns: 1fr;
     gap: 20px;
+    height: auto;  /* モバイルは縦スタック・通常スクロール */
+    padding: 20px 16px 80px;
   }
-  .input-panel {
-    position: relative !important;
-    top: auto !important;
+  .input-panel,
+  .output-panel {
+    height: auto !important;
+    overflow: visible !important;
     max-height: none !important;
   }
   /* iOS auto-zoom 対策：input は最低 16px を強制 */
@@ -172,18 +178,38 @@ html, body {
   }
 }
 
-/* ---------- Left column: Input panel ---------- */
+/* ---------- Left column: Input panel (Split-pane: 独立スクロール) ---------- */
 .input-panel {
   background: #FFFFFF;
   border: 1px solid #F3F4F6;
   border-radius: 1rem;
   padding: 28px;
-  position: sticky;
-  top: 100px;
-  align-self: start;
-  max-height: calc(100vh - 120px);
+  height: 100%;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,102,255,0.3) transparent;
   transition: border-color 0.3s, box-shadow 0.3s;
+}
+.input-panel::-webkit-scrollbar,
+.output-panel::-webkit-scrollbar { width: 6px; }
+.input-panel::-webkit-scrollbar-thumb,
+.output-panel::-webkit-scrollbar-thumb {
+  background: rgba(0,102,255,0.25);
+  border-radius: 3px;
+}
+.input-panel::-webkit-scrollbar-thumb:hover,
+.output-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,102,255,0.5);
+}
+/* 右カラムも独立スクロールするためのラッパー */
+.output-panel {
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,102,255,0.3) transparent;
+  padding-right: 4px;
 }
 .input-panel:hover {
   border-color: rgba(0, 102, 255, 0.20);
@@ -321,6 +347,10 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-right: 4px;
 }
 
 /* ---------- Result card (main number) ---------- */
@@ -725,17 +755,30 @@ html, body {
   font-size: 0.75rem;
 }
 
-/* ---------- Site footer (BizArch × Solo Startup) ---------- */
+/* ---------- Site footer (Split-pane: sticky bottom) ---------- */
 .site-footer {
-  margin-top: 40px;
+  position: sticky;
+  bottom: 0;
+  margin-top: 0;
   border-top: 1px solid #F3F4F6;
-  padding: 24px 0;
+  padding: 14px 24px;
   text-align: center;
   font-size: 0.78rem;
   color: #6B7280;
   letter-spacing: 0.05em;
-  position: relative;
-  z-index: 1;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+}
+@media (max-width: 980px) {
+  .site-footer {
+    position: static;
+    margin-top: 40px;
+    padding: 24px 0;
+    background: transparent;
+    backdrop-filter: none;
+  }
 }
 .site-footer .brand {
   font-weight: 700;
