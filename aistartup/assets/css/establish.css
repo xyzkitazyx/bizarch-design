@@ -4,7 +4,8 @@
 
 /* ---------- Hero ---------- */
 .es-hero {
-  padding: var(--s-16) 0 var(--s-12);
+  padding-top: var(--s-16);
+  padding-bottom: var(--s-12);
   text-align: center;
 }
 .es-hero .eyebrow { margin-bottom: var(--s-3); }
@@ -105,7 +106,8 @@
 
 /* ---------- Step Section ---------- */
 .step-section {
-  padding: var(--s-12) 0;
+  padding-top: var(--s-12);
+  padding-bottom: var(--s-12);
   border-top: 1px solid var(--c-border);
 }
 .step-section:first-of-type { border-top: none; }
@@ -176,6 +178,9 @@
   border-radius: var(--r-lg);
   padding: var(--s-8);
   box-shadow: var(--sh-sm);
+}
+@media (max-width: 640px) {
+  .tool-card { padding: var(--s-5); }
 }
 .tool-card .tool-head {
   display: flex;

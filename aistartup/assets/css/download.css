@@ -4,7 +4,8 @@
 
 /* ---------- Hero ---------- */
 .dl-hero {
-  padding: var(--s-16) 0 var(--s-12);
+  padding-top: var(--s-16);
+  padding-bottom: var(--s-12);
   text-align: center;
 }
 .dl-hero .eyebrow { margin-bottom: var(--s-3); }
@@ -265,7 +266,8 @@
 .dl-state.is-active { display: block; }
 .dl-state-thanks {
   text-align: center;
-  padding: var(--s-12) 0;
+  padding-top: var(--s-12);
+  padding-bottom: var(--s-12);
 }
 .dl-state-thanks .thanks-icon {
   display: inline-grid;

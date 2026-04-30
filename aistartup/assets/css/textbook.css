@@ -23,7 +23,8 @@
 /* ---------- Hero ---------- */
 .tb-hero {
   text-align: center;
-  padding: var(--s-16) 0 var(--s-12);
+  padding-top: var(--s-16);
+  padding-bottom: var(--s-12);
   position: relative;
 }
 .tb-hero h1 {
