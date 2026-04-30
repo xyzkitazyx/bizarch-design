@@ -1,0 +1,80 @@
+/* =========================================================
+   Design Tokens — aistartup.bizarch-design.com
+   既存 style.css と整合（Electric Blue / Deep Purple / Noto Sans JP）
+========================================================= */
+:root {
+  /* Brand */
+  --c-blue: #0066FF;
+  --c-purple: #8A2BE2;
+  --c-gradient: linear-gradient(135deg, #0066FF 0%, #8A2BE2 100%);
+  --c-gradient-soft: linear-gradient(135deg, rgba(0,102,255,0.08) 0%, rgba(138,43,226,0.08) 100%);
+
+  /* Text */
+  --c-text: #111827;
+  --c-text-muted: #6B7280;
+  --c-text-faint: #9CA3AF;
+  --c-text-on-dark: #FFFFFF;
+
+  /* Surface */
+  --c-bg: #FFFFFF;
+  --c-bg-soft: #F9FAFB;
+  --c-bg-card: #FFFFFF;
+  --c-bg-dark: #0B1226;
+
+  /* Border */
+  --c-border: #F3F4F6;
+  --c-border-strong: #E5E7EB;
+  --c-border-hover: rgba(0,102,255,0.20);
+
+  /* Accent */
+  --c-blue-soft: rgba(0,102,255,0.08);
+  --c-blue-faint: rgba(0,102,255,0.03);
+  --c-purple-soft: rgba(138,43,226,0.08);
+  --c-success: #10B981;
+  --c-warning: #F59E0B;
+  --c-yayoi: #C8102E; /* 弥生のロゴ赤に近い色 */
+
+  /* Spacing (4px scale) */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 20px; --s-6: 24px; --s-8: 32px; --s-10: 40px;
+  --s-12: 48px; --s-16: 64px; --s-20: 80px; --s-24: 96px;
+
+  /* Typography */
+  --f-sans: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+  --f-xs: 0.75rem;   --f-sm: 0.875rem;  --f-base: 1rem;
+  --f-lg: 1.125rem;  --f-xl: 1.25rem;   --f-2xl: 1.5rem;
+  --f-3xl: 1.875rem; --f-4xl: 2.25rem;  --f-5xl: 3rem;
+
+  /* Radius */
+  --r-sm: 6px;  --r-md: 10px; --r-lg: 16px;
+  --r-xl: 24px; --r-full: 9999px;
+
+  /* Shadow */
+  --sh-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --sh-md: 0 4px 12px rgba(0,0,0,0.06);
+  --sh-lg: 0 12px 32px rgba(0,0,0,0.08);
+  --sh-xl: 0 24px 48px rgba(0,0,0,0.12);
+  --sh-blue: 0 8px 24px rgba(0,102,255,0.20);
+
+  /* Layout */
+  --w-container: 80rem;
+  --w-prose: 52rem;
+  --h-header: 64px;
+  --h-announce: 44px;
+  --z-header: 100;
+  --z-modal: 200;
+  --z-tooltip: 300;
+
+  /* Motion */
+  --t-fast: 150ms;
+  --t-base: 250ms;
+  --t-slow: 400ms;
+  --e-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --e-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --t-fast: 0ms; --t-base: 0ms; --t-slow: 0ms;
+  }
+}

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>会社設立サポート | AIで一人起業の教科書</title>
+  <meta name="description" content="30分で会社を作り、初日から経理を回す。一人法人の設立を3ステップで進めるためのガイド。弥生のかんたん会社設立・弥生会計Nextをファンとして紹介。">
+  <link rel="canonical" href="https://aistartup.bizarch-design.com/establish/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- OGP / Twitter Card -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="会社設立サポート | AIで一人起業">
+  <meta property="og:description" content="30分で会社を作り、初日から経理を回す。一人法人の設立を3ステップで進めるためのガイド。">
+  <meta property="og:url" content="https://aistartup.bizarch-design.com/establish/">
+  <meta property="og:site_name" content="BizArch Design Inc.">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://aistartup.bizarch-design.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@kita_yysskk">
+  <meta name="twitter:creator" content="@kita_yysskk">
+  <meta name="twitter:title" content="会社設立サポート">
+  <meta name="twitter:description" content="30分で会社を作り、初日から経理を回す。一人法人の設立3ステップ。">
+  <meta name="twitter:image" content="https://aistartup.bizarch-design.com/og-image.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/layout.css">
+  <link rel="stylesheet" href="/assets/css/establish.css">
+</head>
+<body class="bg-blueprint">
+
+<div class="announce-bar">
+  <div class="announce-inner">
+    <span>📕 教科書PDFが完成しました</span>
+    <a href="/download/">→ ダウンロード</a>
+    <button class="announce-close" aria-label="閉じる">✕</button>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="brand" aria-label="ホームへ">
+      <div class="brand-mark">B</div>
+      <div class="brand-text">
+        <span class="brand-name">BizArch Design</span>
+        <span class="brand-sub">ARCHITECTURE × AI</span>
+      </div>
+    </a>
+    <nav class="nav-desktop" aria-label="メインナビゲーション">
+      <a href="/"           class="nav-link" data-nav-path="/">シミュレーター</a>
+      <a href="/textbook/"  class="nav-link" data-nav-path="/textbook/">教科書</a>
+      <a href="/establish/" class="nav-link" data-nav-path="/establish/">会社設立</a>
+    </nav>
+    <a href="https://x.com/kita_yysskk" class="nav-x-link" target="_blank" rel="noopener" aria-label="Xアカウント">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      <span>@kita_yysskk</span>
+    </a>
+    <button class="hamburger" aria-label="メニューを開く" aria-expanded="false">
+      <span class="hamburger-icon"></span>
+    </button>
+  </div>
+</header>
+
+<nav class="nav-mobile" aria-label="モバイルメニュー">
+  <a href="/"           class="nav-link" data-nav-path="/">シミュレーター</a>
+  <a href="/textbook/"  class="nav-link" data-nav-path="/textbook/">教科書を読む</a>
+  <a href="/establish/" class="nav-link" data-nav-path="/establish/">会社設立サポート</a>
+  <div class="nav-divider"></div>
+  <a href="/download/"  class="nav-link" data-nav-path="/download/">⬇ 教科書PDFをダウンロード</a>
+  <a href="https://x.com/kita_yysskk" class="nav-link" target="_blank" rel="noopener">𝕏 @kita_yysskk をフォロー</a>
+</nav>
+
+<main>
+
+  <!-- Hero -->
+  <section class="container-prose es-hero">
+    <span class="eyebrow">🏢 ESTABLISH</span>
+    <h1>会社設立を、<em>30分</em>で進める</h1>
+    <p class="lead">一人法人の立ち上げを3ステップで。<br>初日から経理が回る状態を作る現実的な進め方。</p>
+  </section>
+
+  <!-- Current Location Card (localStorage連動) -->
+  <section class="container-prose">
+    <div id="location-card" class="location-card is-default">
+      <div class="pin">📍</div>
+      <div class="loc-content">
+        <h3>現在地</h3>
+        <p id="location-text">
+          <strong>まだ教科書もシミュレーターも未利用です。</strong><br>
+          まずは <a href="/textbook/">教科書（5分で全体像）</a> か
+          <a href="/">シミュレーター（業種・年商を入力）</a> から始めると、
+          会社設立の進め方が明確になります。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 Step pills -->
+  <section class="container-prose">
+    <div class="step-flow">
+      <div class="step-pill">
+        <span class="step-num">STEP 1</span>
+        <h3>設立準備</h3>
+        <p>5項目を決める</p>
+      </div>
+      <div class="step-pill">
+        <span class="step-num">STEP 2</span>
+        <h3>法人登記</h3>
+        <p>オンラインで30分</p>
+      </div>
+      <div class="step-pill">
+        <span class="step-num">STEP 3</span>
+        <h3>経理開始</h3>
+        <p>初月締めまで自走</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 1 -->
+  <section class="container-prose step-section">
+    <span class="step-label">STEP 1</span>
+    <h2>設立準備で決める5項目</h2>
+    <p class="step-desc">登記前にこの5項目を確定させると、後工程で迷いません。教科書の第1部「起業手続き」と同じ枠組みです。</p>
+
+    <div class="checklist">
+      <div class="check-item">
+        <div class="check-icon">🏷️</div>
+        <h4>商号</h4>
+        <p>株式会社○○</p>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">🎯</div>
+        <h4>事業目的</h4>
+        <p>本業＋拡張余地</p>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">💰</div>
+        <h4>資本金</h4>
+        <p>1円〜可・推奨50万〜</p>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">👤</div>
+        <h4>役員報酬</h4>
+        <p>節税最適 or 手取り最大</p>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">📊</div>
+        <h4>会計ソフト</h4>
+        <p>登記前に決めておく</p>
+      </div>
+    </div>
+
+    <p style="font-size:14px;color:#6B7280">
+      役員報酬の判断は、 <a href="/" style="color:#0066FF;text-decoration:underline">シミュレーターで3パターン比較</a> すると数字で見えます。
+    </p>
+  </section>
+
+  <!-- Step 2 -->
+  <section class="container-prose step-section">
+    <span class="step-label">STEP 2</span>
+    <h2>法人登記をオンラインで完結させる</h2>
+    <p class="step-desc">紙の定款・対面手続き・印紙代を全部スキップして、フォーム入力だけで登記書類を仕上げる方法です。</p>
+
+    <div class="tool-card">
+      <div class="tool-head">
+        <span class="tool-icon">💼</span>
+        <span class="tool-name">弥生のかんたん会社設立</span>
+        <span class="tool-tag">設立サポート</span>
+      </div>
+
+      <ul class="tool-summary">
+        <li>フォームに沿って入力するだけで、定款・登記書類が自動生成</li>
+        <li>電子定款に対応（紙定款の印紙代4万円が0円に）</li>
+        <li>司法書士・行政書士の紹介オプションあり（自分で進める or 専門家任せを選べる）</li>
+        <li>初心者でも30分前後で書類一式が完成</li>
+      </ul>
+
+      <div class="roi-row">
+        <div class="roi-item">
+          <div class="roi-label">利用料</div>
+          <div class="roi-value"><strong>0円</strong></div>
+        </div>
+        <div class="roi-item">
+          <div class="roi-label">電子定款で印紙代</div>
+          <div class="roi-value">4万円 → <strong>0円</strong></div>
+        </div>
+        <div class="roi-item">
+          <div class="roi-label">所要時間</div>
+          <div class="roi-value"><strong>約30分</strong></div>
+        </div>
+      </div>
+
+      <div class="fan-note">
+        <h4>なぜ弥生か（ファンとしての推薦）</h4>
+        <p>無料で使えるうえに、出てくる書類のクオリティが高く、初めての登記でも迷いません。</p>
+        <p>後述の弥生会計Nextとデータが連携できるため、Step 3への移行がスムーズです。</p>
+      </div>
+
+      <a href="https://www.yayoi-kk.co.jp/kaisha-setsuritsu/" class="tool-cta" target="_blank" rel="noopener noreferrer">
+        弥生公式で詳しく見る →
+      </a>
+    </div>
+  </section>
+
+  <!-- Step 3 -->
+  <section class="container-prose step-section">
+    <span class="step-label">STEP 3</span>
+    <h2>設立後すぐ経理を回す</h2>
+    <p class="step-desc">登記が終わったら、初月の取引から会計ソフトに入れていきます。後でまとめてやろうとすると、確定申告で詰みます。</p>
+
+    <div class="tool-card">
+      <div class="tool-head">
+        <span class="tool-icon">📊</span>
+        <span class="tool-name">弥生会計 Next</span>
+        <span class="tool-tag">クラウド会計</span>
+      </div>
+
+      <ul class="tool-summary">
+        <li>クラウド版・初年度無償（2年目以降も低価格)</li>
+        <li>請求書発行・経費登録・確定申告までワンストップ</li>
+        <li>AI仕訳で月次の作業時間を大幅圧縮（実体験で約1/8）</li>
+        <li>かんたん会社設立とのデータ連携で、初期入力ゼロから始められる</li>
+      </ul>
+
+      <div class="roi-row">
+        <div class="roi-item">
+          <div class="roi-label">初年度</div>
+          <div class="roi-value"><strong>無償</strong></div>
+        </div>
+        <div class="roi-item">
+          <div class="roi-label">仕訳作業時間</div>
+          <div class="roi-value">月8h → <strong>月1h</strong></div>
+        </div>
+        <div class="roi-item">
+          <div class="roi-label">対応範囲</div>
+          <div class="roi-value">確定申告まで</div>
+        </div>
+      </div>
+
+      <div class="fan-note">
+        <h4>なぜ弥生会計Nextか（ファンとしての推薦）</h4>
+        <p>請求書から確定申告までが1本で完結します。一人法人で複数ツールを切り替えるオーバーヘッドがありません。</p>
+        <p>初心者が陥りがちな「期中の入力放置」を、AI自動仕訳が物理的に回避してくれます。</p>
+      </div>
+
+      <a href="https://www.yayoi-kk.co.jp/products/account-next/" class="tool-cta" target="_blank" rel="noopener noreferrer">
+        弥生公式で詳しく見る →
+      </a>
+    </div>
+  </section>
+
+  <!-- Disclaimer -->
+  <section class="container-prose">
+    <div class="disclaimer">
+      <p>※ 当ページは情報提供のみで、税理士・司法書士・社労士・弁護士業務にあたる助言ではありません。最終判断は士業へご相談ください。</p>
+      <p>※ 当方は弥生株式会社の関係者ではありません。アフィリエイトリンクではなく、ファンとして純粋に紹介しています。</p>
+      <p>※ 価格・仕様は2026年4月時点の情報です。最新は弥生公式サイトをご確認ください。</p>
+    </div>
+  </section>
+
+  <!-- Loop CTA -->
+  <section class="container-prose loop-cta">
+    <p style="font-size:14px;color:#6B7280;margin-bottom:16px">設立準備の数字を確認したくなったら</p>
+    <a href="/" class="btn btn-primary btn-xl">📊 シミュレーターで税・手取りを試算</a>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand">
+          <div class="brand-mark">B</div>
+          <div class="brand-text">
+            <span class="brand-name" style="color:#fff">BizArch Design</span>
+            <span class="brand-sub">ARCHITECTURE × AI</span>
+          </div>
+        </div>
+        <p>AIで一人法人を立ち上げる人のための<br>実践的な数字と方法論。</p>
+      </div>
+      <div class="footer-col">
+        <h4>シミュレーター</h4>
+        <ul>
+          <li><a href="/">税・手取りを計算</a></li>
+          <li><a href="/#how">使い方</a></li>
+          <li><a href="/#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>教科書</h4>
+        <ul>
+          <li><a href="/textbook/">全13章を読む</a></li>
+          <li><a href="/download/">PDF版をダウンロード</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>運営・SNS</h4>
+        <ul>
+          <li><a href="https://bizarch-design.com/" target="_blank" rel="noopener">BizArch Design</a></li>
+          <li><a href="https://x.com/kita_yysskk" class="footer-x" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="14" height="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            @kita_yysskk
+          </a></li>
+          <li><a href="/establish/">会社設立サポート</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 BizArch Design Inc. All rights reserved.</p>
+      <div>
+        <a href="https://bizarch-design.com/" target="_blank" rel="noopener">プライバシーポリシー</a>
+        ・
+        <a href="https://bizarch-design.com/" target="_blank" rel="noopener">利用規約</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/header.js" defer></script>
+<script src="/assets/js/establish.js" defer></script>
+</body>
+</html>

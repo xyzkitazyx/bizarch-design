@@ -1,0 +1,315 @@
+/* =========================================================
+   /establish/ ページ専用スタイル
+========================================================= */
+
+/* ---------- Hero ---------- */
+.es-hero {
+  padding: var(--s-16) 0 var(--s-12);
+  text-align: center;
+}
+.es-hero .eyebrow { margin-bottom: var(--s-3); }
+.es-hero h1 {
+  font-size: clamp(1.875rem, 4vw, 2.75rem);
+  font-weight: 900;
+  line-height: 1.3;
+  margin-bottom: var(--s-4);
+}
+.es-hero h1 em {
+  font-style: normal;
+  background: var(--c-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.es-hero .lead {
+  font-size: var(--f-lg);
+  color: var(--c-text-muted);
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+/* ---------- Current location card (localStorage連動) ---------- */
+.location-card {
+  display: none;
+  margin: 0 auto var(--s-10);
+  max-width: 40rem;
+  padding: var(--s-5) var(--s-6);
+  border-radius: var(--r-lg);
+  background: var(--c-gradient-soft);
+  border: 1px solid var(--c-border);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-4);
+}
+.location-card .pin {
+  flex-shrink: 0;
+  width: 36px; height: 36px;
+  border-radius: var(--r-full);
+  background: var(--c-blue);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: var(--f-base);
+  margin-top: 2px;
+}
+.location-card .loc-content { flex: 1; }
+.location-card h3 {
+  font-size: var(--f-sm);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: var(--s-1);
+  color: var(--c-text);
+}
+.location-card p {
+  font-size: var(--f-sm);
+  color: var(--c-text-muted);
+  line-height: 1.6;
+}
+.location-card.is-default p strong { color: var(--c-text); }
+
+/* ---------- Step Flow ---------- */
+.step-flow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-4);
+  margin: 0 auto var(--s-12);
+  max-width: 56rem;
+}
+@media (max-width: 768px) {
+  .step-flow { grid-template-columns: 1fr; }
+}
+.step-pill {
+  position: relative;
+  padding: var(--s-5);
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  text-align: center;
+}
+.step-pill .step-num {
+  display: inline-block;
+  font-size: var(--f-xs);
+  font-weight: 700;
+  color: var(--c-blue);
+  letter-spacing: 0.16em;
+  margin-bottom: var(--s-2);
+}
+.step-pill h3 {
+  font-size: var(--f-base);
+  font-weight: 700;
+  margin-bottom: var(--s-1);
+}
+.step-pill p {
+  font-size: var(--f-xs);
+  color: var(--c-text-muted);
+}
+
+/* ---------- Step Section ---------- */
+.step-section {
+  padding: var(--s-12) 0;
+  border-top: 1px solid var(--c-border);
+}
+.step-section:first-of-type { border-top: none; }
+.step-section .step-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-1) var(--s-3);
+  background: var(--c-blue-soft);
+  color: var(--c-blue);
+  border-radius: var(--r-full);
+  font-size: var(--f-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--s-3);
+}
+.step-section h2 {
+  font-size: var(--f-2xl);
+  font-weight: 800;
+  margin-bottom: var(--s-3);
+  line-height: 1.4;
+}
+.step-section .step-desc {
+  color: var(--c-text-muted);
+  margin-bottom: var(--s-6);
+  max-width: 36rem;
+}
+
+/* ---------- 5項目チェックリスト ---------- */
+.checklist {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--s-3);
+  margin-bottom: var(--s-6);
+}
+@media (max-width: 768px) {
+  .checklist { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .checklist { grid-template-columns: 1fr; }
+}
+.check-item {
+  padding: var(--s-4);
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  text-align: center;
+}
+.check-item .check-icon {
+  font-size: var(--f-2xl);
+  margin-bottom: var(--s-2);
+}
+.check-item h4 {
+  font-size: var(--f-sm);
+  font-weight: 700;
+  margin-bottom: var(--s-1);
+}
+.check-item p {
+  font-size: var(--f-xs);
+  color: var(--c-text-muted);
+}
+
+/* ---------- Tool Promo Card (弥生) ---------- */
+.tool-card {
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-left: 4px solid var(--c-yayoi);
+  border-radius: var(--r-lg);
+  padding: var(--s-8);
+  box-shadow: var(--sh-sm);
+}
+.tool-card .tool-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-bottom: var(--s-4);
+  flex-wrap: wrap;
+}
+.tool-card .tool-icon {
+  font-size: var(--f-2xl);
+  flex-shrink: 0;
+}
+.tool-card .tool-name {
+  font-size: var(--f-xl);
+  font-weight: 800;
+  color: var(--c-text);
+}
+.tool-card .tool-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  background: rgba(200,16,46,0.08);
+  color: var(--c-yayoi);
+  border-radius: var(--r-full);
+  font-size: var(--f-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.tool-card .tool-summary {
+  list-style: none;
+  margin-bottom: var(--s-5);
+}
+.tool-card .tool-summary li {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: var(--s-2);
+  font-size: var(--f-sm);
+  color: var(--c-text);
+  line-height: 1.7;
+}
+.tool-card .tool-summary li::before {
+  content: "✓";
+  position: absolute;
+  left: 0; top: 0;
+  color: var(--c-success);
+  font-weight: 700;
+}
+
+.roi-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-3);
+  background: var(--c-bg-soft);
+  border-radius: var(--r-md);
+  padding: var(--s-4);
+  margin-bottom: var(--s-5);
+}
+@media (max-width: 640px) { .roi-row { grid-template-columns: 1fr; } }
+.roi-item .roi-label {
+  font-size: var(--f-xs);
+  color: var(--c-text-muted);
+  margin-bottom: 2px;
+}
+.roi-item .roi-value {
+  font-size: var(--f-lg);
+  font-weight: 800;
+  color: var(--c-text);
+  letter-spacing: 0.01em;
+}
+.roi-item .roi-value strong {
+  background: var(--c-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.fan-note {
+  padding: var(--s-4);
+  background: var(--c-bg-soft);
+  border-radius: var(--r-md);
+  margin-bottom: var(--s-5);
+}
+.fan-note h4 {
+  font-size: var(--f-xs);
+  font-weight: 700;
+  color: var(--c-text);
+  margin-bottom: var(--s-2);
+  letter-spacing: 0.04em;
+}
+.fan-note p {
+  font-size: var(--f-sm);
+  color: var(--c-text);
+  line-height: 1.7;
+}
+.fan-note p + p { margin-top: var(--s-2); }
+
+.tool-card .tool-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-6);
+  background: var(--c-yayoi);
+  color: #fff !important;
+  border-radius: var(--r-md);
+  font-size: var(--f-sm);
+  font-weight: 700;
+  transition: all var(--t-fast);
+}
+.tool-card .tool-cta:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: var(--sh-md);
+}
+
+/* ---------- Disclaimer ---------- */
+.disclaimer {
+  margin: var(--s-12) 0 var(--s-8);
+  padding: var(--s-5) var(--s-6);
+  background: var(--c-bg-soft);
+  border: 1px dashed var(--c-border-strong);
+  border-radius: var(--r-md);
+  font-size: var(--f-xs);
+  color: var(--c-text-muted);
+  line-height: 1.7;
+}
+.disclaimer p { margin-bottom: var(--s-1); }
+.disclaimer p:last-child { margin-bottom: 0; }
+
+/* ---------- Loop CTA ---------- */
+.loop-cta {
+  text-align: center;
+  margin: var(--s-12) 0;
+}
+.loop-cta .btn-xl {
+  min-width: 320px;
+}

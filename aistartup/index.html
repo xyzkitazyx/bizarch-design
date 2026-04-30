@@ -18,18 +18,60 @@
   <meta property="og:description" content="業種・年商を入力すると3パターンの税・手取りを即計算。2026年4月時点の最新税率対応。">
   <meta property="og:url" content="https://aistartup.bizarch-design.com/">
   <meta property="og:site_name" content="BizArch Design Inc.">
+  <meta property="og:locale" content="ja_JP">
   <meta property="og:image" content="https://aistartup.bizarch-design.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:alt" content="AI起業シミュレーター 業種・年商を入力 → 3パターンの税・手取りを即計算">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@kita_yysskk">
+  <meta name="twitter:creator" content="@kita_yysskk">
   <meta name="twitter:title" content="AI起業シミュレーター">
   <meta name="twitter:description" content="業種・年商で3パターンの税・手取りを即計算">
   <meta name="twitter:image" content="https://aistartup.bizarch-design.com/og-image.png">
+  <meta name="twitter:image:alt" content="AI起業シミュレーター 表紙画像">
 
   <!-- Noto Sans JP (bizarch-design tone & manner) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/layout.css">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* 新ヘッダー(108px) + ミニフッター(36px) = 既存 80+64=144px と同じ。height計算維持 */
+    :root.announce-hidden .container { height: calc(100vh - 64px - 36px) !important; }
+    /* ミニフッター */
+    .site-footer-mini {
+      height: 36px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #FFFFFF;
+      border-top: 1px solid #F3F4F6;
+      font-size: 12px;
+      color: #6B7280;
+      flex-wrap: wrap;
+    }
+    .site-footer-mini .footer-mini-nav { display: flex; gap: 18px; align-items: center; }
+    .site-footer-mini a {
+      color: #6B7280; text-decoration: none; transition: color 150ms;
+    }
+    .site-footer-mini a:hover { color: #0066FF; }
+    .site-footer-mini .footer-x-mini {
+      display: inline-flex; align-items: center; gap: 4px; font-weight: 600;
+    }
+    .site-footer-mini .footer-x-mini svg { width: 12px; height: 12px; }
+    @media (max-width: 760px) {
+      .site-footer-mini {
+        height: auto; padding: 8px 16px; flex-direction: column; gap: 4px; text-align: center;
+      }
+      .site-footer-mini .footer-mini-nav { gap: 14px; flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
 
   <!-- Structured data (JSON-LD) -->
   <script type="application/ld+json">
@@ -70,19 +112,48 @@
   <div class="orb orb-purple"></div>
 </div>
 
-<!-- 固定ヘッダー -->
-<header class="app-header">
+<!-- ====== Announce Bar ====== -->
+<div class="announce-bar">
+  <div class="announce-inner">
+    <span>📕 教科書PDFが完成しました</span>
+    <a href="/download/">→ ダウンロード</a>
+    <button class="announce-close" aria-label="閉じる">✕</button>
+  </div>
+</div>
+
+<!-- ====== Site Header ====== -->
+<header class="site-header">
   <div class="header-inner">
-    <h1>
-      AIで一人起業の教科書
-      <span class="hl">シミュレーター</span>
-    </h1>
-    <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
-      <span class="header-eyebrow">Tax × Salary</span>
-      <span class="version">v1.0 / 2026-04 / 東京23区基準</span>
-    </div>
+    <a href="/" class="brand" aria-label="ホームへ">
+      <div class="brand-mark">B</div>
+      <div class="brand-text">
+        <span class="brand-name">BizArch Design</span>
+        <span class="brand-sub">ARCHITECTURE × AI</span>
+      </div>
+    </a>
+    <nav class="nav-desktop" aria-label="メインナビゲーション">
+      <a href="/"           class="nav-link" data-nav-path="/">シミュレーター</a>
+      <a href="/textbook/"  class="nav-link" data-nav-path="/textbook/">教科書</a>
+      <a href="/establish/" class="nav-link" data-nav-path="/establish/">会社設立</a>
+    </nav>
+    <a href="https://x.com/kita_yysskk" class="nav-x-link" target="_blank" rel="noopener" aria-label="Xアカウント">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      <span>@kita_yysskk</span>
+    </a>
+    <button class="hamburger" aria-label="メニューを開く" aria-expanded="false">
+      <span class="hamburger-icon"></span>
+    </button>
   </div>
 </header>
+
+<nav class="nav-mobile" aria-label="モバイルメニュー">
+  <a href="/"           class="nav-link" data-nav-path="/">シミュレーター</a>
+  <a href="/textbook/"  class="nav-link" data-nav-path="/textbook/">教科書を読む</a>
+  <a href="/establish/" class="nav-link" data-nav-path="/establish/">会社設立サポート</a>
+  <div class="nav-divider"></div>
+  <a href="/download/"  class="nav-link" data-nav-path="/download/">⬇ 教科書PDFをダウンロード</a>
+  <a href="https://x.com/kita_yysskk" class="nav-link" target="_blank" rel="noopener">𝕏 @kita_yysskk をフォロー</a>
+</nav>
 
 <main class="container">
 
@@ -481,12 +552,21 @@
   </svg>
 </button>
 
-<!-- サイトフッター -->
-<footer class="site-footer">
-  <span class="brand">BizArch × Solo Startup</span>
-  &nbsp;|&nbsp; Architecture × AI for the Solo Founder &nbsp;|&nbsp; (c) 2026
+<!-- サイトフッター（ミニ版・split-paneレイアウト維持のため軽量） -->
+<footer class="site-footer-mini">
+  <span>BizArch × Solo Startup &nbsp;|&nbsp; (c) 2026</span>
+  <nav class="footer-mini-nav">
+    <a href="/textbook/">教科書</a>
+    <a href="/establish/">会社設立</a>
+    <a href="/download/">PDF</a>
+    <a href="https://x.com/kita_yysskk" class="footer-x-mini" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      @kita_yysskk
+    </a>
+  </nav>
 </footer>
 
 <script src="script.js"></script>
+<script src="/assets/js/header.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,47 @@
+<!--
+  共通ヘッダー（参考テンプレ・各ページに直接コピペして使用）
+  data-nav-path 属性で現在地ハイライト（header.js が判定）
+-->
+<div class="announce-bar">
+  <div class="announce-inner">
+    <span>📕 教科書PDFが完成しました</span>
+    <a href="/download/">→ ダウンロード</a>
+    <button class="announce-close" aria-label="閉じる">✕</button>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="brand" aria-label="ホームへ">
+      <div class="brand-mark">B</div>
+      <div class="brand-text">
+        <span class="brand-name">BizArch Design</span>
+        <span class="brand-sub">ARCHITECTURE × AI</span>
+      </div>
+    </a>
+
+    <nav class="nav-desktop" aria-label="メインナビゲーション">
+      <a href="/"           class="nav-link" data-nav-path="/">シミュレーター</a>
+      <a href="/textbook/"  class="nav-link" data-nav-path="/textbook/">教科書</a>
+      <a href="/establish/" class="nav-link" data-nav-path="/establish/">会社設立</a>
+    </nav>
+
+    <a href="https://x.com/kita_yysskk" class="nav-x-link" target="_blank" rel="noopener" aria-label="Xアカウント @kita_yysskk">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      <span>@kita_yysskk</span>
+    </a>
+
+    <button class="hamburger" aria-label="メニューを開く" aria-expanded="false">
+      <span class="hamburger-icon"></span>
+    </button>
+  </div>
+</header>
+
+<nav class="nav-mobile" aria-label="モバイルメニュー">
+  <a href="/"           class="nav-link" data-nav-path="/">シミュレーター</a>
+  <a href="/textbook/"  class="nav-link" data-nav-path="/textbook/">教科書を読む</a>
+  <a href="/establish/" class="nav-link" data-nav-path="/establish/">会社設立サポート</a>
+  <div class="nav-divider"></div>
+  <a href="/download/"  class="nav-link" data-nav-path="/download/">⬇ 教科書PDFをダウンロード</a>
+  <a href="https://x.com/kita_yysskk" class="nav-link" target="_blank" rel="noopener">𝕏 @kita_yysskk をフォロー</a>
+</nav>
