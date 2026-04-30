@@ -237,8 +237,11 @@ html, body {
   padding-right: var(--s-6);
 }
 @media (max-width: 640px) {
-  /* header-inner / footer-inner と揃えて 24px に統一（左端の揺れ防止） */
-  .container, .container-prose { padding-left: var(--s-6); padding-right: var(--s-6); }
+  /* mobile 共通余白：header-inner / footer-inner と統一して 28px（左端揃い） */
+  .container, .container-prose { padding-left: 28px; padding-right: 28px; }
+  .announce-inner, .header-inner, .footer-inner { padding-left: 28px; padding-right: 28px; }
+  /* CTAボタンが大画面mobile/iPhone SE どちらでもはみ出さないよう100% 幅 */
+  .btn-xl { width: 100%; max-width: 100%; padding: var(--s-4) var(--s-6); font-size: var(--f-base); }
 }
 
 /* ---------- Section ---------- */
