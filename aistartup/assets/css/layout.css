@@ -237,7 +237,7 @@ html, body {
   padding-right: var(--s-6);
 }
 @media (max-width: 640px) {
-  .container, .container-prose { padding-left: var(--s-4); padding-right: var(--s-4); }
+  .container, .container-prose { padding-left: var(--s-5); padding-right: var(--s-5); }
 }
 
 /* ---------- Section ---------- */

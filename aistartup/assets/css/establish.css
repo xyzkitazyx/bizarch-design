@@ -144,10 +144,7 @@
   margin-bottom: var(--s-6);
 }
 @media (max-width: 768px) {
-  .checklist { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 480px) {
-  .checklist { grid-template-columns: 1fr; }
+  .checklist { grid-template-columns: repeat(2, 1fr); gap: var(--s-2); }
 }
 .check-item {
   padding: var(--s-4);
@@ -155,6 +152,10 @@
   border: 1px solid var(--c-border);
   border-radius: var(--r-md);
   text-align: center;
+}
+@media (max-width: 480px) {
+  .check-item { padding: var(--s-3); }
+  .check-item .check-icon { font-size: var(--f-xl); }
 }
 .check-item .check-icon {
   font-size: var(--f-2xl);
