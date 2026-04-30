@@ -50,7 +50,7 @@
 
 /* ---------- Preview Strip ---------- */
 .preview-strip {
-  margin: var(--s-10) 0 var(--s-12);
+  margin: var(--s-10) auto var(--s-12);
 }
 .preview-track {
   display: grid;
@@ -141,7 +141,7 @@
 /* ---------- CTA Section ---------- */
 .dl-cta {
   text-align: center;
-  margin: var(--s-12) 0 var(--s-8);
+  margin: var(--s-12) auto var(--s-8);
 }
 .dl-cta .btn-xl {
   min-width: 280px;
