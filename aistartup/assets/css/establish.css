@@ -181,7 +181,14 @@
   box-shadow: var(--sh-sm);
 }
 @media (max-width: 640px) {
-  .tool-card { padding: var(--s-5); }
+  .tool-card {
+    /* 親 container-prose padding(24px) からマイナス margin で
+       viewport端から 14px の位置にカードを寄せる（カード強調） */
+    margin-left: -10px;
+    margin-right: -10px;
+    padding: var(--s-5);
+  }
+  .loop-cta .btn-xl { min-width: auto; }
 }
 .tool-card .tool-head {
   display: flex;

@@ -237,7 +237,8 @@ html, body {
   padding-right: var(--s-6);
 }
 @media (max-width: 640px) {
-  .container, .container-prose { padding-left: 28px; padding-right: 28px; }
+  /* header-inner / footer-inner と揃えて 24px に統一（左端の揺れ防止） */
+  .container, .container-prose { padding-left: var(--s-6); padding-right: var(--s-6); }
 }
 
 /* ---------- Section ---------- */
