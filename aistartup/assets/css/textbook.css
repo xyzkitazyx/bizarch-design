@@ -5,21 +5,19 @@
 /* ---------- Progress bar (top fixed) ---------- */
 .progress-bar {
   position: fixed;
-  top: var(--h-header);
+  top: var(--header-total-h);
   left: 0; right: 0;
   height: 3px;
   background: rgba(0,0,0,0.04);
   z-index: calc(var(--z-header) - 1);
   pointer-events: none;
+  transition: top var(--t-base) var(--e-out);
 }
 .progress-bar-fill {
   height: 100%;
   background: var(--c-gradient);
   width: 0;
   transition: width 80ms linear;
-}
-.announce-bar:not(.is-hidden) ~ .site-header + .progress-bar {
-  top: calc(var(--h-header) + var(--h-announce));
 }
 
 /* ---------- Hero ---------- */
@@ -110,13 +108,14 @@
 /* ---------- TOC sidebar (PC) ---------- */
 .tb-toc {
   position: sticky;
-  top: calc(var(--h-header) + 24px);
+  top: calc(var(--header-total-h) + 24px);
   align-self: start;
   font-size: var(--f-sm);
-  max-height: calc(100vh - var(--h-header) - 48px);
+  max-height: calc(100vh - var(--header-total-h) - 48px);
   overflow-y: auto;
   padding-right: var(--s-2);
   scrollbar-width: thin;
+  transition: top var(--t-base) var(--e-out);
 }
 @media (max-width: 980px) { .tb-toc { display: none; } }
 .tb-toc h4 {
@@ -165,7 +164,7 @@
 .tb-chapter {
   padding: var(--s-12) 0;
   border-top: 1px solid var(--c-border);
-  scroll-margin-top: calc(var(--h-header) + 24px);
+  scroll-margin-top: calc(var(--header-total-h) + 24px);
 }
 .tb-chapter:first-of-type { border-top: none; padding-top: var(--s-4); }
 

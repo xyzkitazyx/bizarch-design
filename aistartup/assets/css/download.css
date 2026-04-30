@@ -54,7 +54,7 @@
 }
 .preview-track {
   display: grid;
-  grid-template-columns: repeat(13, minmax(160px, 1fr));
+  grid-template-columns: repeat(13, 140px);
   gap: var(--s-3);
   padding: var(--s-2);
   overflow-x: auto;

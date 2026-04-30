@@ -61,6 +61,7 @@
   --w-prose: 52rem;
   --h-header: 64px;
   --h-announce: 44px;
+  --header-total-h: calc(var(--h-header) + var(--h-announce));
   --z-header: 100;
   --z-modal: 200;
   --z-tooltip: 300;
@@ -72,6 +73,9 @@
   --e-out: cubic-bezier(0.16, 1, 0.3, 1);
   --e-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 }
+
+/* announce-bar が閉じられた時：CSS変数のカスケードで全コンポーネントに反映される */
+:root.announce-hidden { --header-total-h: var(--h-header); }
 
 @media (prefers-reduced-motion: reduce) {
   :root {

@@ -41,8 +41,8 @@
   <link rel="stylesheet" href="/assets/css/layout.css">
   <link rel="stylesheet" href="style.css">
   <style>
-    /* 新ヘッダー(108px) + ミニフッター(36px) = 既存 80+64=144px と同じ。height計算維持 */
-    :root.announce-hidden .container { height: calc(100vh - 64px - 36px) !important; }
+    /* 新ヘッダー(announce表示時108px / 非表示時64px) + ミニフッター(36px) — CSS変数で動的計算 */
+    .container { height: calc(100vh - var(--header-total-h) - 36px) !important; }
     /* ミニフッター */
     .site-footer-mini {
       height: 36px;
@@ -159,7 +159,10 @@
 
   <!-- 左カラム：入力フォーム -->
   <aside class="input-panel">
-    <p class="section-eyebrow">Inputs</p>
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:4px">
+      <p class="section-eyebrow" style="margin-bottom:0">Inputs</p>
+      <span style="font-size:10px;letter-spacing:0.04em;color:#9CA3AF;font-weight:500;white-space:nowrap">v1.0 ・ 2026-04 ・ 東京23区基準</span>
+    </div>
     <h2 class="panel-title">前提条件の入力</h2>
     <p class="panel-subtitle">業種・年商・役員報酬パターンを設定すると、右側の結果が即座に再計算されます。</p>
 
