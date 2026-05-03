@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIで一人個人事業の教科書 収支シミュレーター v1.0</title>
+
+  <!-- Noto Sans JP -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-blueprint">
+
+<!-- 背景アクセント -->
+<div class="orb-wrap" aria-hidden="true">
+  <div class="orb orb-blue"></div>
+  <div class="orb orb-purple"></div>
+</div>
+
+<!-- 固定ヘッダー -->
+<header class="app-header">
+  <div class="header-inner">
+    <h1>
+      AIで一人個人事業の教科書
+      <span class="hl">収支シミュレーター</span>
+    </h1>
+    <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+      <span class="header-eyebrow">Solo Business × AI</span>
+      <span class="version">v1.0 / 2026-04 / 副業⇄専業対応</span>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- ▼▼▼ 左カラム：入力フォーム ▼▼▼ -->
+  <aside class="input-panel">
+    <p class="section-eyebrow">Inputs</p>
+    <h2 class="panel-title">前提条件の入力</h2>
+    <p class="panel-subtitle">モード・業種・年商を設定すると、右側の手取りが即座に再計算されます。</p>
+
+    <!-- モード切替（副業／専業） -->
+    <section class="form-section mode-switch-section">
+      <label class="form-label">
+        <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+        </svg>
+        モード切替
+      </label>
+      <div class="mode-toggle" role="tablist">
+        <button class="mode-btn active" data-mode="fukugyou" type="button" role="tab">副業モード</button>
+        <button class="mode-btn" data-mode="sengyou" type="button" role="tab">専業モード</button>
+      </div>
+      <p class="form-help" id="mode-comment">給与＋事業所得で副業6パターンを試算（給与400万モデル相当）</p>
+    </section>
+
+    <!-- 業種選択 -->
+    <section class="form-section">
+      <label for="industry" class="form-label">
+        <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
+        </svg>
+        業種プリセット
+      </label>
+      <select id="industry" class="form-control">
+        <option value="受託開発">受託開発</option>
+        <option value="AXコンサル">AXコンサル</option>
+        <option value="業務設計コンサル">業務設計コンサル</option>
+        <option value="BAコンサル">BAコンサル</option>
+        <option value="経営コンサル">経営コンサル</option>
+        <option value="広告運用">広告運用</option>
+        <option value="ウェブ制作">ウェブ制作</option>
+        <option value="ウェブデザイン">ウェブデザイン</option>
+        <option value="カスタム">カスタム</option>
+      </select>
+      <p class="form-help" id="industry-comment">AI活用エンジニア・月単価60〜100万・想定年商700-1,500万</p>
+    </section>
+
+    <!-- 年商 -->
+    <section class="form-section">
+      <label for="revenue" class="form-label">
+        <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+        年商（万円）
+      </label>
+      <div class="slider-row">
+        <input type="range" id="revenue-slider" min="0" max="3000" step="10" value="700">
+        <input type="number" id="revenue" class="form-control number-narrow" min="0" max="3000" step="10" value="700">
+      </div>
+    </section>
+
+    <!-- 経費 -->
+    <section class="form-section">
+      <label for="expense" class="form-label">
+        <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
+        </svg>
+        経費（万円・年額）
+      </label>
+      <input type="number" id="expense" class="form-control" min="0" step="10" value="200">
+      <div class="sub-input-row">
+        <label for="ai-expense" class="form-label-inline">うちAI関連経費（万円）</label>
+        <input type="number" id="ai-expense" class="form-control number-narrow" min="0" step="1" value="24">
+      </div>
+      <p class="form-help">通信費・自宅按分・外注費・AIツール（ChatGPT/Claude/Cursor等）の合計</p>
+    </section>
+
+    <!-- 自治体 -->
+    <section class="form-section">
+      <label for="municipality" class="form-label">
+        <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+        </svg>
+        自治体（国保計算）
+      </label>
+      <select id="municipality" class="form-control">
+        <option value="東京23区">東京23区（所得割13.7%）</option>
+        <option value="大阪市">大阪市（所得割約15%）</option>
+        <option value="名古屋市">名古屋市（所得割約14%）</option>
+        <option value="札幌市">札幌市（所得割約15.5%）</option>
+        <option value="福岡市">福岡市（所得割約14.3%）</option>
+        <option value="その他">その他（全国平均14%）</option>
+      </select>
+    </section>
+
+    <!-- 申告区分・e-Tax -->
+    <section class="form-section">
+      <label class="form-label">
+        <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+        申告区分
+      </label>
+      <div class="radio-group">
+        <label class="radio-item">
+          <input type="radio" name="filing" value="aoiro65" checked>
+          <span>青色65万控除（e-Tax＋電子帳簿保存）</span>
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="filing" value="aoiro55">
+          <span>青色55万控除（紙提出）</span>
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="filing" value="aoiro10">
+          <span>青色10万控除（簡易簿記）</span>
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="filing" value="shiroiro">
+          <span>白色申告（控除なし）</span>
+        </label>
+      </div>
+    </section>
+
+    <!-- 副業モード詳細 -->
+    <section class="form-section mode-fukugyou-only">
+      <label class="form-label">
+        <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+        </svg>
+        副業者の前提
+      </label>
+      <div class="sub-input-row">
+        <label for="salary-income" class="form-label-inline">本業給与年収（万円）</label>
+        <input type="number" id="salary-income" class="form-control number-narrow" min="0" step="10" value="400">
+      </div>
+      <div class="sub-input-row">
+        <label for="spouse-income" class="form-label-inline">配偶者年収（万円）</label>
+        <input type="number" id="spouse-income" class="form-control number-narrow" min="0" step="10" value="0">
+      </div>
+      <div class="sub-input-row">
+        <label for="dependents" class="form-label-inline">扶養家族数（配偶者除く）</label>
+        <input type="number" id="dependents" class="form-control number-narrow" min="0" max="10" step="1" value="0">
+      </div>
+      <label class="checkbox-item">
+        <input type="checkbox" id="spouse-shaho-fuyo">
+        <span>配偶者の社保被扶養者である（130万の壁判定）</span>
+      </label>
+      <div class="radio-group" style="margin-top:8px;">
+        <label class="radio-item">
+          <input type="radio" name="jumin" value="ordinary" checked>
+          <span>住民税：普通徴収（副業バレ対策）</span>
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="jumin" value="special">
+          <span>住民税：特別徴収（給与天引き）</span>
+        </label>
+      </div>
+    </section>
+
+    <!-- 専業モード詳細 -->
+    <section class="form-section mode-sengyou-only" style="display:none;">
+      <label class="form-label">
+        <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
+        </svg>
+        専業者の節税オプション
+      </label>
+      <div class="sub-input-row">
+        <label for="ideco-month" class="form-label-inline">iDeCo月額（円・最大68,000）</label>
+        <input type="number" id="ideco-month" class="form-control number-narrow" min="0" max="68000" step="1000" value="0">
+      </div>
+      <div class="sub-input-row">
+        <label for="kyosai-month" class="form-label-inline">小規模共済月額（円・最大70,000）</label>
+        <input type="number" id="kyosai-month" class="form-control number-narrow" min="0" max="70000" step="1000" value="0">
+      </div>
+      <div class="sub-input-row">
+        <label for="kikin-month" class="form-label-inline">国民年金基金月額（円・iDeCo合算で68,000）</label>
+        <input type="number" id="kikin-month" class="form-control number-narrow" min="0" max="68000" step="1000" value="0">
+      </div>
+      <label class="checkbox-item" style="margin-top:8px;">
+        <input type="checkbox" id="senjusha-on">
+        <span>配偶者を青色専従者にする</span>
+      </label>
+      <div class="sub-input-row">
+        <label for="senjusha-month" class="form-label-inline">専従者給与月額（万円）</label>
+        <input type="number" id="senjusha-month" class="form-control number-narrow" min="0" max="50" step="1" value="15" disabled>
+      </div>
+      <label class="checkbox-item">
+        <input type="checkbox" id="age-over40">
+        <span>40歳以上（介護分の国保加算）</span>
+      </label>
+    </section>
+
+    <p class="panel-disclaimer">
+      ※ 概算試算です。実際の税額は<a href="https://www.yayoi-kk.co.jp/shinkoku/aoiroshinkoku/" target="_blank" rel="noopener">弥生青色申告</a>等で正確に計算してください。
+    </p>
+
+  </aside>
+
+  <!-- ▼▼▼ 右カラム：結果表示 ▼▼▼ -->
+  <section class="output-panel">
+
+    <!-- 結果カード（手取り年/月） -->
+    <div class="result-card">
+      <div class="card-label" id="result-label">年間手取り（事業＋給与）</div>
+      <div class="card-amount" id="total-take-home">- 万円</div>
+      <div class="card-breakdown">
+        <span>月の手取り：<b id="monthly-take-home">-</b> 万円</span>
+        <span class="sep">／</span>
+        <span>事業所得：<b id="business-income">-</b> 万円</span>
+      </div>
+      <div class="card-meta">
+        <span id="filing-label">青色65万控除</span>
+        <span id="mode-label">副業モード（給与400万＋事業）</span>
+      </div>
+    </div>
+
+    <!-- 6つの壁＋法人成り 警告エリア -->
+    <div id="warning-area" class="warning-area"></div>
+
+    <!-- 弥生CTAエリア -->
+    <div id="yayoi-cta-area" class="yayoi-cta-area"></div>
+
+    <!-- 内訳：税・社保・控除 -->
+    <section class="pl-section">
+      <p class="section-eyebrow">Detail</p>
+      <h2 class="section-title">
+        <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+        </svg>
+        計算の内訳
+      </h2>
+      <div class="pl-grid">
+
+        <!-- 事業P&L -->
+        <div class="pl-card">
+          <h3 class="pl-card-title">事業のP&amp;L</h3>
+          <table class="pl-table">
+            <tr><td>年商</td>                        <td class="num" id="pl-revenue">-</td></tr>
+            <tr><td>経費</td>                        <td class="num minus" id="pl-expense">-</td></tr>
+            <tr><td>　うちAI関連経費</td>            <td class="num minus" id="pl-ai-expense">-</td></tr>
+            <tr><td>専従者給与（経費化）</td>        <td class="num minus" id="pl-senjusha">-</td></tr>
+            <tr class="row-bold"><td>事業所得（控除前）</td><td class="num" id="pl-business-income">-</td></tr>
+            <tr><td>青色申告特別控除</td>            <td class="num minus" id="pl-aoiro">-</td></tr>
+            <tr class="row-highlight"><td>事業所得（控除後）</td><td class="num" id="pl-business-income-net">-</td></tr>
+          </table>
+        </div>
+
+        <!-- 税・社保 -->
+        <div class="pl-card">
+          <h3 class="pl-card-title">税金・社会保険</h3>
+          <table class="pl-table">
+            <tr><td>給与所得（副業のみ）</td>        <td class="num" id="pl-salary-income">-</td></tr>
+            <tr><td>給与所得控除</td>                <td class="num minus" id="pl-salary-deduction">-</td></tr>
+            <tr><td>国民健康保険（年）</td>          <td class="num minus" id="pl-kokuho">-</td></tr>
+            <tr><td>国民年金（年）</td>              <td class="num minus" id="pl-nenkin">-</td></tr>
+            <tr><td>給与社保（副業時）</td>          <td class="num minus" id="pl-kyuyo-shaho">-</td></tr>
+            <tr><td>iDeCo＋共済＋基金</td>            <td class="num minus" id="pl-kyosai-deduction">-</td></tr>
+            <tr><td>基礎控除</td>                    <td class="num minus" id="pl-kiso">-</td></tr>
+            <tr><td>配偶者控除等</td>                <td class="num minus" id="pl-spouse-deduction">-</td></tr>
+            <tr class="row-bold"><td>所得税課税所得</td><td class="num" id="pl-taxable">-</td></tr>
+            <tr><td>　所得税</td>                    <td class="num" id="pl-incometax">-</td></tr>
+            <tr><td>　復興特別所得税(2.1%)</td>      <td class="num" id="pl-reconst">-</td></tr>
+            <tr><td>　住民税(10%)</td>               <td class="num" id="pl-resident">-</td></tr>
+            <tr class="row-bold"><td>税合計</td>     <td class="num" id="pl-total-tax">-</td></tr>
+            <tr class="row-highlight"><td>手取り合計</td><td class="num" id="pl-take-home">-</td></tr>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 法人成り推奨 -->
+    <section class="houjin-section" id="houjin-section">
+      <div class="houjin-card">
+        <p class="section-eyebrow">Next Stage</p>
+        <h2 class="section-title">
+          <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m18-18v18M6 21V8.25M9 21V8.25M12 21V3.75M15 21V8.25M18 21V8.25" />
+          </svg>
+          法人成りシミュレーター
+        </h2>
+        <p class="houjin-text" id="houjin-text">
+          年商や課税所得が一定ラインを超えると、個人事業より法人化のほうが有利になります。
+          現在の試算結果から、法人成りの目安と効果を確認してください。
+        </p>
+        <a class="houjin-btn" id="houjin-btn" href="../../ai_solo_startup_textbook2/05_simulator/index.html" target="_blank" rel="noopener">
+          法人版シミュレーターで試算する →
+        </a>
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      <p>※ 計算前提：2026年4月時点・東京23区基準・所得税は累進5/10/20/23/33/40/45%＋復興特別2.1%、住民税10%、青色65万、基礎控除48万、国民年金月17,510円、国保概算は所得割13.7%＋均等割66,000円。配偶者特別控除・社会保険の細部運用・専従者給与の届出有無は簡略化しています。詳細は <a href="README.md">README.md</a> 参照。</p>
+    </footer>
+
+  </section>
+
+</main>
+
+<!-- サイトフッター -->
+<footer class="site-footer">
+  <span class="brand">BizArch × Solo Business</span>
+  &nbsp;|&nbsp; AI for the Solo Founder &nbsp;|&nbsp; (c) 2026
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

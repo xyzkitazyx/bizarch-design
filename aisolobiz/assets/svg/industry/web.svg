@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-labelledby="webTitle">
+  <title id="webTitle">ウェブ制作</title>
+  <rect x="6" y="10" width="52" height="42" rx="3" fill="none" stroke="#0066FF" stroke-width="2"/>
+  <line x1="6" y1="20" x2="58" y2="20" stroke="#0066FF" stroke-width="2"/>
+  <circle cx="12" cy="15" r="1.5" fill="#FF7A59"/>
+  <circle cx="17" cy="15" r="1.5" fill="#8A2BE2"/>
+  <circle cx="22" cy="15" r="1.5" fill="#0066FF"/>
+  <rect x="12" y="26" width="24" height="4" rx="1" fill="#0066FF" opacity="0.6"/>
+  <rect x="12" y="34" width="40" height="3" rx="1" fill="#6B7280" opacity="0.5"/>
+  <rect x="12" y="40" width="36" height="3" rx="1" fill="#6B7280" opacity="0.5"/>
+  <rect x="40" y="26" width="12" height="4" rx="1" fill="#FF7A59"/>
+</svg>

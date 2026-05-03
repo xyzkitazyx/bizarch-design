@@ -1,0 +1,240 @@
+{
+  "version": "2026-04",
+  "validFrom": "2026-04-01",
+  "validUntil": "2027-03-31",
+  "comment": "AIで一人個人事業の教科書 シミュレーター用 計算データ。2026年4月時点・東京23区基準。所得税は累進5/10/20/23/33/40/45%＋復興特別2.1%、住民税10%、青色65万、基礎控除48万、国民年金月17,510円、国保概算は所得割13.7%＋均等割66,000円。",
+
+  "industries": {
+    "受託開発": {
+      "default_revenue": 700,
+      "default_expense": 200,
+      "default_ai_expense": 24,
+      "comment": "AI活用エンジニア・月単価60〜100万・想定年商700-1,500万"
+    },
+    "AXコンサル": {
+      "default_revenue": 1000,
+      "default_expense": 200,
+      "default_ai_expense": 36,
+      "comment": "AI Transformation支援。顧問契約中心・想定年商1,000-2,500万"
+    },
+    "業務設計コンサル": {
+      "default_revenue": 800,
+      "default_expense": 180,
+      "default_ai_expense": 30,
+      "comment": "BPR・業務改善。月単価80-200万・想定年商800-2,000万"
+    },
+    "BAコンサル": {
+      "default_revenue": 900,
+      "default_expense": 180,
+      "default_ai_expense": 30,
+      "comment": "ビジネスアーキテクチャコンサル。事業構造設計・想定年商900-2,000万"
+    },
+    "経営コンサル": {
+      "default_revenue": 600,
+      "default_expense": 150,
+      "default_ai_expense": 24,
+      "comment": "中小企業向け顧問4社×15万・想定年商600-1,500万"
+    },
+    "広告運用": {
+      "default_revenue": 500,
+      "default_expense": 100,
+      "default_ai_expense": 18,
+      "comment": "Google/Meta/LINE運用代行。1社月15-20万×5-7社・想定年商500-1,200万"
+    },
+    "ウェブ制作": {
+      "default_revenue": 600,
+      "default_expense": 150,
+      "default_ai_expense": 24,
+      "comment": "LP・コーポサイト制作。LP×3-4本/月・想定年商600-1,200万"
+    },
+    "ウェブデザイン": {
+      "default_revenue": 700,
+      "default_expense": 150,
+      "default_ai_expense": 24,
+      "comment": "UI/UXデザイン。月額60-90万・想定年商700-1,500万"
+    },
+    "カスタム": {
+      "default_revenue": 500,
+      "default_expense": 150,
+      "default_ai_expense": 18,
+      "comment": "任意の業種で手動入力"
+    }
+  },
+
+  "kokuho_municipalities": {
+    "comment": "国保自治体別マスタ（2026年度・40歳未満基準）。介護分は40歳以上+1.5%・均等割+15,000円で加算。",
+    "東京23区": {
+      "income_rate": 0.137,
+      "per_capita_yen": 66000,
+      "kaigo_addition_rate": 0.0234,
+      "kaigo_per_capita_yen": 16200,
+      "limit_yen": 1090000,
+      "comment": "所得割13.7%＋均等割66,000円・上限109万"
+    },
+    "大阪市": {
+      "income_rate": 0.150,
+      "per_capita_yen": 69000,
+      "kaigo_addition_rate": 0.0250,
+      "kaigo_per_capita_yen": 17000,
+      "limit_yen": 1090000,
+      "comment": "所得割約15%＋均等割69,000円・上限109万"
+    },
+    "名古屋市": {
+      "income_rate": 0.140,
+      "per_capita_yen": 64000,
+      "kaigo_addition_rate": 0.0240,
+      "kaigo_per_capita_yen": 16000,
+      "limit_yen": 1090000,
+      "comment": "所得割約14%＋均等割64,000円・上限109万"
+    },
+    "札幌市": {
+      "income_rate": 0.155,
+      "per_capita_yen": 68000,
+      "kaigo_addition_rate": 0.0240,
+      "kaigo_per_capita_yen": 16500,
+      "limit_yen": 1090000,
+      "comment": "所得割約15.5%＋均等割68,000円・上限109万"
+    },
+    "福岡市": {
+      "income_rate": 0.143,
+      "per_capita_yen": 67000,
+      "kaigo_addition_rate": 0.0240,
+      "kaigo_per_capita_yen": 16300,
+      "limit_yen": 1090000,
+      "comment": "所得割約14.3%＋均等割67,000円・上限109万"
+    },
+    "その他": {
+      "income_rate": 0.140,
+      "per_capita_yen": 65000,
+      "kaigo_addition_rate": 0.0240,
+      "kaigo_per_capita_yen": 16200,
+      "limit_yen": 1090000,
+      "comment": "全国平均的な値（所得割約14%＋均等割65,000円）"
+    }
+  },
+
+  "kokumin_nenkin": {
+    "comment": "国民年金（第1号被保険者・2026年度）",
+    "monthly_yen": 17510,
+    "yearly_yen": 210120
+  },
+
+  "income_tax_rates": {
+    "comment": "所得税の累進税率（5-45%・控除額あり）",
+    "brackets": [
+      {"upToYen": 1950000, "rate": 0.05, "deductionYen": 0},
+      {"upToYen": 3300000, "rate": 0.10, "deductionYen": 97500},
+      {"upToYen": 6950000, "rate": 0.20, "deductionYen": 427500},
+      {"upToYen": 9000000, "rate": 0.23, "deductionYen": 636000},
+      {"upToYen": 18000000, "rate": 0.33, "deductionYen": 1536000},
+      {"upToYen": 40000000, "rate": 0.40, "deductionYen": 2796000},
+      {"upToYen": null, "rate": 0.45, "deductionYen": 4796000}
+    ],
+    "reconstruction_rate": 0.021
+  },
+
+  "resident_tax": {
+    "comment": "住民税（東京・所得割10%＋均等割5,000円・基礎控除43万・調整控除2,500円）",
+    "income_rate": 0.10,
+    "per_capita_yen": 5000,
+    "basic_deduction_yen": 430000,
+    "adjustment_deduction_yen": 2500
+  },
+
+  "deductions": {
+    "comment": "個人事業主の主な所得控除",
+    "basic_deduction_income_tax_yen": 480000,
+    "basic_deduction_resident_tax_yen": 430000,
+    "basic_deduction_threshold_yen": 24000000,
+    "aoiro_etax_yen": 650000,
+    "aoiro_paper_yen": 550000,
+    "aoiro_simple_yen": 100000,
+    "shiroiro_yen": 0,
+    "spouse_deduction_yen": 380000,
+    "spouse_special_full_threshold_yen": 1500000,
+    "spouse_special_zero_threshold_yen": 2010000,
+    "dependent_deduction_yen": 380000
+  },
+
+  "salary_deduction": {
+    "comment": "給与所得控除（2026年版・最低55万）",
+    "brackets": [
+      {"upToYen": 1625000, "fixedYen": 550000, "rate": 0, "constYen": 0},
+      {"upToYen": 1800000, "fixedYen": null, "rate": 0.40, "constYen": -100000},
+      {"upToYen": 3600000, "fixedYen": null, "rate": 0.30, "constYen": 80000},
+      {"upToYen": 6600000, "fixedYen": null, "rate": 0.20, "constYen": 440000},
+      {"upToYen": 8500000, "fixedYen": null, "rate": 0.10, "constYen": 1100000},
+      {"upToYen": null, "fixedYen": 1950000, "rate": 0, "constYen": 0}
+    ]
+  },
+
+  "ideco": {
+    "comment": "iDeCo（個人事業主・第1号被保険者）。国民年金基金と合算で月6.8万上限。",
+    "max_monthly_yen": 68000,
+    "max_yearly_yen": 816000,
+    "combined_with_kokumin_nenkin_kikin": true
+  },
+
+  "shokibo_kyosai": {
+    "comment": "小規模企業共済（中小機構）",
+    "max_monthly_yen": 70000,
+    "max_yearly_yen": 840000
+  },
+
+  "kokumin_nenkin_kikin": {
+    "comment": "国民年金基金（iDeCo合算で月6.8万上限）",
+    "max_monthly_yen": 68000,
+    "max_yearly_yen": 816000
+  },
+
+  "consumption_tax": {
+    "comment": "消費税（個人事業主）",
+    "free_threshold_yen": 10000000,
+    "rate": 0.10,
+    "two_percent_special_rate": 0.02,
+    "two_percent_special_ends_at": "2026-09-30",
+    "simplified_service_rate": 0.50
+  },
+
+  "wall_thresholds": {
+    "comment": "6つの壁（副業/専業ごとの判定ライン）",
+    "fukugyou": {
+      "wall_103": {"yen": 1030000, "label": "配偶者控除の壁（給与換算）", "type": "spouse"},
+      "wall_106": {"yen": 1060000, "label": "社会保険適用拡大（パート給与）", "type": "shaho"},
+      "wall_130": {"yen": 1300000, "label": "配偶者の社保被扶養者の壁", "type": "shaho"},
+      "wall_150": {"yen": 1500000, "label": "配偶者特別控除満額帯", "type": "spouse"},
+      "wall_200": {"yen": 200000, "label": "副業所得20万・住民税申告必要ライン（事業所得）", "type": "tax"}
+    },
+    "sengyou": {
+      "wall_kiso_48": {"yen": 480000, "label": "基礎控除の壁", "type": "tax"},
+      "wall_invoice_1000": {"yen": 10000000, "label": "消費税課税事業者ライン（インボイス2割特例）", "type": "tax"},
+      "wall_houjin_600": {"yen": 6000000, "label": "法人成り検討ライン（課税所得600万）", "type": "houjin_taxable"},
+      "wall_houjin_revenue_800": {"yen": 8000000, "label": "法人成り検討ライン（年商800万）", "type": "houjin_revenue"}
+    }
+  },
+
+  "houjin_links": {
+    "comment": "法人版シミュレータへの誘導",
+    "simulator_url": "../../ai_solo_startup_textbook2/05_simulator/index.html",
+    "label": "法人版シミュレータで試算する"
+  },
+
+  "yayoi_cta": {
+    "comment": "弥生サービスの誘導CTA",
+    "kigyou": {
+      "url": "https://www.yayoi-kk.co.jp/kigyo/starting/",
+      "label": "弥生「開業届」（無料・15分）",
+      "subtext": "副業からのスタートはこちら"
+    },
+    "shiroiro": {
+      "url": "https://www.yayoi-kk.co.jp/shinkoku/shiroiroshinkoku/",
+      "label": "弥生「白色申告オンライン」",
+      "subtext": "副業少額帯・帳簿が苦手な人向け"
+    },
+    "aoiro": {
+      "url": "https://www.yayoi-kk.co.jp/shinkoku/aoiroshinkoku/",
+      "label": "弥生「青色申告オンライン」",
+      "subtext": "65万控除・本気で節税するならこれ"
+    }
+  }
+}

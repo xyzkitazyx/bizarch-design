@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80" role="img" aria-labelledby="ch7Title">
+  <title id="ch7Title">第7章 固定費・キャッシュフロー</title>
+  <path d="M14 36 L40 14 L66 36 L66 66 L14 66 Z" fill="none" stroke="#0066FF" stroke-width="2.5" stroke-linejoin="round"/>
+  <rect x="34" y="48" width="12" height="18" fill="#FF7A59" opacity="0.3" stroke="#FF7A59" stroke-width="1.5"/>
+  <rect x="22" y="40" width="14" height="14" rx="2" fill="#FFFFFF" stroke="#8A2BE2" stroke-width="2"/>
+  <line x1="25" y1="44" x2="33" y2="44" stroke="#8A2BE2" stroke-width="1.5"/>
+  <line x1="25" y1="48" x2="33" y2="48" stroke="#8A2BE2" stroke-width="1.5"/>
+  <line x1="25" y1="52" x2="29" y2="52" stroke="#8A2BE2" stroke-width="1.5"/>
+</svg>

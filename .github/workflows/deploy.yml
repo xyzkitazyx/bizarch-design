@@ -62,3 +62,24 @@ jobs:
           exclude: |
             **/test_node.js
             **/.git*
+
+      # 8. エックスサーバー（サブドメイン aisolobiz.bizarch-design.com）へFTP転送
+      - name: Deploy AI個人事業の教科書 to XSERVER subdomain
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./aisolobiz/
+          server-dir: ${{ secrets.FTP_SERVER_DIR_AISOLOBIZ }}
+          dangerous-clean-slate: false
+          exclude: |
+            **/test_node.js
+            **/build_textbook.py
+            **/PROMPTS_FOR_USER.md
+            **/image_prompts.md
+            **/generate_images.mjs
+            **/regenerate_v2.mjs
+            **/_generation_log.json
+            **/予備/**
+            **/.git*

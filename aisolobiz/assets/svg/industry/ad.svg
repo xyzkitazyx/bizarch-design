@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-labelledby="adTitle">
+  <title id="adTitle">広告運用</title>
+  <path d="M10 28 L10 36 L24 36 L48 50 L48 14 L24 28 Z" fill="none" stroke="#0066FF" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M48 22 Q54 32 48 42" fill="none" stroke="#FF7A59" stroke-width="2.5" stroke-linecap="round"/>
+  <rect x="14" y="40" width="3" height="10" fill="#8A2BE2"/>
+  <rect x="20" y="36" width="3" height="14" fill="#8A2BE2"/>
+  <rect x="26" y="42" width="3" height="8" fill="#8A2BE2"/>
+</svg>

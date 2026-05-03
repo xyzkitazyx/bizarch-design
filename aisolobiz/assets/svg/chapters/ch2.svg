@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80" role="img" aria-labelledby="ch2Title">
+  <title id="ch2Title">第2章 節税3比較</title>
+  <path d="M40 8 L64 18 L64 42 Q64 60 40 72 Q16 60 16 42 L16 18 Z" fill="none" stroke="#0066FF" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M40 8 L64 18 L64 42 Q64 60 40 72 Q16 60 16 42 L16 18 Z" fill="#0066FF" opacity="0.1"/>
+  <text x="40" y="46" font-family="'Noto Sans JP', sans-serif" font-size="20" font-weight="900" fill="#FF7A59" text-anchor="middle">%</text>
+  <line x1="28" y1="56" x2="52" y2="56" stroke="#8A2BE2" stroke-width="2" stroke-linecap="round"/>
+</svg>

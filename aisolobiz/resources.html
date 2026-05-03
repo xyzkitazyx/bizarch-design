@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>リソース集 | AIで一人個人事業の教科書</title>
+  <meta name="description" content="個人事業特有の用語集50語、5都市の国保自治体早見表、業種別AIツールリンク集を一画面で。検索ボックス付きで瞬時に調べられます。">
+  <meta property="og:title" content="リソース集 | AIで一人個人事業の教科書">
+  <meta property="og:description" content="用語50・自治体5都市・AIツール公式リンクをまとめた個人事業のリファレンス。">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="assets/svg/favicon.svg">
+  <link rel="stylesheet" href="assets/css/common.css">
+  <style>
+    /* resources.html 独自スタイル ================================ */
+    .res-hero{
+      background: linear-gradient(135deg, #0E0F23 0%, var(--color-secondary,#8A2BE2) 60%, var(--color-primary,#0066FF) 100%);
+      color:#fff;
+      padding: clamp(48px,8vw,84px) 24px;
+      text-align:center; position:relative; overflow:hidden;
+    }
+    .res-hero::before{
+      content:""; position:absolute; inset:0;
+      background:
+        radial-gradient(circle at 30% 80%, rgba(255,122,89,.18) 0%, transparent 50%),
+        radial-gradient(circle at 70% 20%, rgba(255,255,255,.12) 0%, transparent 50%);
+      pointer-events:none;
+    }
+    .res-hero__inner{position:relative;z-index:1;max-width:840px;margin:0 auto;}
+    .res-hero__title{
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-weight:800; line-height:1.25; margin: 0 0 1rem;
+    }
+    .res-hero__lead{
+      font-size: clamp(.96rem, 1.7vw, 1.12rem);
+      max-width:640px; margin:0 auto; line-height:1.85; opacity:.95;
+    }
+
+    /* タブナビ ================================ */
+    .tab-nav{
+      max-width: 980px; margin: -32px auto 0;
+      padding: 0 24px; position:relative; z-index:5;
+      display:flex; gap:6px; flex-wrap: wrap;
+    }
+    .tab-btn{
+      flex: 1 1 200px;
+      padding: 16px 20px;
+      background:#fff; border: 1px solid #E5E7EB;
+      border-radius: 14px 14px 0 0;
+      font-weight:700; cursor:pointer;
+      font-size: .98rem; color: #374151;
+      transition: all .2s ease;
+      display:flex; align-items:center; justify-content:center; gap:.5rem;
+    }
+    .tab-btn:hover{border-color: var(--color-primary,#0066FF); color:#111827;}
+    .tab-btn.is-active{
+      background: var(--color-primary,#0066FF); color:#fff;
+      border-color: var(--color-primary,#0066FF);
+    }
+    .tab-btn .icon{font-size:1.2em;}
+    .tab-btn .count{
+      font-size:.78rem;font-weight:600;
+      background: rgba(0,0,0,.07); padding: 2px 8px;border-radius:999px;
+      margin-left:.4rem;
+    }
+    .tab-btn.is-active .count{background:rgba(255,255,255,.25);}
+
+    /* タブパネル ================================ */
+    .tab-panel{
+      max-width: 980px; margin: 0 auto;
+      padding: clamp(36px,5vw,56px) 24px clamp(48px,7vw,72px);
+      background:#fff;
+      border-radius: 0 0 18px 18px;
+      border:1px solid #E5E7EB; border-top:none;
+    }
+    .tab-panel[hidden]{display:none;}
+    .tab-panel__title{
+      font-size: clamp(1.3rem, 2.6vw, 1.8rem);
+      font-weight:800; margin:0 0 .8rem; color:#111827;
+    }
+    .tab-panel__lead{
+      font-size:.96rem; color:#4B5563; line-height:1.85;
+      margin: 0 0 1.6rem;
+    }
+
+    /* 検索ボックス ================================ */
+    .search-box{
+      position: relative;
+      margin-bottom: 1.4rem;
+    }
+    .search-box input{
+      width:100%; padding: 14px 16px 14px 44px;
+      border-radius: 10px; border: 1.5px solid #D1D5DB;
+      font-size: 1rem; background:#F9FAFB;
+      transition: all .2s ease;
+    }
+    .search-box input:focus{
+      outline:none; border-color: var(--color-primary,#0066FF);
+      background:#fff;
+      box-shadow: 0 0 0 3px rgba(0,102,255,.15);
+    }
+    .search-box::before{
+      content:"🔍"; position:absolute; left:14px; top:50%;
+      transform: translateY(-50%); font-size: 1.05rem;
+    }
+    .search-clear{
+      position:absolute; right: 12px; top:50%; transform: translateY(-50%);
+      background: #E5E7EB; border:none; cursor:pointer;
+      width:24px;height:24px; border-radius:50%;
+      font-size: .85rem; color:#6B7280;
+      display:none;
+    }
+    .search-box.has-query .search-clear{display:flex;align-items:center;justify-content:center;}
+    .search-status{
+      font-size:.85rem; color:#6B7280; margin: 0 0 1rem;
+    }
+
+    /* カテゴリチップ ================================ */
+    .cat-chips{
+      display:flex; flex-wrap:wrap; gap:8px;
+      margin-bottom: 1.4rem;
+    }
+    .cat-chip{
+      padding: 6px 14px; border-radius: 999px;
+      background:#F3F4F6; border:1px solid #E5E7EB;
+      font-size: .85rem; cursor:pointer; font-weight:600;
+      color:#4B5563; transition: all .15s ease;
+    }
+    .cat-chip:hover{background:#E6F0FF;color: var(--color-primary,#0066FF);}
+    .cat-chip.is-active{
+      background: var(--color-primary,#0066FF); color:#fff;
+      border-color: var(--color-primary,#0066FF);
+    }
+
+    /* 用語カード ================================ */
+    .term-grid{
+      display:grid; gap: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+    .term-card{
+      padding: 16px 18px;
+      background:#fff; border-radius: 10px;
+      border-left: 3px solid var(--color-primary,#0066FF);
+      border-top: 1px solid #E5E7EB;
+      border-right: 1px solid #E5E7EB;
+      border-bottom: 1px solid #E5E7EB;
+      transition: all .15s ease;
+    }
+    .term-card[data-cat="tax"]{border-left-color: var(--color-primary,#0066FF);}
+    .term-card[data-cat="hoken"]{border-left-color: #10B981;}
+    .term-card[data-cat="biz"]{border-left-color: var(--color-secondary,#8A2BE2);}
+    .term-card[data-cat="exit"]{border-left-color: var(--color-coral,#FF7A59);}
+    .term-card.is-hidden{display:none;}
+    .term-card.is-highlight{background:#FFFBEB;border-color:#F59E0B;}
+
+    .term-card__head{
+      display:flex; align-items:center; gap:.5rem;
+      margin-bottom:.4rem;
+    }
+    .term-card__num{
+      font-size:.72rem; font-weight:700; color:#9CA3AF;
+    }
+    .term-card__name{
+      font-size:1.02rem; font-weight:700; color:#111827;
+      flex:1;
+    }
+    .term-card__cat{
+      font-size:.7rem; padding:2px 8px; border-radius:999px;
+      background:#F3F4F6; color:#6B7280; font-weight:600;
+    }
+    .term-card[data-cat="tax"] .term-card__cat{background:#E6F0FF;color:var(--color-primary,#0066FF);}
+    .term-card[data-cat="hoken"] .term-card__cat{background:#D1FAE5;color:#065F46;}
+    .term-card[data-cat="biz"] .term-card__cat{background:#F5F3FF;color:var(--color-secondary,#8A2BE2);}
+    .term-card[data-cat="exit"] .term-card__cat{background:#FFF1EC;color:var(--color-coral,#FF7A59);}
+
+    .term-card__def{
+      font-size:.92rem; color:#374151; line-height:1.7;
+      margin: 0 0 .4rem;
+    }
+    .term-card__sub{
+      font-size:.8rem; color:#6B7280; line-height:1.65;
+      margin:0;
+    }
+
+    /* 国保表 ================================ */
+    .kokuho-table{
+      width:100%; border-collapse: separate; border-spacing: 0;
+      font-size:.92rem; margin-bottom: 1.4rem;
+      overflow:hidden; border-radius:12px; border:1px solid #E5E7EB;
+    }
+    .kokuho-table thead th{
+      background: linear-gradient(180deg, var(--color-primary,#0066FF) 0%, #0052CC 100%);
+      color:#fff; font-weight:700; padding: 12px 10px;
+      text-align:center; font-size:.92rem;
+    }
+    .kokuho-table tbody td, .kokuho-table tbody th{
+      padding: 12px 10px; text-align:center;
+      border-top: 1px solid #E5E7EB; background:#fff;
+    }
+    .kokuho-table tbody th{
+      background:#F3F4F6; font-weight:700; color:#111827;
+      text-align:left; padding-left: 16px;
+    }
+    .kokuho-table tbody tr:nth-child(even) td{background:#F9FAFB;}
+    .kokuho-table tbody tr:hover td, .kokuho-table tbody tr:hover th{background:#FFFBEB;}
+    .kokuho-table .is-min{color: #10B981; font-weight:700;}
+    .kokuho-table .is-max{color: var(--color-coral,#FF7A59); font-weight:700;}
+    .kokuho-table .is-cap{font-size:.78rem; color:#6B7280; display:block;}
+
+    .kokuho-note{
+      background:#F0FDF4; border-left:4px solid #10B981;
+      padding: 14px 18px; border-radius: 8px;
+      font-size:.92rem; color:#065F46; line-height:1.75;
+      margin-bottom: 1.4rem;
+    }
+    .kokuho-saving{
+      background: linear-gradient(135deg, #FFF8F4 0%, #FFEEE6 100%);
+      padding: 20px 24px; border-radius:14px;
+      border: 2px solid var(--color-coral,#FF7A59);
+      margin-bottom: 1.4rem;
+    }
+    .kokuho-saving h3{
+      font-size:1.1rem; margin: 0 0 .6rem;
+      color:#9A3412; font-weight:800;
+    }
+    .kokuho-saving p{margin:0;font-size:.95rem;line-height:1.8;color:#7C2D12;}
+    .kokuho-saving strong{font-size:1.15rem;color:var(--color-coral,#FF7A59);}
+
+    /* AIツール表 ================================ */
+    .tools-section{margin-bottom: 2rem;}
+    .tools-section h3{
+      font-size: 1.1rem; font-weight:700; margin: 0 0 .8rem;
+      color:#111827;
+      display:flex; align-items:center; gap:.5rem;
+    }
+    .tools-section h3 .icon{font-size:1.3em;}
+    .tools-table{
+      width:100%; border-collapse: separate; border-spacing:0;
+      font-size:.9rem; margin-bottom: 1rem;
+      border-radius:10px; overflow:hidden;
+      border:1px solid #E5E7EB;
+    }
+    .tools-table thead th{
+      background:#1F2937; color:#fff; padding: 10px 12px;
+      text-align:left; font-size:.85rem; font-weight:700;
+    }
+    .tools-table tbody td{
+      padding: 11px 12px; border-top:1px solid #E5E7EB;
+      vertical-align: middle;
+    }
+    .tools-table tbody tr:nth-child(even) td{background:#F9FAFB;}
+    .tools-table tbody tr:hover td{background:#F0F9FF;}
+    .tools-table .tool-name{font-weight:700;color:#111827;}
+    .tools-table .price{
+      font-size:.82rem; color:#374151;
+      white-space:nowrap;
+    }
+    .tools-table .price .free{
+      color:#10B981; font-weight:700;
+    }
+    .tools-table .badges{display:flex;gap:4px;flex-wrap:wrap;}
+    .tools-table .badge{
+      font-size:.7rem; padding:1px 8px; border-radius:999px;
+      font-weight:600;
+    }
+    .tools-table .badge--free{background:#D1FAE5;color:#065F46;}
+    .tools-table .badge--paid{background:#FEF3C7;color:#92400E;}
+    .tools-table .badge--jp{background:#DBEAFE;color:#1E40AF;}
+    .tools-table .badge--en{background:#F3F4F6;color:#6B7280;}
+    .tools-table .link a{
+      color: var(--color-primary,#0066FF); font-weight:600;
+      text-decoration:none;
+    }
+    .tools-table .link a:hover{text-decoration:underline;}
+
+    /* レスポンシブ：表→カード変換 */
+    @media (max-width: 720px){
+      .kokuho-table, .tools-table{font-size:.82rem;}
+      .kokuho-table thead th, .kokuho-table tbody td, .kokuho-table tbody th,
+      .tools-table thead th, .tools-table tbody td{padding: 8px 6px;}
+      .tab-btn{flex: 1 1 calc(50% - 6px); font-size:.88rem;padding: 13px 10px;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ========== ヘッダー ========== -->
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <a href="index.html" class="brand-logo" aria-label="AIで一人個人事業の教科書 トップへ">
+      <img src="assets/svg/logo.svg" alt="AIで一人個人事業の教科書" />
+    </a>
+
+    <button class="nav-toggle" type="button"
+            aria-controls="globalNav" aria-expanded="false" aria-label="メニューを開く">
+      <span class="bar" aria-hidden="true"></span>
+    </button>
+
+    <nav id="globalNav" class="global-nav" aria-label="主要ナビゲーション">
+      <a href="index.html">トップ</a>
+      <a href="textbook.html">教科書</a>
+      <a href="simulator/index.html">シミュレータ</a>
+      <a href="open.html">開業届</a>
+      <a href="downloads.html">資料DL</a>
+      <a href="resources.html" aria-current="page">用語集</a>
+      <a href="simulator/index.html" class="is-cta">試算する</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ========== ヒーロー ========== -->
+<section class="res-hero">
+  <div class="res-hero__inner">
+    <h1 class="res-hero__title">リソース集</h1>
+    <p class="res-hero__lead">
+      個人事業特有の <strong>用語50語</strong>・5都市の<strong>国保早見表</strong>・<strong>業種別AIツール公式リンク</strong>。<br>
+      この1ページで困りごとが全部片付くリファレンスです。
+    </p>
+  </div>
+</section>
+
+<!-- ========== タブナビ ========== -->
+<nav class="tab-nav" role="tablist" aria-label="リソースタブ">
+  <button class="tab-btn is-active" role="tab" data-tab="glossary" aria-selected="true">
+    <span class="icon">🔍</span>用語集<span class="count">50</span>
+  </button>
+  <button class="tab-btn" role="tab" data-tab="kokuho">
+    <span class="icon">🗾</span>自治体国保早見表<span class="count">5都市</span>
+  </button>
+  <button class="tab-btn" role="tab" data-tab="tools">
+    <span class="icon">🤖</span>AIツールリンク集<span class="count">19</span>
+  </button>
+</nav>
+
+<!-- ========== ① 用語集 ========== -->
+<section class="tab-panel" id="glossary" role="tabpanel">
+  <h2 class="tab-panel__title">個人事業の用語集（50語）</h2>
+  <p class="tab-panel__lead">青色申告・専従者給与・みなし譲渡など、初心者がつまずく専門用語を <strong>4カテゴリ50語</strong>で網羅。検索ボックスで瞬時に調べられます。</p>
+
+  <div class="search-box">
+    <input id="termSearch" type="search" placeholder="用語を検索（例：青色、インボイス、雑所得...）" autocomplete="off">
+    <button class="search-clear" type="button" aria-label="クリア">×</button>
+  </div>
+  <p class="search-status" id="termStatus">全50語を表示中</p>
+
+  <div class="cat-chips" role="tablist" aria-label="カテゴリ絞り込み">
+    <button class="cat-chip is-active" data-cat="all">すべて</button>
+    <button class="cat-chip" data-cat="tax">開業・税務</button>
+    <button class="cat-chip" data-cat="hoken">社会保険・年金</button>
+    <button class="cat-chip" data-cat="biz">経営・契約</button>
+    <button class="cat-chip" data-cat="exit">法人成り・出口</button>
+  </div>
+
+  <div class="term-grid" id="termGrid">
+    <!-- 開業・税務（15語） -->
+    <article class="term-card" data-cat="tax"><div class="term-card__head"><span class="term-card__num">01</span><span class="term-card__name">開業届</span><span class="term-card__cat">税務</span></div><p class="term-card__def">個人事業の開業を税務署に届け出る書類。</p><p class="term-card__sub">開業日から1ヶ月以内に提出。</p></article>
+    <article class="term-card" data-cat="tax"><div class="term-card__head"><span class="term-card__num">02</span><span class="term-card__name">青色申告</span><span class="term-card__cat">税務</span></div><p class="term-card__def">帳簿付けと引き換えに65万円控除等が受けられる制度。</p><p class="term-card__sub">開業日から2ヶ月以内に承認申請。</p></article>
+    <article class="term-card" data-cat="tax"><div class="term-card__head"><span class="term-card__num">03</span><span class="term-card__name">白色申告</span><span class="term-card__cat">税務</span></div><p class="term-card__def">簡易な帳簿で済む代わりに控除が小さい。</p><p class="term-card__sub">副業少額帯向け。</p></article>
+    <article class="term-card" data-cat="tax"><div class="term-card__head"><span class="term-card__num">04</span><span class="term-card__name">屋号</span><span class="term-card__cat">税務</span></div><p class="term-card__def">個人事業の事業上の名称。</p><p class="term-card__sub">法人の商号に相当。</p></article>
+    <article class="term-card" data-cat="tax"><div class="term-card__head"><span class="term-card__num">05</span><span class="term-card__name">事業所得</span><span class="term-card__cat">税務</span></div><p class="term-card__def">事業から得た所得（売上−経費）。</p><p class="term-card__sub">雑所得との区分が重要。</p></article>
+    <article class="term-card" data-cat="tax"><div class="term-card__head"><span class="term-card__num">06</span><span class="term-card__name">雑所得</span><span class="term-card__cat">税務</span></div><p class="term-card__def">副業等で帳簿不備の場合に分類される所得区分。</p><p class="term-card__sub">青色不可・損益通算不可。</p></article>
+    <article class="term-card" data-cat="tax"><div class="term-card__head"><span class="term-card__num">07</span><span class="term-card__name">確定申告</span><span class="term-card__cat">税務</span></div><p class="term-card__def">1月〜3月の年次申告。</p><p class="term-card__sub">青色65万はe-Tax必須。</p></article>
+    <article class="term-card" data-cat="tax"><div class="term-card__head"><span class="term-card__num">08</span><span class="term-card__name">e-Tax</span><span class="term-card__cat">税務</span></div><p class="term-card__def">電子申告システム。</p><p class="term-card__sub">青色65万控除の要件。</p></article>
+    <article class="term-card" data-cat="tax"><div class="term-card__head"><span class="term-card__num">09</span><span class="term-card__name">電子帳簿保存法</span><span class="term-card__cat">税務</span></div><p class="term-card__def">電子取引データの電子保存を義務付ける法律。</p><p class="term-card__sub">弥生で自動対応。</p></article>
+    <article class="term-card" data-cat="tax"><div class="term-card__head"><span class="term-card__num">10</span><span class="term-card__name">源泉徴収</span><span class="term-card__cat">税務</span></div><p class="term-card__def">報酬から事前に税金が引かれる制度。</p><p class="term-card__sub">個人事業の請求書記載例参照。</p></article>
+    <article class="term-card" data-cat="tax"><div class="term-card__head"><span class="term-card__num">11</span><span class="term-card__name">予定納税</span><span class="term-card__cat">税務</span></div><p class="term-card__def">所得税を前払いする制度。</p><p class="term-card__sub">7月・11月の2回。</p></article>
+    <article class="term-card" data-cat="tax"><div class="term-card__head"><span class="term-card__num">12</span><span class="term-card__name">損益通算</span><span class="term-card__cat">税務</span></div><p class="term-card__def">事業の赤字を給与所得から差し引く。</p><p class="term-card__sub">雑所得は損益通算不可。</p></article>
+    <article class="term-card" data-cat="tax"><div class="term-card__head"><span class="term-card__num">13</span><span class="term-card__name">純損失の繰越控除</span><span class="term-card__cat">税務</span></div><p class="term-card__def">青色の赤字を3年間繰越せる制度。</p><p class="term-card__sub">青色だけの特権。</p></article>
+    <article class="term-card" data-cat="tax"><div class="term-card__head"><span class="term-card__num">14</span><span class="term-card__name">青色専従者給与</span><span class="term-card__cat">税務</span></div><p class="term-card__def">配偶者等家族への給与を経費にできる。</p><p class="term-card__sub">事前届出＋実態必須。</p></article>
+    <article class="term-card" data-cat="tax"><div class="term-card__head"><span class="term-card__num">15</span><span class="term-card__name">家事按分</span><span class="term-card__cat">税務</span></div><p class="term-card__def">自宅費用を事業利用部分だけ経費化。</p><p class="term-card__sub">按分根拠の文書化必須。</p></article>
+
+    <!-- 社会保険・年金（10語） -->
+    <article class="term-card" data-cat="hoken"><div class="term-card__head"><span class="term-card__num">16</span><span class="term-card__name">国保</span><span class="term-card__cat">社保</span></div><p class="term-card__def">国民健康保険。</p><p class="term-card__sub">個人事業主の医療保険。</p></article>
+    <article class="term-card" data-cat="hoken"><div class="term-card__head"><span class="term-card__num">17</span><span class="term-card__name">国民年金</span><span class="term-card__cat">社保</span></div><p class="term-card__def">個人事業主の年金（基礎年金）。</p><p class="term-card__sub">月17,510円（2026年）。</p></article>
+    <article class="term-card" data-cat="hoken"><div class="term-card__head"><span class="term-card__num">18</span><span class="term-card__name">任意継続</span><span class="term-card__cat">社保</span></div><p class="term-card__def">退職後2年間は会社の健保を継続できる制度。</p><p class="term-card__sub">退職後20日以内に手続き。</p></article>
+    <article class="term-card" data-cat="hoken"><div class="term-card__head"><span class="term-card__num">19</span><span class="term-card__name">社保被扶養者</span><span class="term-card__cat">社保</span></div><p class="term-card__def">配偶者の社保に扶養される地位。</p><p class="term-card__sub">年収130万円が壁。</p></article>
+    <article class="term-card" data-cat="hoken"><div class="term-card__head"><span class="term-card__num">20</span><span class="term-card__name">配偶者控除</span><span class="term-card__cat">社保</span></div><p class="term-card__def">配偶者の所得に応じて受けられる控除。</p><p class="term-card__sub">103万円が壁。</p></article>
+    <article class="term-card" data-cat="hoken"><div class="term-card__head"><span class="term-card__num">21</span><span class="term-card__name">配偶者特別控除</span><span class="term-card__cat">社保</span></div><p class="term-card__def">配偶者控除の上位。</p><p class="term-card__sub">150万円〜201万円で段階的。</p></article>
+    <article class="term-card" data-cat="hoken"><div class="term-card__head"><span class="term-card__num">22</span><span class="term-card__name">国民年金基金</span><span class="term-card__cat">社保</span></div><p class="term-card__def">個人事業主の上乗せ年金。</p><p class="term-card__sub">iDeCoとの併用可。</p></article>
+    <article class="term-card" data-cat="hoken"><div class="term-card__head"><span class="term-card__num">23</span><span class="term-card__name">iDeCo</span><span class="term-card__cat">社保</span></div><p class="term-card__def">個人型確定拠出年金。</p><p class="term-card__sub">月6.8万円まで全額所得控除。</p></article>
+    <article class="term-card" data-cat="hoken"><div class="term-card__head"><span class="term-card__num">24</span><span class="term-card__name">小規模企業共済</span><span class="term-card__cat">社保</span></div><p class="term-card__def">個人事業主・小規模法人役員の退職金制度。</p><p class="term-card__sub">月7万円まで全額所得控除。</p></article>
+    <article class="term-card" data-cat="hoken"><div class="term-card__head"><span class="term-card__num">25</span><span class="term-card__name">文芸美術国民健康保険組合</span><span class="term-card__cat">社保</span></div><p class="term-card__def">文芸・美術業界の国保組合。</p><p class="term-card__sub">月19,600円固定で安い。</p></article>
+
+    <!-- 経営・契約（15語） -->
+    <article class="term-card" data-cat="biz"><div class="term-card__head"><span class="term-card__num">26</span><span class="term-card__name">インボイス制度</span><span class="term-card__cat">経営</span></div><p class="term-card__def">消費税の適格請求書等保存方式。</p><p class="term-card__sub">BtoB主体ならほぼ必須。</p></article>
+    <article class="term-card" data-cat="biz"><div class="term-card__head"><span class="term-card__num">27</span><span class="term-card__name">2割特例</span><span class="term-card__cat">経営</span></div><p class="term-card__def">インボイス登録の小規模事業者向け軽減。</p><p class="term-card__sub">売上の2%で消費税納税。</p></article>
+    <article class="term-card" data-cat="biz"><div class="term-card__head"><span class="term-card__num">28</span><span class="term-card__name">簡易課税</span><span class="term-card__cat">経営</span></div><p class="term-card__def">業種別みなし仕入率で消費税計算。</p><p class="term-card__sub">売上5,000万以下で選択可。</p></article>
+    <article class="term-card" data-cat="biz"><div class="term-card__head"><span class="term-card__num">29</span><span class="term-card__name">本則課税</span><span class="term-card__cat">経営</span></div><p class="term-card__def">実際の経費に基づく消費税計算。</p><p class="term-card__sub">大型経費がある場合に有利。</p></article>
+    <article class="term-card" data-cat="biz"><div class="term-card__head"><span class="term-card__num">30</span><span class="term-card__name">課税売上割合</span><span class="term-card__cat">経営</span></div><p class="term-card__def">課税売上÷総売上。</p><p class="term-card__sub">95%以上ならリバースチャージ免除。</p></article>
+    <article class="term-card" data-cat="biz"><div class="term-card__head"><span class="term-card__num">31</span><span class="term-card__name">業務委託契約</span><span class="term-card__cat">経営</span></div><p class="term-card__def">法人・個人と仕事の発注／受託契約。</p><p class="term-card__sub">フリーランス新法対応必須。</p></article>
+    <article class="term-card" data-cat="biz"><div class="term-card__head"><span class="term-card__num">32</span><span class="term-card__name">準委任契約</span><span class="term-card__cat">経営</span></div><p class="term-card__def">仕事の遂行が目的（成果物責任なし）。</p><p class="term-card__sub">コンサルに多い。</p></article>
+    <article class="term-card" data-cat="biz"><div class="term-card__head"><span class="term-card__num">33</span><span class="term-card__name">請負契約</span><span class="term-card__cat">経営</span></div><p class="term-card__def">成果物の完成が目的。</p><p class="term-card__sub">ウェブ制作・受託開発に多い。</p></article>
+    <article class="term-card" data-cat="biz"><div class="term-card__head"><span class="term-card__num">34</span><span class="term-card__name">NDA</span><span class="term-card__cat">経営</span></div><p class="term-card__def">秘密保持契約。</p><p class="term-card__sub">商談時にほぼ必須。</p></article>
+    <article class="term-card" data-cat="biz"><div class="term-card__head"><span class="term-card__num">35</span><span class="term-card__name">競業避止</span><span class="term-card__cat">経営</span></div><p class="term-card__def">退職／契約終了後に競合事業を制限する条項。</p><p class="term-card__sub">補償なしは無効リスク。</p></article>
+    <article class="term-card" data-cat="biz"><div class="term-card__head"><span class="term-card__num">36</span><span class="term-card__name">フリーランス新法</span><span class="term-card__cat">経営</span></div><p class="term-card__def">2024年11月施行の個人事業者保護法。</p><p class="term-card__sub">12項目の書面交付義務。</p></article>
+    <article class="term-card" data-cat="biz"><div class="term-card__head"><span class="term-card__num">37</span><span class="term-card__name">下請法</span><span class="term-card__cat">経営</span></div><p class="term-card__def">下請事業者保護法。</p><p class="term-card__sub">資本金1,000万超→以下のみ。</p></article>
+    <article class="term-card" data-cat="biz"><div class="term-card__head"><span class="term-card__num">38</span><span class="term-card__name">屋号付き口座</span><span class="term-card__cat">経営</span></div><p class="term-card__def">屋号で開設できる銀行口座。</p><p class="term-card__sub">信用補完に有効。</p></article>
+    <article class="term-card" data-cat="biz"><div class="term-card__head"><span class="term-card__num">39</span><span class="term-card__name">賠償責任保険</span><span class="term-card__cat">経営</span></div><p class="term-card__def">フリーランス向け業務上の損害賠償保険。</p><p class="term-card__sub">月千円〜数千円。</p></article>
+    <article class="term-card" data-cat="biz"><div class="term-card__head"><span class="term-card__num">40</span><span class="term-card__name">リファラル</span><span class="term-card__cat">経営</span></div><p class="term-card__def">既存顧客からの紹介経由の取引。</p><p class="term-card__sub">受注率が高い。</p></article>
+
+    <!-- 法人成り・出口（10語） -->
+    <article class="term-card" data-cat="exit"><div class="term-card__head"><span class="term-card__num">41</span><span class="term-card__name">法人成り</span><span class="term-card__cat">出口</span></div><p class="term-card__def">個人事業を法人へ移行すること。</p><p class="term-card__sub">課税所得600万超が目安。</p></article>
+    <article class="term-card" data-cat="exit"><div class="term-card__head"><span class="term-card__num">42</span><span class="term-card__name">合同会社</span><span class="term-card__cat">出口</span></div><p class="term-card__def">出資者＝経営者の小規模法人形態。</p><p class="term-card__sub">設立コスト6万円。</p></article>
+    <article class="term-card" data-cat="exit"><div class="term-card__head"><span class="term-card__num">43</span><span class="term-card__name">株式会社</span><span class="term-card__cat">出口</span></div><p class="term-card__def">株主と経営者を分離できる法人形態。</p><p class="term-card__sub">設立コスト約25万円。</p></article>
+    <article class="term-card" data-cat="exit"><div class="term-card__head"><span class="term-card__num">44</span><span class="term-card__name">役員報酬</span><span class="term-card__cat">出口</span></div><p class="term-card__def">法人代表者への給与（毎月定額）。</p><p class="term-card__sub">期首3ヶ月以内に決定。</p></article>
+    <article class="term-card" data-cat="exit"><div class="term-card__head"><span class="term-card__num">45</span><span class="term-card__name">退職所得控除</span><span class="term-card__cat">出口</span></div><p class="term-card__def">退職金の課税を圧縮する控除。</p><p class="term-card__sub">×1/2課税の最大の節税。</p></article>
+    <article class="term-card" data-cat="exit"><div class="term-card__head"><span class="term-card__num">46</span><span class="term-card__name">廃業届</span><span class="term-card__cat">出口</span></div><p class="term-card__def">個人事業を廃止する届出。</p><p class="term-card__sub">1ヶ月以内・無料。</p></article>
+    <article class="term-card" data-cat="exit"><div class="term-card__head"><span class="term-card__num">47</span><span class="term-card__name">休業</span><span class="term-card__cat">出口</span></div><p class="term-card__def">廃業せず売上ゼロ運用する状態。</p><p class="term-card__sub">届出不要。</p></article>
+    <article class="term-card" data-cat="exit"><div class="term-card__head"><span class="term-card__num">48</span><span class="term-card__name">事業譲渡</span><span class="term-card__cat">出口</span></div><p class="term-card__def">個人事業の資産・契約を法人へ譲渡。</p><p class="term-card__sub">みなし譲渡課税の論点。</p></article>
+    <article class="term-card" data-cat="exit"><div class="term-card__head"><span class="term-card__num">49</span><span class="term-card__name">株式譲渡</span><span class="term-card__cat">出口</span></div><p class="term-card__def">法人の株式を売却。</p><p class="term-card__sub">分離課税20.315%。</p></article>
+    <article class="term-card" data-cat="exit"><div class="term-card__head"><span class="term-card__num">50</span><span class="term-card__name">M&A</span><span class="term-card__cat">出口</span></div><p class="term-card__def">法人の事業や株式を売買。</p><p class="term-card__sub">個人事業は廃業＋法人化が前提。</p></article>
+  </div>
+</section>
+
+<!-- ========== ② 国保早見表 ========== -->
+<section class="tab-panel" id="kokuho" role="tabpanel" hidden>
+  <h2 class="tab-panel__title">自治体国保早見表（5都市・2026年度）</h2>
+  <p class="tab-panel__lead">専業1年目・<strong>40歳未満・単身モデル</strong>の所得別 国保保険料 年額。同じ所得600万でも自治体で <strong>年12万円差</strong>が出ます。</p>
+
+  <table class="kokuho-table" aria-label="国保保険料5都市比較">
+    <thead>
+      <tr>
+        <th scope="col">所得</th>
+        <th scope="col">東京23区</th>
+        <th scope="col">大阪市</th>
+        <th scope="col">名古屋市</th>
+        <th scope="col">札幌市</th>
+        <th scope="col">福岡市</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">200万円</th>
+        <td>約27万円</td>
+        <td>約30万円</td>
+        <td class="is-min">約26万円</td>
+        <td class="is-max">約32万円</td>
+        <td>約29万円</td>
+      </tr>
+      <tr>
+        <th scope="row">400万円</th>
+        <td>約48万円</td>
+        <td>約53万円</td>
+        <td class="is-min">約47万円</td>
+        <td class="is-max">約56万円</td>
+        <td>約51万円</td>
+      </tr>
+      <tr>
+        <th scope="row">600万円</th>
+        <td>約69万円</td>
+        <td>約76万円</td>
+        <td class="is-min">約68万円</td>
+        <td class="is-max">約80万円</td>
+        <td>約73万円</td>
+      </tr>
+      <tr>
+        <th scope="row">800万円</th>
+        <td>約85万円</td>
+        <td>約92万円</td>
+        <td class="is-min">約83万円</td>
+        <td class="is-max">約96万円</td>
+        <td>約88万円</td>
+      </tr>
+      <tr>
+        <th scope="row">1,000万円</th>
+        <td>約89万円<span class="is-cap">（上限）</span></td>
+        <td>約95万円<span class="is-cap">（上限）</span></td>
+        <td class="is-min">約87万円<span class="is-cap">（上限）</span></td>
+        <td class="is-max">約99万円<span class="is-cap">（上限）</span></td>
+        <td>約92万円<span class="is-cap">（上限）</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="kokuho-note">
+    ※2026年4月時点の各自治体の保険料率を基に算出。実際の保険料は世帯構成・年齢・各種軽減で変動するため、
+    <strong>自治体公式の試算ツール</strong>で必ず再計算してください。
+  </p>
+
+  <div class="kokuho-saving">
+    <h3>都市選定の節税効果</h3>
+    <p>「同じ所得600万円」でも、最も高い札幌市と最も低い名古屋市で <strong>年12万円</strong>の差。10年で<strong>120万円</strong>の差になります。住む場所を選べる個人事業者は、業務拠点・取引先・家庭事情を最優先しつつ、選択肢の1つに入れる手も。</p>
+  </div>
+
+  <h3 style="font-size:1.15rem;margin:2rem 0 .8rem;">国保軽減の5テクニック</h3>
+  <table class="kokuho-table" aria-label="国保軽減テクニック">
+    <thead><tr><th>テクニック</th><th>効果</th><th>注意点</th></tr></thead>
+    <tbody>
+      <tr><th scope="row" style="text-align:left;">任意継続を2年使い切る</th><td>退職時の保険料水準を維持</td><td>期限内手続き必須</td></tr>
+      <tr><th scope="row" style="text-align:left;">世帯合算（家族の収入と合算）</th><td>世帯の上限額にぶつかる</td><td>家族構成次第</td></tr>
+      <tr><th scope="row" style="text-align:left;">経費を増やして所得を圧縮</th><td>翌年の国保が下がる</td><td>合法な経費のみ</td></tr>
+      <tr><th scope="row" style="text-align:left;">所得分散（専従者給与・iDeCo）</th><td>個人の課税所得を圧縮</td><td>第2章の節税3比較を参照</td></tr>
+      <tr><th scope="row" style="text-align:left;">国保組合への加入</th><td>業種別組合は安い場合あり</td><td>加入条件あり</td></tr>
+    </tbody>
+  </table>
+  <p class="kokuho-note" style="background:#FEF3C7;border-color:#F59E0B;color:#92400E;margin-top:1.4rem;">
+    <strong>文芸美術国民健康保険組合</strong>はライター・デザイナー等が加入可能で、所得に関わらず <strong>月19,600円固定</strong>（医療＋介護込み・2026年度）。所得600万円超なら一般の国保より圧倒的に安いです。
+  </p>
+</section>
+
+<!-- ========== ③ AIツール ========== -->
+<section class="tab-panel" id="tools" role="tabpanel" hidden>
+  <h2 class="tab-panel__title">AIツールリンク集（業種別）</h2>
+  <p class="tab-panel__lead">個人事業主向けのAIツール19本を <strong>業種別・用途別</strong>に整理。すべて公式リンク・2026年4月時点の月額。</p>
+
+  <div class="tools-section">
+    <h3><span class="icon">⭐</span>全業種共通（必須3本）</h3>
+    <table class="tools-table">
+      <thead><tr><th>ツール</th><th>用途</th><th>月額</th><th>区分</th><th>公式リンク</th></tr></thead>
+      <tbody>
+        <tr><td class="tool-name">ChatGPT Plus</td><td>文章生成・GPTs</td><td class="price">3,000円</td><td><div class="badges"><span class="badge badge--paid">有料</span><span class="badge badge--jp">日本語</span></div></td><td class="link"><a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">chatgpt.com →</a></td></tr>
+        <tr><td class="tool-name">Claude Pro</td><td>長文・コーディング</td><td class="price">3,000円</td><td><div class="badges"><span class="badge badge--paid">有料</span><span class="badge badge--jp">日本語</span></div></td><td class="link"><a href="https://claude.ai/" target="_blank" rel="noopener noreferrer">claude.ai →</a></td></tr>
+        <tr><td class="tool-name">Notion</td><td>案件管理・ナレッジ</td><td class="price">1,650円〜</td><td><div class="badges"><span class="badge badge--free">無料あり</span><span class="badge badge--jp">日本語</span></div></td><td class="link"><a href="https://www.notion.so/" target="_blank" rel="noopener noreferrer">notion.so →</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tools-section">
+    <h3><span class="icon">💼</span>業種別の追加ツール</h3>
+    <table class="tools-table">
+      <thead><tr><th>業種</th><th>ツール</th><th>月額</th><th>区分</th><th>公式リンク</th></tr></thead>
+      <tbody>
+        <tr><td>受託開発</td><td class="tool-name">Cursor / Claude Code</td><td class="price">3,000円</td><td><div class="badges"><span class="badge badge--paid">有料</span><span class="badge badge--en">英語</span></div></td><td class="link"><a href="https://www.cursor.com/" target="_blank" rel="noopener noreferrer">cursor.com →</a></td></tr>
+        <tr><td>AXコンサル</td><td class="tool-name">LangChain</td><td class="price">従量課金</td><td><div class="badges"><span class="badge badge--paid">有料</span><span class="badge badge--en">英語</span></div></td><td class="link"><a href="https://www.langchain.com/" target="_blank" rel="noopener noreferrer">langchain.com →</a></td></tr>
+        <tr><td>業務設計コンサル</td><td class="tool-name">Miro Pro</td><td class="price">1,200円</td><td><div class="badges"><span class="badge badge--free">無料あり</span><span class="badge badge--jp">日本語</span></div></td><td class="link"><a href="https://miro.com/" target="_blank" rel="noopener noreferrer">miro.com →</a></td></tr>
+        <tr><td>BAコンサル</td><td class="tool-name">Lucidchart</td><td class="price">1,500円</td><td><div class="badges"><span class="badge badge--free">無料あり</span><span class="badge badge--jp">日本語</span></div></td><td class="link"><a href="https://www.lucidchart.com/" target="_blank" rel="noopener noreferrer">lucidchart.com →</a></td></tr>
+        <tr><td>経営コンサル</td><td class="tool-name">Gamma</td><td class="price">1,500円</td><td><div class="badges"><span class="badge badge--free">無料あり</span><span class="badge badge--jp">日本語</span></div></td><td class="link"><a href="https://gamma.app/" target="_blank" rel="noopener noreferrer">gamma.app →</a></td></tr>
+        <tr><td>広告運用</td><td class="tool-name">ChatGPT + Google広告API</td><td class="price">3,000円</td><td><div class="badges"><span class="badge badge--paid">有料</span><span class="badge badge--jp">日本語</span></div></td><td class="link"><a href="https://ads.google.com/" target="_blank" rel="noopener noreferrer">ads.google.com →</a></td></tr>
+        <tr><td>ウェブ制作</td><td class="tool-name">Cursor + Vercel</td><td class="price">3,000円〜</td><td><div class="badges"><span class="badge badge--free">無料あり</span><span class="badge badge--en">英語</span></div></td><td class="link"><a href="https://vercel.com/" target="_blank" rel="noopener noreferrer">vercel.com →</a></td></tr>
+        <tr><td>ウェブデザイン</td><td class="tool-name">Figma + Midjourney</td><td class="price">1,500円〜</td><td><div class="badges"><span class="badge badge--free">無料あり</span><span class="badge badge--jp">日本語</span></div></td><td class="link"><a href="https://www.figma.com/" target="_blank" rel="noopener noreferrer">figma.com →</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tools-section">
+    <h3><span class="icon">🧮</span>経理・税務の必須3本（弥生）</h3>
+    <table class="tools-table">
+      <thead><tr><th>ツール</th><th>用途</th><th>月額</th><th>区分</th><th>公式リンク</th></tr></thead>
+      <tbody>
+        <tr><td class="tool-name">弥生青色申告オンライン セルフプラン</td><td>確定申告（青色65万）</td><td class="price">1,400円〜</td><td><div class="badges"><span class="badge badge--paid">有料</span><span class="badge badge--jp">日本語</span></div></td><td class="link"><a href="https://www.yayoi-kk.co.jp/shinkoku/aoiroshinkoku/" target="_blank" rel="noopener noreferrer">弥生 青色申告 →</a></td></tr>
+        <tr><td class="tool-name">弥生「開業届」サービス</td><td>開業届・青色申請書作成</td><td class="price"><span class="free">無料</span></td><td><div class="badges"><span class="badge badge--free">無料</span><span class="badge badge--jp">日本語</span></div></td><td class="link"><a href="https://www.yayoi-kk.co.jp/kigyo/starting/" target="_blank" rel="noopener noreferrer">弥生 開業届 →</a></td></tr>
+        <tr><td class="tool-name">弥生「白色申告オンライン」</td><td>白色申告（副業少額帯）</td><td class="price"><span class="free">無料</span></td><td><div class="badges"><span class="badge badge--free">無料</span><span class="badge badge--jp">日本語</span></div></td><td class="link"><a href="https://www.yayoi-kk.co.jp/shinkoku/shiroiroshinkoku/" target="_blank" rel="noopener noreferrer">弥生 白色申告 →</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tools-section">
+    <h3><span class="icon">⚡</span>その他の便利ツール</h3>
+    <table class="tools-table">
+      <thead><tr><th>ツール</th><th>用途</th><th>月額</th><th>区分</th><th>公式リンク</th></tr></thead>
+      <tbody>
+        <tr><td class="tool-name">Notta</td><td>議事録AI</td><td class="price">1,800円</td><td><div class="badges"><span class="badge badge--free">無料あり</span><span class="badge badge--jp">日本語</span></div></td><td class="link"><a href="https://www.notta.ai/" target="_blank" rel="noopener noreferrer">notta.ai →</a></td></tr>
+        <tr><td class="tool-name">Perplexity Pro</td><td>リサーチAI</td><td class="price">3,000円</td><td><div class="badges"><span class="badge badge--free">無料あり</span><span class="badge badge--jp">日本語</span></div></td><td class="link"><a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer">perplexity.ai →</a></td></tr>
+        <tr><td class="tool-name">Canva Pro</td><td>デザイン・サムネ</td><td class="price">1,500円</td><td><div class="badges"><span class="badge badge--free">無料あり</span><span class="badge badge--jp">日本語</span></div></td><td class="link"><a href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">canva.com →</a></td></tr>
+        <tr><td class="tool-name">Zapier</td><td>自動化</td><td class="price">1,400円〜</td><td><div class="badges"><span class="badge badge--free">無料あり</span><span class="badge badge--en">英語</span></div></td><td class="link"><a href="https://zapier.com/" target="_blank" rel="noopener noreferrer">zapier.com →</a></td></tr>
+        <tr><td class="tool-name">Calendly</td><td>商談予約</td><td class="price">1,500円</td><td><div class="badges"><span class="badge badge--free">無料あり</span><span class="badge badge--en">英語</span></div></td><td class="link"><a href="https://calendly.com/" target="_blank" rel="noopener noreferrer">calendly.com →</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ========== フッター ========== -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <img src="assets/svg/logo.svg" alt="" height="36">
+      <p>2026年4月時点の数字・制度に基づきます。最新の制度変更は税務署・自治体・各機関の公式情報をご確認ください。</p>
+    </div>
+    <nav class="site-footer__nav" aria-label="フッターナビ">
+      <a href="index.html">トップ</a>
+      <a href="simulator/index.html">シミュレータ</a>
+      <a href="open.html">開業届</a>
+      <a href="downloads.html">資料DL</a>
+      <a href="resources.html">リソース</a>
+    </nav>
+    <p class="site-footer__copy">© 2026 AIで一人個人事業の教科書</p>
+  </div>
+</footer>
+
+<script>
+  // ========== タブ切替 ==========
+  (function(){
+    const btns = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.tab-panel');
+    function activateTab(target, updateHash){
+      let matched = false;
+      btns.forEach(b => {
+        const isActive = b.dataset.tab === target;
+        if(isActive) matched = true;
+        b.classList.toggle('is-active', isActive);
+        b.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+      if(!matched) return;
+      panels.forEach(p => {
+        p.hidden = (p.id !== target);
+      });
+      if(updateHash){
+        history.replaceState(null, '', '#' + target);
+      }
+    }
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        activateTab(btn.dataset.tab, true);
+      });
+    });
+    // ページ起動時、URLハッシュがあればそのタブを開く
+    const initialHash = location.hash.replace('#','');
+    if(initialHash){
+      activateTab(initialHash, false);
+    }
+    // ブラウザの戻る/進むに対応
+    window.addEventListener('hashchange', () => {
+      const hash = location.hash.replace('#','');
+      if(hash) activateTab(hash, false);
+    });
+  })();
+
+  // ========== 用語集：検索＋カテゴリ ==========
+  (function(){
+    const input = document.getElementById('termSearch');
+    const status = document.getElementById('termStatus');
+    const grid = document.getElementById('termGrid');
+    const cards = grid.querySelectorAll('.term-card');
+    const chips = document.querySelectorAll('.cat-chip');
+    const searchBox = input.closest('.search-box');
+    const clearBtn = searchBox.querySelector('.search-clear');
+    let activeCat = 'all';
+
+    function filter(){
+      const q = input.value.trim().toLowerCase();
+      searchBox.classList.toggle('has-query', q.length > 0);
+      let visible = 0;
+      cards.forEach(card => {
+        const name = card.querySelector('.term-card__name').textContent.toLowerCase();
+        const def = card.querySelector('.term-card__def').textContent.toLowerCase();
+        const sub = card.querySelector('.term-card__sub').textContent.toLowerCase();
+        const cat = card.dataset.cat;
+        const matchQ = !q || name.includes(q) || def.includes(q) || sub.includes(q);
+        const matchCat = activeCat === 'all' || cat === activeCat;
+        const show = matchQ && matchCat;
+        card.classList.toggle('is-hidden', !show);
+        card.classList.toggle('is-highlight', q.length > 0 && show);
+        if(show) visible++;
+      });
+      if(visible === 0){
+        status.textContent = '該当する用語がありません。別のキーワードでお試しください。';
+        status.style.color = '#DC2626';
+      }else{
+        const filterDesc = (activeCat==='all'?'全':'カテゴリ絞込') + (q?'＋検索':'');
+        status.textContent = visible + '件を表示中（' + filterDesc + '）';
+        status.style.color = '';
+      }
+    }
+
+    input.addEventListener('input', filter);
+    clearBtn.addEventListener('click', () => { input.value = ''; filter(); input.focus(); });
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => c.classList.toggle('is-active', c === chip));
+        activeCat = chip.dataset.cat;
+        filter();
+      });
+    });
+  })();
+</script>
+
+<script src="assets/js/common.js" defer></script>
+</body>
+</html>

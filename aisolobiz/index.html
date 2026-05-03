@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>AIで一人個人事業の教科書｜30秒で結論・1分で試算・15分で開業届</title>
+<meta name="description" content="AIで個人事業、本当にやれる？——30秒Q&A・6つの壁ダッシュボード・手取り早見表・節税3比較・15分で開業届。8業種×AI活用率の数字で答える、副業から専業・法人成りまでのガイド。" />
+<meta name="theme-color" content="#0066FF" />
+
+<!-- OGP / Twitter -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="AIで一人個人事業の教科書" />
+<meta property="og:description" content="30秒で結論、1分で試算、15分で開業届。AI×個人事業の数字を全部出す教科書。" />
+<meta property="og:image" content="assets/images/ogp.png" />
+<meta property="og:locale" content="ja_JP" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="assets/images/ogp.png" />
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="assets/svg/favicon.svg" />
+
+<!-- Google Fonts: Noto Sans JP -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+
+<!-- Common CSS -->
+<link rel="stylesheet" href="assets/css/common.css" />
+
+<style>
+/* =========================================================
+   index.html ページ固有スタイル（共通CSSと衝突しないもの）
+========================================================= */
+
+/* メインオフセット（fixedヘッダ分） */
+main { padding-top: 64px; }
+
+/* ---------- HERO ---------- */
+.hero {
+  position: relative;
+  padding: 56px 0 72px;
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(0,102,255,0.10), transparent 45%),
+    radial-gradient(circle at 88% 82%, rgba(138,43,226,0.10), transparent 45%),
+    linear-gradient(rgba(0,102,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,102,255,0.025) 1px, transparent 1px);
+  background-size: auto, auto, 40px 40px, 40px 40px;
+  z-index: -1;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+@media (max-width: 1024px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px;
+  background: rgba(0,102,255,0.08);
+  border: 1px solid rgba(0,102,255,0.20);
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--c-blue);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.hero-eyebrow .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--c-coral);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+.hero-title {
+  font-weight: 900;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  color: var(--c-text);
+  margin-bottom: 18px;
+}
+.hero-title .grad {
+  background: var(--grad-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero-sub {
+  font-size: 1rem;
+  color: var(--c-text-sub);
+  line-height: 1.85;
+  margin-bottom: 16px;
+  max-width: 580px;
+}
+.hero-bullets {
+  display: flex;
+  gap: 18px 24px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+.hero-bullets li {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--c-text);
+}
+.hero-bullets li b {
+  background: var(--grad-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: 1.1rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+.hero-cta {
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+.hero-meta {
+  margin-top: 18px;
+  font-size: 0.78rem;
+  color: var(--c-text-mute);
+}
+
+.hero-visual {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(0,102,255,0.08), rgba(138,43,226,0.08)),
+    repeating-linear-gradient(45deg, rgba(0,102,255,0.04) 0 1px, transparent 1px 16px);
+  border: 1px solid rgba(0,102,255,0.15);
+  box-shadow: 0 30px 60px -20px rgba(0,102,255,0.20), 0 12px 24px -10px rgba(138,43,226,0.15);
+}
+.hero-visual img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 0.7s ease, transform 1.2s ease;
+}
+.hero-visual img.is-loaded {
+  opacity: 1;
+  transform: scale(1);
+}
+.hero-visual::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(0,102,255,0.04));
+}
+
+/* ---------- 30秒Q&A ---------- */
+.qa-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+@media (max-width: 1024px) { .qa-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 640px)  { .qa-grid { grid-template-columns: 1fr; } }
+.qa-card {
+  background: #fff;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color var(--t-mid), box-shadow var(--t-mid), transform var(--t-mid);
+  position: relative;
+}
+.qa-card:hover {
+  border-color: rgba(0,102,255,0.25);
+  box-shadow: var(--sh-mid);
+  transform: translateY(-2px);
+}
+.qa-num {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: var(--c-blue);
+}
+.qa-q {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--c-text);
+  line-height: 1.5;
+}
+.qa-a {
+  font-size: 0.82rem;
+  color: var(--c-text-sub);
+  line-height: 1.7;
+}
+.qa-tag {
+  display: inline-block;
+  margin-top: auto;
+  padding: 3px 10px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border-radius: 999px;
+  background: var(--grad-warm);
+  color: var(--c-coral);
+  border: 1px solid rgba(255,122,89,0.30);
+  align-self: flex-start;
+}
+
+/* ---------- 3つの入り口 ---------- */
+.entry-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+@media (max-width: 900px) { .entry-grid { grid-template-columns: 1fr; } }
+.entry-card {
+  background: #fff;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  padding: 32px 28px 28px;
+  display: flex; flex-direction: column;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--t-mid), box-shadow var(--t-mid), transform var(--t-mid);
+}
+.entry-card:hover {
+  border-color: rgba(0,102,255,0.25);
+  box-shadow: var(--sh-mid);
+  transform: translateY(-3px);
+}
+.entry-card::before {
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: var(--grad-brand);
+  opacity: 0.85;
+}
+.entry-card .entry-icon {
+  width: 48px; height: 48px;
+  border-radius: var(--r-md);
+  background: var(--grad-warm);
+  display: grid; place-items: center;
+  font-size: 1.6rem;
+}
+.entry-card h3 {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--c-text);
+  margin-top: 4px;
+}
+.entry-card p {
+  font-size: 0.88rem;
+  color: var(--c-text-sub);
+  line-height: 1.75;
+  flex: 1;
+}
+.entry-card .entry-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--c-blue);
+  margin-top: 8px;
+}
+.entry-card .entry-link:hover { color: var(--c-purple); }
+
+/* ---------- 6つの壁 ---------- */
+.walls-wrap {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 32px;
+  align-items: center;
+}
+@media (max-width: 1024px) { .walls-wrap { grid-template-columns: 1fr; } }
+.walls-svg {
+  background: #fff;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  padding: 16px;
+  overflow: hidden;
+}
+.walls-svg img { width: 100%; height: auto; display: block; }
+.walls-list { display: flex; flex-direction: column; gap: 12px; }
+.walls-list .item {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  transition: border-color var(--t-mid), background var(--t-mid);
+}
+.walls-list .item:hover {
+  border-color: rgba(0,102,255,0.20);
+  background: rgba(0,102,255,0.02);
+}
+.walls-list .badge {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+.walls-list .badge.b-side {
+  background: rgba(0,102,255,0.10);
+  color: var(--c-blue);
+}
+.walls-list .badge.b-solo {
+  background: rgba(138,43,226,0.10);
+  color: var(--c-purple);
+}
+.walls-list .item-text { font-size: 0.85rem; color: var(--c-text-sub); line-height: 1.65; }
+.walls-list .item-text b { color: var(--c-text); font-weight: 800; }
+
+/* ---------- 業種診断 ---------- */
+.diag-card {
+  background: linear-gradient(135deg, rgba(0,102,255,0.04), rgba(138,43,226,0.04));
+  border: 1px solid rgba(0,102,255,0.15);
+  border-radius: var(--r-xl);
+  padding: 36px 36px;
+}
+@media (max-width: 768px) { .diag-card { padding: 28px 22px; } }
+.diag-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin: 24px 0 24px;
+}
+@media (max-width: 900px) { .diag-grid { grid-template-columns: repeat(2, 1fr); } }
+.diag-tile {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 18px 10px;
+  background: #fff;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  text-align: center;
+  transition: border-color var(--t-mid), transform var(--t-mid), box-shadow var(--t-mid);
+}
+.diag-tile:hover { border-color: rgba(0,102,255,0.25); transform: translateY(-2px); box-shadow: var(--sh-soft); }
+.diag-tile img { width: 56px; height: 56px; }
+.diag-tile span { font-size: 0.85rem; font-weight: 700; color: var(--c-text); }
+
+/* ---------- 12章リスト ---------- */
+.ch-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+@media (max-width: 1024px) { .ch-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 720px)  { .ch-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px)  { .ch-grid { grid-template-columns: 1fr; } }
+.ch-card {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 18px 16px;
+  background: #fff;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  transition: border-color var(--t-mid), transform var(--t-mid), box-shadow var(--t-mid);
+}
+.ch-card:hover { border-color: rgba(0,102,255,0.25); transform: translateY(-2px); box-shadow: var(--sh-soft); }
+.ch-card img { width: 44px; height: 44px; flex-shrink: 0; }
+.ch-card .ch-no {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--c-blue);
+}
+.ch-card h3 {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--c-text);
+  line-height: 1.5;
+  margin-top: 2px;
+}
+
+/* ---------- 即試算ウィジェット ---------- */
+.qsim-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  background: #fff;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-xl);
+  padding: 36px;
+}
+@media (max-width: 900px) { .qsim-wrap { grid-template-columns: 1fr; padding: 24px; gap: 24px; } }
+.qsim-form-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--c-text);
+  margin-bottom: 14px;
+}
+.qsim-mode {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  background: var(--c-surface-3);
+  border-radius: var(--r-md);
+  padding: 4px;
+  margin-bottom: 16px;
+}
+.qsim-mode button {
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 10px 14px;
+  border: none;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--c-text-mute);
+  transition: background var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
+}
+.qsim-mode button.is-active {
+  background: var(--grad-brand);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0,102,255,0.25);
+}
+.qsim-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--c-border);
+}
+.qsim-row:last-of-type { border-bottom: none; }
+.qsim-row label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--c-text);
+}
+.qsim-input {
+  display: flex; align-items: center; gap: 6px;
+}
+.qsim-input input {
+  width: 110px;
+  padding: 8px 10px;
+  border: 1px solid var(--c-border-soft);
+  border-radius: var(--r-sm);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.qsim-input input:focus { outline: none; border-color: transparent; box-shadow: 0 0 0 2px var(--c-blue); }
+.qsim-input span { font-size: 0.82rem; color: var(--c-text-mute); }
+
+.qsim-result {
+  background: linear-gradient(135deg, rgba(0,102,255,0.04), rgba(138,43,226,0.04));
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  padding: 28px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.qsim-net {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  font-weight: 700;
+  color: var(--c-blue);
+  text-transform: uppercase;
+}
+.qsim-net-amt {
+  font-weight: 900;
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  background: var(--grad-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.qsim-net-amt::after { content: "万円／年"; font-size: 1rem; color: var(--c-text-mute); margin-left: 6px; -webkit-text-fill-color: var(--c-text-mute); }
+.qsim-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 18px;
+  font-size: 0.86rem;
+  color: var(--c-text-sub);
+}
+.qsim-grid > div { display: flex; justify-content: space-between; }
+.qsim-grid b { font-weight: 800; color: var(--c-text); font-variant-numeric: tabular-nums; }
+.qsim-note {
+  font-size: 0.74rem;
+  color: var(--c-text-mute);
+  margin-top: 4px;
+  line-height: 1.55;
+}
+.qsim-cta { margin-top: 8px; }
+
+/* ---------- 法人成りCTA ---------- */
+.houjin-cta {
+  background: linear-gradient(135deg, rgba(0,102,255,0.06), rgba(138,43,226,0.06));
+  border: 1px solid rgba(138,43,226,0.20);
+  border-radius: var(--r-xl);
+  padding: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.houjin-cta .houjin-text {
+  flex: 1; min-width: 280px;
+}
+.houjin-cta h3 {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--c-text);
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.houjin-cta p {
+  font-size: 0.92rem;
+  color: var(--c-text-sub);
+  line-height: 1.75;
+}
+.houjin-cta .houjin-text b {
+  background: var(--grad-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 900;
+}
+
+/* ---------- Reveal animation ---------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- aria-disabled (coming soon) ---------- */
+a[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: default;
+  pointer-events: none;
+  filter: grayscale(35%);
+  position: relative;
+}
+a[aria-disabled="true"]::after {
+  content: "準備中";
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 6px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--c-text-mute);
+  background: var(--c-surface-3);
+  border: 1px solid var(--c-border-soft);
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+  vertical-align: 1px;
+}
+/* ボタン型のaria-disabledは「準備中」バッジを内部用に置き換え */
+.btn[aria-disabled="true"] { opacity: 0.5; }
+/* 現在地表示 */
+.global-nav a[aria-current="page"] {
+  color: var(--c-blue);
+  background: rgba(0,102,255,0.08);
+  font-weight: 800;
+}
+</style>
+</head>
+<body class="bg-blueprint">
+
+<!-- ===== Header ===== -->
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <a href="#top" class="brand-logo" aria-label="AIで一人個人事業の教科書 トップへ">
+      <img src="assets/svg/logo.svg" alt="AIで一人個人事業の教科書" />
+    </a>
+
+    <button class="nav-toggle" type="button"
+            aria-controls="globalNav" aria-expanded="false" aria-label="メニューを開く">
+      <span class="bar" aria-hidden="true"></span>
+    </button>
+
+    <nav id="globalNav" class="global-nav" aria-label="主要ナビゲーション">
+      <a href="index.html" aria-current="page">トップ</a>
+      <a href="textbook.html">教科書</a>
+      <a href="simulator/index.html">シミュレータ</a>
+      <a href="open.html">開業届</a>
+      <a href="downloads.html">資料DL</a>
+      <a href="resources.html">用語集</a>
+      <a href="simulator/index.html" class="is-cta">試算する</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ===== Hero ===== -->
+<section class="hero" aria-labelledby="heroTitle">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <span class="hero-eyebrow"><span class="dot" aria-hidden="true"></span>AI × SOLO BUSINESS / 2026 EDITION</span>
+        <h1 id="heroTitle" class="hero-title">
+          <span class="grad">AIで個人事業</span>、<br />やれる。
+        </h1>
+        <p class="hero-sub">
+          短気なあなたのための、数字で答える教科書。<br />
+          副業6万から専業1,500万まで、税・社保・節税を全部表にしました。
+        </p>
+        <ul class="hero-bullets" aria-label="3つの数字">
+          <li><b>30秒</b>で結論</li>
+          <li><b>1分</b>で試算</li>
+          <li><b>15分</b>で開業届</li>
+        </ul>
+        <div class="hero-cta">
+          <a href="simulator/index.html" class="btn btn--primary btn--lg">
+            <span aria-hidden="true">🧮</span> シミュレータで試算
+          </a>
+          <a href="#textbook" class="btn btn--ghost btn--lg">
+            <span aria-hidden="true">📖</span> 教科書を読む
+          </a>
+        </div>
+        <p class="hero-meta">
+          ※ 数字の前提：2026年4月時点・東京23区基準。所得税は累進＋復興2.1%、青色65万、基礎48万、国保13.7%＋均等割66,000円で概算。
+        </p>
+      </div>
+
+      <div class="hero-visual" data-video-placeholder aria-hidden="true">
+        <img src="assets/images/hero.png" alt="" data-hero-image loading="eager" decoding="async" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 30秒Q&A ===== -->
+<section class="section" aria-labelledby="qaTitle">
+  <div class="container">
+    <p class="section-eyebrow" data-reveal>30 SEC OVERVIEW</p>
+    <h2 id="qaTitle" class="section-title" data-reveal>
+      まず<span class="hl">5問だけ</span>、即答します。
+    </h2>
+    <p class="section-lead" data-reveal>
+      哲学・抽象論はゼロ。短気な読者のために、結論から数字で答えるプロローグです。
+    </p>
+
+    <div class="qa-grid">
+      <article class="qa-card" data-reveal>
+        <span class="qa-num">Q1</span>
+        <h3 class="qa-q">AIで独立、本当にできる？</h3>
+        <p class="qa-a">YES。月6万の副業から月100万超の専業まで実例。8業種すべてに月100万到達者が実在します。</p>
+        <span class="qa-tag">月6〜100万円</span>
+      </article>
+      <article class="qa-card" data-reveal>
+        <span class="qa-num">Q2</span>
+        <h3 class="qa-q">AIツール代はいくら？</h3>
+        <p class="qa-a">月5千／2万／5万円の3階層で十分。売上に対するツール費比率は5%以内が目安です。</p>
+        <span class="qa-tag">月5千〜5万</span>
+      </article>
+      <article class="qa-card" data-reveal>
+        <span class="qa-num">Q3</span>
+        <h3 class="qa-q">どんな仕事をどれくらい？</h3>
+        <p class="qa-a">8業種×AI活用率で「月◯時間で月◯万」が早見表化。Web制作なら月60時間で月50万。</p>
+        <span class="qa-tag">8業種カタログ</span>
+      </article>
+      <article class="qa-card" data-reveal>
+        <span class="qa-num">Q4</span>
+        <h3 class="qa-q">税金で持っていかれる？</h3>
+        <p class="qa-a">青色65万＋経費＋iDeCo＋小規模共済で年200万円超の控除。手取りは年100万円以上変わります。</p>
+        <span class="qa-tag">控除410万超</span>
+      </article>
+      <article class="qa-card" data-reveal>
+        <span class="qa-num">Q5</span>
+        <h3 class="qa-q">何から始める？</h3>
+        <p class="qa-a">弥生「開業届」で15分・無料・スマホ完結。紙の手書きや税務署窓口の時代は終わっています。</p>
+        <span class="qa-tag">15分・無料</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3つの入り口 ===== -->
+<section class="section section--alt" id="textbook" aria-labelledby="entryTitle">
+  <div class="container">
+    <p class="section-eyebrow" data-reveal>3 ENTRANCES</p>
+    <h2 id="entryTitle" class="section-title" data-reveal>
+      まず<span class="hl">どこから</span>入る？
+    </h2>
+    <p class="section-lead" data-reveal>
+      あなたの今のフェーズで、最短ルートが変わります。3つの入り口を用意しました。
+    </p>
+
+    <div class="entry-grid">
+      <article class="entry-card" data-reveal>
+        <div class="entry-icon" aria-hidden="true">📖</div>
+        <h3>教科書を読む</h3>
+        <p>12章＋巻末で、副業から法人成りまで網羅。表と数字だけで、抽象論ゼロの設計です。</p>
+        <a class="entry-link" href="#chapters">12章を見る →</a>
+      </article>
+      <article class="entry-card" data-reveal>
+        <div class="entry-icon" aria-hidden="true">🧮</div>
+        <h3>シミュレータで試算</h3>
+        <p>あなたの売上・経費・モードを入れるだけ。手取り・税・社保・6つの壁判定が瞬時に出ます。</p>
+        <a class="entry-link" href="simulator/index.html">シミュレータへ →</a>
+      </article>
+      <article class="entry-card" data-reveal>
+        <div class="entry-icon" aria-hidden="true">📝</div>
+        <h3>15分で開業届</h3>
+        <p>弥生の開業届で、開業届＋青色申告承認＋専従者給与の3点を同時に出すのが鉄則。</p>
+        <a class="entry-link" href="open.html">15分で開業届を出す →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 6つの壁ダッシュボード ===== -->
+<section class="section" id="walls" aria-labelledby="wallsTitle">
+  <div class="container">
+    <p class="section-eyebrow" data-reveal>6 WALLS DASHBOARD</p>
+    <h2 id="wallsTitle" class="section-title" data-reveal>
+      個人事業主が越える<span class="hl">6つの壁</span>
+    </h2>
+    <p class="section-lead" data-reveal>
+      副業者が気にする5つの壁＋専業者の3つの壁を1ページに圧縮。あなたの現在地で「次どこを越えるか」がわかります。
+    </p>
+
+    <div class="walls-wrap">
+      <div class="walls-svg" data-reveal>
+        <img src="assets/svg/walls/walls_overview.svg" alt="6つの壁ダッシュボード（副業/専業の年収階段）" />
+      </div>
+
+      <ul class="walls-list" data-reveal>
+        <li class="item">
+          <span class="badge b-side">103万</span>
+          <span class="item-text"><b>配偶者控除</b>が減り始める。副業者は配偶者の年収側で判定。</span>
+        </li>
+        <li class="item">
+          <span class="badge b-side">130万</span>
+          <span class="item-text"><b>社保被扶養者</b>から外れる。事業所得は経費控除後で見る健保が多数。</span>
+        </li>
+        <li class="item">
+          <span class="badge b-side">200万</span>
+          <span class="item-text"><b>住民税申告不要</b>（給与＋20万以下）が使えなくなる副業ゾーン。</span>
+        </li>
+        <li class="item">
+          <span class="badge b-solo">48万</span>
+          <span class="item-text"><b>基礎控除</b>満額帯（合計所得2,400万以下）。専業のスタートライン。</span>
+        </li>
+        <li class="item">
+          <span class="badge b-solo">1,000万</span>
+          <span class="item-text"><b>消費税</b>の課税事業者ライン。インボイス2割特例の試算は必須。</span>
+        </li>
+        <li class="item">
+          <span class="badge b-solo">課税600万</span>
+          <span class="item-text"><b>法人成り</b>検討ライン。年商800〜1,000万超で必ず試算。</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 業種診断 ===== -->
+<section class="section section--alt" id="diagnose" aria-labelledby="diagTitle">
+  <div class="container">
+    <p class="section-eyebrow" data-reveal>7Q DIAGNOSE</p>
+    <h2 id="diagTitle" class="section-title" data-reveal>
+      <span class="hl">7問</span>であなたに合う業種を当てる
+    </h2>
+    <p class="section-lead" data-reveal>
+      8業種から「あなたが今すぐ稼げる業種」を診断。詳細は第4章「業種カタログ」で。
+    </p>
+
+    <div class="diag-card" data-reveal>
+      <p style="font-size:0.95rem; color:var(--c-text-sub); margin-bottom:14px;">
+        診断対象の8業種：
+      </p>
+      <div class="diag-grid">
+        <a class="diag-tile" href="textbook.html#chapter4">
+          <img src="assets/svg/industry/dev.svg" alt="" /><span>受託開発</span>
+        </a>
+        <a class="diag-tile" href="textbook.html#chapter4">
+          <img src="assets/svg/industry/ax.svg" alt="" /><span>AXコンサル</span>
+        </a>
+        <a class="diag-tile" href="textbook.html#chapter4">
+          <img src="assets/svg/industry/biz.svg" alt="" /><span>業務設計</span>
+        </a>
+        <a class="diag-tile" href="textbook.html#chapter4">
+          <img src="assets/svg/industry/ba.svg" alt="" /><span>BAコンサル</span>
+        </a>
+        <a class="diag-tile" href="textbook.html#chapter4">
+          <img src="assets/svg/industry/keiei.svg" alt="" /><span>経営コンサル</span>
+        </a>
+        <a class="diag-tile" href="textbook.html#chapter4">
+          <img src="assets/svg/industry/ad.svg" alt="" /><span>広告運用</span>
+        </a>
+        <a class="diag-tile" href="textbook.html#chapter4">
+          <img src="assets/svg/industry/web.svg" alt="" /><span>ウェブ制作</span>
+        </a>
+        <a class="diag-tile" href="textbook.html#chapter4">
+          <img src="assets/svg/industry/design.svg" alt="" /><span>ウェブデザイン</span>
+        </a>
+      </div>
+      <div style="text-align:center;">
+        <a href="textbook.html#chapter4" class="btn btn--primary">
+          <span aria-hidden="true">🎯</span> 7問診断を始める（第4章）
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 12章リスト ===== -->
+<section class="section" id="chapters" aria-labelledby="chTitle">
+  <div class="container">
+    <p class="section-eyebrow" data-reveal>12 CHAPTERS</p>
+    <h2 id="chTitle" class="section-title" data-reveal>
+      教科書は<span class="hl">何が読める？</span>
+    </h2>
+    <p class="section-lead" data-reveal>
+      Part 1【お金・道具・仕事】→ Part 2【実行】→ Part 3【守り】→ Part 4【出口】→ Part 5【成長】の5部構成。
+    </p>
+
+    <div class="ch-grid">
+      <a class="ch-card" href="textbook.html#chapter1" data-reveal>
+        <img src="assets/svg/chapters/ch1.svg" alt="" />
+        <div><span class="ch-no">CH 01</span><h3>手取り早見表（副業6×専業6）</h3></div>
+      </a>
+      <a class="ch-card" href="textbook.html#chapter2" data-reveal>
+        <img src="assets/svg/chapters/ch2.svg" alt="" />
+        <div><span class="ch-no">CH 02</span><h3>節税効果の3比較</h3></div>
+      </a>
+      <a class="ch-card" href="textbook.html#chapter3" data-reveal>
+        <img src="assets/svg/chapters/ch3.svg" alt="" />
+        <div><span class="ch-no">CH 03</span><h3>AIツール3階層</h3></div>
+      </a>
+      <a class="ch-card" href="textbook.html#chapter4" data-reveal>
+        <img src="assets/svg/chapters/ch4.svg" alt="" />
+        <div><span class="ch-no">CH 04</span><h3>業種カタログ＋7問診断</h3></div>
+      </a>
+      <a class="ch-card" href="textbook.html#chapter5" data-reveal>
+        <img src="assets/svg/chapters/ch5.svg" alt="" />
+        <div><span class="ch-no">CH 05</span><h3>15分で開業</h3></div>
+      </a>
+      <a class="ch-card" href="textbook.html#chapter6" data-reveal>
+        <img src="assets/svg/chapters/ch6.svg" alt="" />
+        <div><span class="ch-no">CH 06</span><h3>仕事の取り方（5チャネル）</h3></div>
+      </a>
+      <a class="ch-card" href="textbook.html#chapter7" data-reveal>
+        <img src="assets/svg/chapters/ch7.svg" alt="" />
+        <div><span class="ch-no">CH 07</span><h3>固定費とキャッシュフロー</h3></div>
+      </a>
+      <a class="ch-card" href="textbook.html#chapter8" data-reveal>
+        <img src="assets/svg/chapters/ch8.svg" alt="" />
+        <div><span class="ch-no">CH 08</span><h3>経費術</h3></div>
+      </a>
+      <a class="ch-card" href="textbook.html#chapter9" data-reveal>
+        <img src="assets/svg/chapters/ch9.svg" alt="" />
+        <div><span class="ch-no">CH 09</span><h3>確定申告の最短ルート</h3></div>
+      </a>
+      <a class="ch-card" href="textbook.html#chapter10" data-reveal>
+        <img src="assets/svg/chapters/ch10.svg" alt="" />
+        <div><span class="ch-no">CH 10</span><h3>落とし穴10選</h3></div>
+      </a>
+      <a class="ch-card" href="textbook.html#chapter11" data-reveal>
+        <img src="assets/svg/chapters/ch11.svg" alt="" />
+        <div><span class="ch-no">CH 11</span><h3>やめる／休む／ピボット</h3></div>
+      </a>
+      <a class="ch-card" href="textbook.html#chapter12" data-reveal>
+        <img src="assets/svg/chapters/ch12.svg" alt="" />
+        <div><span class="ch-no">CH 12</span><h3>卒業ロード（→法人版）</h3></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 即試算ウィジェット ===== -->
+<section class="section section--alt" id="quick-sim" aria-labelledby="qsTitle">
+  <div class="container">
+    <p class="section-eyebrow" data-reveal>QUICK SIM</p>
+    <h2 id="qsTitle" class="section-title" data-reveal>
+      <span class="hl">1分で試算</span>。手取りはいくら残る？
+    </h2>
+    <p class="section-lead" data-reveal>
+      モード（副業／専業）と年商・経費（・本業給与）を入れるだけ。詳細はシミュレータで業種・控除も含めて精緻化できます。
+    </p>
+
+    <div class="qsim-wrap" data-quick-sim data-reveal>
+      <!-- 入力 -->
+      <div class="qsim-form">
+        <div class="qsim-form-title">条件を入れる</div>
+
+        <div class="qsim-mode" role="tablist" aria-label="モード切替">
+          <button type="button" data-mode="solo"  class="is-active" aria-pressed="true">専業</button>
+          <button type="button" data-mode="side"  aria-pressed="false">副業</button>
+        </div>
+
+        <div class="qsim-row">
+          <label for="qs-revenue">年商</label>
+          <span class="qsim-input">
+            <input id="qs-revenue" data-input="revenue" type="number" inputmode="numeric" min="0" max="100000" step="10" value="800" />
+            <span>万円</span>
+          </span>
+        </div>
+        <div class="qsim-row">
+          <label for="qs-expense">経費</label>
+          <span class="qsim-input">
+            <input id="qs-expense" data-input="expense" type="number" inputmode="numeric" min="0" max="100000" step="10" value="200" />
+            <span>万円</span>
+          </span>
+        </div>
+        <div class="qsim-row" data-row-salary style="display:none;">
+          <label for="qs-salary">本業給与</label>
+          <span class="qsim-input">
+            <input id="qs-salary" data-input="salary" type="number" inputmode="numeric" min="0" max="100000" step="10" value="500" />
+            <span>万円</span>
+          </span>
+        </div>
+
+        <p class="qsim-note">
+          ※ 軽量版：所得税（累進＋復興2.1%）＋住民税10%＋（専業のみ）国保概算＋国民年金21万。基礎48万＋青色65万を控除。
+          詳細控除（共済・iDeCo・専従者）は<a href="simulator/index.html">シミュレータ</a>でどうぞ。
+        </p>
+      </div>
+
+      <!-- 出力 -->
+      <div class="qsim-result">
+        <span class="qsim-net">YOUR NET</span>
+        <span class="qsim-net-amt"><span data-out="net">0</span></span>
+
+        <div class="qsim-grid" aria-live="polite">
+          <div><span>事業所得</span><b><span data-out="biz-income">0</span> 万</b></div>
+          <div><span>課税所得</span><b><span data-out="taxable">0</span> 万</b></div>
+          <div><span>所得税</span><b><span data-out="income-tax">0</span> 万</b></div>
+          <div><span>住民税</span><b><span data-out="resident-tax">0</span> 万</b></div>
+          <div><span>税合計</span><b><span data-out="total-tax">0</span> 万</b></div>
+        </div>
+
+        <p class="qsim-note" data-out="note"></p>
+        <a href="simulator/index.html" class="btn btn--primary qsim-cta">
+          <span aria-hidden="true">🧮</span> 詳細シミュレータで精緻化
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 法人成りCTA ===== -->
+<section class="section" aria-labelledby="houjinTitle">
+  <div class="container">
+    <div class="houjin-cta" data-reveal>
+      <div class="houjin-text">
+        <h3 id="houjinTitle">
+          <b>法人成りライン</b>を超えたら、法人版へ。
+        </h3>
+        <p>
+          課税所得 <b>600万円</b> または年商 <b>800〜1,000万円</b> を継続的に超えるなら、法人成りで税負担が逆転します。
+          姉妹サイト「AIで一人法人の教科書」で、設立コスト・役員報酬最適化・社保・退職金まで網羅しています。
+        </p>
+      </div>
+      <a href="coming-soon.html?page=corporate" class="btn btn--coral btn--lg">
+        <span aria-hidden="true">🏢</span> 法人版の教科書へ
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===== Footer ===== -->
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>サイト一覧</h4>
+        <ul>
+          <li><a href="textbook.html">教科書トップ</a></li>
+          <li><a href="textbook.html#chapter1">12章リスト</a></li>
+          <li><a href="simulator/index.html">収支シミュレータ</a></li>
+          <li><a href="open.html">第5章 開業届</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>巻末ツール</h4>
+        <ul>
+          <li><a href="resources.html#glossary">用語集</a></li>
+          <li><a href="textbook.html#chapter1">手取り早見表</a></li>
+          <li><a href="resources.html#kokuho">国保自治体早見表</a></li>
+          <li><a href="resources.html#tools">AIツールリンク集</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>関連</h4>
+        <ul>
+          <li><a href="coming-soon.html?page=corporate">法人版の教科書</a></li>
+          <li><a href="coming-soon.html?page=about">著者プロフィール</a></li>
+          <li><a href="downloads.html">資料ダウンロード</a></li>
+          <li><a href="coming-soon.html?page=contact">お問い合わせ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>免責</h4>
+        <ul>
+          <li><a href="textbook.html#preface">数字の前提</a></li>
+          <li><a href="coming-soon.html?page=privacy">プライバシー</a></li>
+          <li><a href="coming-soon.html?page=terms">利用規約</a></li>
+          <li><a href="coming-soon.html?page=changelog">更新履歴</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; <span data-year>2026</span> <span class="brand">AI × SOLO BUSINESS 教科書</span></span>
+      <span>本サイトの数字は2026年4月時点・東京23区基準の概算です。</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/common.js" defer></script>
+</body>
+</html>

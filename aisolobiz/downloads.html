@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>資料ダウンロード | AIで一人個人事業の教科書</title>
+  <meta name="description" content="教科書のPPT版、note記事、自治体国保早見表、業種別チェックリストなど、無料で使える個人事業向け資料をまとめてダウンロード。">
+  <meta property="og:title" content="資料ダウンロード | AIで一人個人事業の教科書">
+  <meta property="og:description" content="62枚のPPT版教科書ほか、無料で使える資料をまとめて配布中。">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="assets/svg/favicon.svg">
+  <link rel="stylesheet" href="assets/css/common.css">
+  <style>
+    /* downloads.html 独自スタイル ================================ */
+    .dl-hero{
+      background: linear-gradient(135deg, var(--color-primary,#0066FF) 0%, var(--color-secondary,#8A2BE2) 60%, var(--color-coral,#FF7A59) 100%);
+      color:#fff; padding: clamp(56px,9vw,96px) 24px;
+      text-align:center; position:relative; overflow:hidden;
+    }
+    .dl-hero::before{
+      content:""; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse at 20% 80%, rgba(255,255,255,.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(255,122,89,.2) 0%, transparent 50%);
+      pointer-events:none;
+    }
+    .dl-hero__inner{position:relative;z-index:1;max-width:840px;margin:0 auto;}
+    .dl-hero__badge{
+      display:inline-block;
+      background: rgba(255,255,255,.2);
+      padding: 6px 18px; border-radius: 999px;
+      font-size: .85rem; font-weight: 700; letter-spacing: .08em;
+      margin-bottom: 1.4rem; backdrop-filter: blur(6px);
+    }
+    .dl-hero__title{
+      font-size: clamp(2rem, 5.5vw, 3.4rem);
+      font-weight:800; line-height:1.25; margin: 0 0 1rem;
+    }
+    .dl-hero__lead{
+      font-size: clamp(1rem, 1.8vw, 1.18rem);
+      max-width:680px; margin: 0 auto; line-height: 1.85;
+      opacity:.95;
+    }
+    .dl-hero__meta{
+      margin-top: 2rem; display: flex; justify-content: center;
+      gap: 14px 28px; flex-wrap: wrap; font-size: .92rem;
+    }
+    .dl-hero__meta span::before{
+      content:"●"; color: var(--color-coral,#FF7A59);
+      margin-right:.4rem; font-size:.7em;
+    }
+
+    /* セクション共通 */
+    .section{
+      max-width:1080px; margin: 0 auto;
+      padding: clamp(48px,7vw,80px) 24px;
+    }
+    .section__title{
+      font-size: clamp(1.5rem, 3.2vw, 2.1rem);
+      font-weight:800; margin: 0 0 1.4rem;
+      color:#111827;
+    }
+    .section__title::before{
+      content:""; display:inline-block;
+      width:4px; height:1em; background: var(--color-primary, #0066FF);
+      margin-right:.6rem; border-radius:2px; vertical-align:-3px;
+    }
+    .section__lead{
+      font-size:1.02rem; color:#4B5563; line-height:1.85;
+      max-width: 760px; margin:0 0 2rem;
+    }
+
+    /* DLカード ================================ */
+    .dl-grid{
+      display:grid; gap: 22px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    }
+    .dl-card{
+      position: relative;
+      display: flex; flex-direction: column;
+      background:#fff; border:1px solid #E5E7EB;
+      border-radius:18px; padding:26px 24px 24px;
+      transition: all .25s ease;
+      overflow:hidden;
+    }
+    .dl-card:hover{
+      transform:translateY(-4px);
+      box-shadow: 0 14px 30px rgba(0,0,0,.08);
+      border-color: var(--color-primary,#0066FF);
+    }
+    .dl-card.is-featured{
+      background: linear-gradient(135deg, #F3F8FF 0%, #FFF 70%);
+      border:2px solid var(--color-primary,#0066FF);
+    }
+    .dl-card.is-coming{opacity:.7;}
+    .dl-card.is-coming .dl-card__btn{pointer-events:none;background:#9CA3AF;}
+
+    .dl-card__head{
+      display:flex; align-items:flex-start; gap:14px; margin-bottom:1rem;
+    }
+    .dl-card__icon{
+      flex-shrink:0; width:56px;height:56px;
+      border-radius:14px;
+      background: linear-gradient(135deg, var(--color-primary,#0066FF), var(--color-secondary,#8A2BE2));
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.6rem; color:#fff;
+    }
+    .dl-card.is-featured .dl-card__icon{
+      background: linear-gradient(135deg, var(--color-coral,#FF7A59), var(--color-secondary,#8A2BE2));
+    }
+    .dl-card__type{
+      display:inline-block; font-size:.72rem; font-weight:700;
+      letter-spacing:.05em; color: var(--color-primary,#0066FF);
+      background:#E6F0FF; padding: 3px 10px; border-radius: 999px;
+      margin-bottom:.4rem;
+    }
+    .dl-card.is-featured .dl-card__type{
+      color:#fff; background: var(--color-coral,#FF7A59);
+    }
+    .dl-card__title{
+      font-size:1.12rem; font-weight:800; margin:0;
+      color:#111827; line-height:1.4;
+    }
+    .dl-card__desc{
+      flex:1; margin: 0 0 1rem; color:#4B5563;
+      font-size:.92rem; line-height:1.75;
+    }
+    .dl-card__meta{
+      display:flex; flex-wrap:wrap; gap: 6px 12px;
+      margin-bottom:1.2rem; font-size:.82rem; color:#6B7280;
+    }
+    .dl-card__meta span{
+      display:inline-flex; align-items:center; gap:4px;
+      padding: 2px 10px; background:#F3F4F6;
+      border-radius:6px;
+    }
+    .dl-card__btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:.4rem; padding:13px 22px;
+      background: var(--color-primary,#0066FF); color:#fff;
+      text-decoration:none; font-weight:700; font-size:.95rem;
+      border-radius: 10px;
+      transition: all .2s ease;
+    }
+    .dl-card__btn:hover{background:#0052CC;transform:translateY(-1px);}
+    .dl-card.is-featured .dl-card__btn{
+      background: linear-gradient(90deg, var(--color-coral,#FF7A59) 0%, #FF5C2D 100%);
+      box-shadow: 0 4px 14px rgba(255,122,89,.35);
+    }
+    .dl-card__ribbon{
+      position:absolute; top: 14px; right: -32px;
+      transform: rotate(35deg);
+      background: var(--color-coral,#FF7A59); color:#fff;
+      padding: 4px 36px; font-size:.72rem; font-weight:700;
+      letter-spacing:.08em;
+    }
+    .dl-card__coming{
+      display:inline-block; background:#F3F4F6;
+      color:#6B7280; padding:3px 10px; border-radius:999px;
+      font-size:.75rem; font-weight:700;
+      margin-bottom:.5rem;
+    }
+
+    /* 注意ブロック */
+    .note-block{
+      background:#FFFBEB; border-left: 4px solid #F59E0B;
+      padding: 18px 22px; border-radius: 10px;
+      margin-top: 32px; font-size:.92rem; color:#78350F;
+      line-height:1.75;
+    }
+    .note-block strong{color:#92400E;}
+
+    /* 関連CTA */
+    .cta-pair{
+      display:grid; gap:18px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      margin-top: 2rem;
+    }
+    .cta-pair a{
+      display:block; padding: 22px 26px;
+      background:#fff; border:1px solid #E5E7EB; border-radius: 14px;
+      text-decoration:none; color:#111827;
+      transition: all .2s ease;
+    }
+    .cta-pair a:hover{
+      transform:translateY(-3px);
+      box-shadow:0 8px 20px rgba(0,0,0,.07);
+      border-color: var(--color-primary,#0066FF);
+    }
+    .cta-pair .label{
+      font-size:.78rem; color: var(--color-secondary,#8A2BE2);
+      font-weight:700; letter-spacing:.05em;
+    }
+    .cta-pair h4{margin:.4rem 0 .4rem;font-size:1.1rem;}
+    .cta-pair p{margin:0;font-size:.88rem;color:#6B7280;line-height:1.7;}
+  </style>
+</head>
+<body>
+
+<!-- ========== ヘッダー ========== -->
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <a href="index.html" class="brand-logo" aria-label="AIで一人個人事業の教科書 トップへ">
+      <img src="assets/svg/logo.svg" alt="AIで一人個人事業の教科書" />
+    </a>
+
+    <button class="nav-toggle" type="button"
+            aria-controls="globalNav" aria-expanded="false" aria-label="メニューを開く">
+      <span class="bar" aria-hidden="true"></span>
+    </button>
+
+    <nav id="globalNav" class="global-nav" aria-label="主要ナビゲーション">
+      <a href="index.html">トップ</a>
+      <a href="textbook.html">教科書</a>
+      <a href="simulator/index.html">シミュレータ</a>
+      <a href="open.html">開業届</a>
+      <a href="downloads.html" aria-current="page">資料DL</a>
+      <a href="resources.html">用語集</a>
+      <a href="simulator/index.html" class="is-cta">試算する</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ========== ヒーロー ========== -->
+<section class="dl-hero">
+  <div class="dl-hero__inner">
+    <span class="dl-hero__badge">FREE DOWNLOAD</span>
+    <h1 class="dl-hero__title">無料ダウンロード<br>センター</h1>
+    <p class="dl-hero__lead">
+      教科書のPPT版・note記事・自治体国保早見表・業種別チェックリスト・開業届テンプレ。<br>
+      個人事業のスタートに必要な資料を、<strong>登録不要・完全無料</strong>でまとめて配布しています。
+    </p>
+    <div class="dl-hero__meta">
+      <span>登録不要</span>
+      <span>商用利用OK（出典明記）</span>
+      <span>2026年4月版</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ダウンロードリスト ========== -->
+<section class="section" id="downloads">
+  <h2 class="section__title">ダウンロード一覧</h2>
+  <p class="section__lead">気になる資料をクリックしてその場でダウンロード or 閲覧できます。</p>
+
+  <div class="dl-grid">
+
+    <!-- ① 教科書PPT版（特推し） -->
+    <article class="dl-card is-featured">
+      <span class="dl-card__ribbon">人気No.1</span>
+      <div class="dl-card__head">
+        <div class="dl-card__icon">📊</div>
+        <div>
+          <span class="dl-card__type">PowerPoint</span>
+          <h3 class="dl-card__title">教科書PPT版（全62枚）</h3>
+        </div>
+      </div>
+      <p class="dl-card__desc">
+        全4章＋表紙＋目次の <strong>62スライド</strong>構成。社内研修・勉強会・自分用ノートとして自由に使えます。図表・チャート・落とし穴マップを全収録。
+      </p>
+      <div class="dl-card__meta">
+        <span>62枚</span>
+        <span>245KB</span>
+        <span>.pptx</span>
+        <span>編集可</span>
+      </div>
+      <a class="dl-card__btn" href="../03_pptx/2026-04-30_AIで一人個人事業の教科書.pptx" download>
+        ↓ PPTをダウンロード
+      </a>
+    </article>
+
+    <!-- ② note記事 -->
+    <article class="dl-card">
+      <div class="dl-card__head">
+        <div class="dl-card__icon">📖</div>
+        <div>
+          <span class="dl-card__type">Article</span>
+          <h3 class="dl-card__title">note記事フル版（全文）</h3>
+        </div>
+      </div>
+      <p class="dl-card__desc">
+        4章構成・約45,000字のフル記事。第1章「お金」／第2章「ツール」／第3章「防御」／第4章「出口」＋巻末A〜J（テンプレ集）。
+      </p>
+      <div class="dl-card__meta">
+        <span>4章</span>
+        <span>約45,000字</span>
+        <span>巻末A〜J</span>
+      </div>
+      <a class="dl-card__btn" href="https://note.com/" target="_blank" rel="noopener noreferrer">
+        noteで読む →
+      </a>
+    </article>
+
+    <!-- ③ 国保早見表 -->
+    <article class="dl-card">
+      <div class="dl-card__head">
+        <div class="dl-card__icon">🗾</div>
+        <div>
+          <span class="dl-card__type">Reference</span>
+          <h3 class="dl-card__title">国保自治体別早見表（5都市）</h3>
+        </div>
+      </div>
+      <p class="dl-card__desc">
+        東京23区・大阪市・名古屋市・札幌市・福岡市の <strong>所得別 国保保険料 年額</strong>（2026年度・40歳未満・単身モデル）。最大年12万円の差を可視化。
+      </p>
+      <div class="dl-card__meta">
+        <span>5都市</span>
+        <span>5所得帯</span>
+        <span>2026年版</span>
+      </div>
+      <a class="dl-card__btn" href="resources.html#kokuho">
+        早見表を見る →
+      </a>
+    </article>
+
+    <!-- ④ 業種別チェックリスト -->
+    <article class="dl-card is-coming">
+      <div class="dl-card__head">
+        <div class="dl-card__icon">✅</div>
+        <div>
+          <span class="dl-card__coming">後日追加予定</span>
+          <h3 class="dl-card__title">業種別チェックリスト</h3>
+        </div>
+      </div>
+      <p class="dl-card__desc">
+        受託開発／AXコンサル／業務設計／BAコンサル／経営コンサル／広告運用／ウェブ制作／ウェブデザインの <strong>8業種別</strong>に、必要なAIツール・経費科目・契約注意点をチェックリスト化。
+      </p>
+      <div class="dl-card__meta">
+        <span>8業種</span>
+        <span>準備中</span>
+      </div>
+      <a class="dl-card__btn" href="coming-soon.html?page=custom-list">準備中ページへ →</a>
+    </article>
+
+    <!-- ⑤ 開業届テンプレート -->
+    <article class="dl-card">
+      <div class="dl-card__head">
+        <div class="dl-card__icon">📝</div>
+        <div>
+          <span class="dl-card__type">Service</span>
+          <h3 class="dl-card__title">開業届テンプレート（弥生）</h3>
+        </div>
+      </div>
+      <p class="dl-card__desc">
+        弥生「開業届」サービスでスマホ <strong>15分・無料</strong>。質問に答えるだけで開業届と青色申告承認申請書が同時に作成できます。
+      </p>
+      <div class="dl-card__meta">
+        <span>15分</span>
+        <span>無料</span>
+        <span>e-Tax対応</span>
+      </div>
+      <a class="dl-card__btn" href="https://www.yayoi-kk.co.jp/kigyo/starting/" target="_blank" rel="noopener noreferrer">
+        弥生で作成する →
+      </a>
+    </article>
+
+    <!-- ⑥ 数字根拠（おまけ） -->
+    <article class="dl-card">
+      <div class="dl-card__head">
+        <div class="dl-card__icon">🔍</div>
+        <div>
+          <span class="dl-card__type">Reference</span>
+          <h3 class="dl-card__title">数字根拠（出典）一覧</h3>
+        </div>
+      </div>
+      <p class="dl-card__desc">
+        本サイトと教科書で使用した税率・控除額・社保料率の <strong>公式出典</strong>を巻末Jにまとめています。国税庁・厚労省・自治体公式の最新リンク付き。
+      </p>
+      <div class="dl-card__meta">
+        <span>50+項目</span>
+        <span>公式リンク</span>
+      </div>
+      <a class="dl-card__btn" href="resources.html#sources">出典を確認 →</a>
+    </article>
+
+  </div>
+
+  <!-- 注意ブロック -->
+  <div class="note-block">
+    <strong>ご利用上の注意：</strong>
+    本資料は <strong>2026年4月時点</strong> の制度・税率・社保料率に基づきます。実際の手続きや申告にあたっては最新の公式情報（国税庁・自治体・各機関）を必ずご確認ください。
+    商用利用は出典明記（「AIで一人個人事業の教科書」）でOK。<strong>再販・無断転載は禁止</strong>します。
+  </div>
+</section>
+
+<!-- ========== 関連CTA ========== -->
+<section class="section" id="related">
+  <h2 class="section__title">あわせて使う</h2>
+  <p class="section__lead">資料単体ではなく、教科書本体・シミュレータと組み合わせると効果倍増です。</p>
+  <div class="cta-pair">
+    <a href="index.html#textbook">
+      <span class="label">教科書本編</span>
+      <h4>note記事から読む</h4>
+      <p>4章＋巻末A〜Jのフル版を、ブラウザで快適に読めます。</p>
+    </a>
+    <a href="simulator/index.html">
+      <span class="label">シミュレータ</span>
+      <h4>節税シミュレータで試算</h4>
+      <p>あなたの売上を入れるだけで、青色65万＋専従者の手取りを瞬時に計算。</p>
+    </a>
+    <a href="open.html">
+      <span class="label">15分で開業届</span>
+      <h4>弥生で開業届を作る</h4>
+      <p>無料・スマホ完結。青色申請書も同時に作成できます。</p>
+    </a>
+    <a href="resources.html">
+      <span class="label">リソース集</span>
+      <h4>用語集・自治体早見表・AIツール</h4>
+      <p>50語の用語集と業種別ツール一覧で、つまずきポイントを即解決。</p>
+    </a>
+  </div>
+</section>
+
+<!-- ========== フッター ========== -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <img src="assets/svg/logo.svg" alt="" height="36">
+      <p>2026年4月時点の数字・制度に基づきます。最新の制度変更は税務署・自治体・各機関の公式情報をご確認ください。</p>
+    </div>
+    <nav class="site-footer__nav" aria-label="フッターナビ">
+      <a href="index.html">トップ</a>
+      <a href="simulator/index.html">シミュレータ</a>
+      <a href="open.html">開業届</a>
+      <a href="downloads.html">資料DL</a>
+      <a href="resources.html">リソース</a>
+    </nav>
+    <p class="site-footer__copy">© 2026 AIで一人個人事業の教科書</p>
+  </div>
+</footer>
+
+<script src="assets/js/common.js" defer></script>
+</body>
+</html>

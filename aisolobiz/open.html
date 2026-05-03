@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>15分で開業届 | AIで一人個人事業の教科書</title>
+  <meta name="description" content="弥生「開業届」サービスを使えば15分・無料・スマホで開業届と青色申告承認申請書が完成。出すべきタイミング、手順4ステップ、副業バレ対策まで解説。">
+  <meta property="og:title" content="15分で開業届 | AIで一人個人事業の教科書">
+  <meta property="og:description" content="弥生「開業届」サービスを使えば15分・無料で完結。青色65万控除も同時取得。">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="assets/svg/favicon.svg">
+  <link rel="stylesheet" href="assets/css/common.css">
+  <style>
+    /* open.html 独自スタイル ===================================== */
+    .open-hero{
+      background: linear-gradient(135deg, var(--color-primary, #0066FF) 0%, var(--color-secondary, #8A2BE2) 100%);
+      color:#fff;
+      padding: clamp(48px, 9vw, 96px) 24px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .open-hero::before{
+      content:""; position:absolute; inset:0;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(255,122,89,.18) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,.12) 0%, transparent 40%);
+      pointer-events:none;
+    }
+    .open-hero__inner{position:relative;z-index:1;max-width:880px;margin:0 auto;}
+    .open-hero__eyebrow{
+      display:inline-block;
+      background: rgba(255,255,255,.18);
+      padding: 6px 16px; border-radius: 999px;
+      font-size:.85rem; font-weight:600; letter-spacing:.05em;
+      margin-bottom:1.2rem; backdrop-filter: blur(6px);
+    }
+    .open-hero__title{
+      font-size: clamp(2rem, 5.5vw, 3.4rem);
+      font-weight: 800; line-height:1.25; margin:0 0 1rem;
+    }
+    .open-hero__title .accent{color: var(--color-coral, #FF7A59);}
+    .open-hero__lead{
+      font-size: clamp(1rem, 1.8vw, 1.18rem);
+      max-width:620px;margin: 0 auto 2rem; line-height:1.8;
+      opacity:.95;
+    }
+    .open-hero__stats{
+      display:flex; flex-wrap:wrap; justify-content:center;
+      gap: 16px 36px;margin-top:1.6rem;
+    }
+    .open-hero__stat{font-size:.95rem;}
+    .open-hero__stat strong{
+      display:block; font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight:800; color: var(--color-coral, #FF7A59);
+      margin-bottom:.2rem;
+    }
+    .open-hero__placeholder{
+      margin: 2rem auto 0; max-width: 720px;
+      aspect-ratio: 16/9; border-radius: 16px;
+      background:
+        repeating-linear-gradient(45deg, rgba(255,255,255,.06) 0 12px, rgba(255,255,255,.12) 12px 24px),
+        rgba(255,255,255,.08);
+      border:1.5px dashed rgba(255,255,255,.4);
+      display:flex; align-items:center; justify-content:center;
+      color:rgba(255,255,255,.7); font-size:.9rem;
+    }
+
+    .section{
+      max-width: 1080px; margin: 0 auto;
+      padding: clamp(48px, 7vw, 80px) 24px;
+    }
+    .section__title{
+      font-size: clamp(1.5rem, 3.2vw, 2.1rem);
+      font-weight:800; margin: 0 0 1.4rem;
+      color:#111827;
+    }
+    .section__title::before{
+      content:""; display:inline-block;
+      width:4px; height:1em; background: var(--color-primary, #0066FF);
+      margin-right:.6rem; border-radius:2px; vertical-align: -3px;
+    }
+    .section__lead{
+      font-size:1.02rem; color:#4B5563; line-height:1.85;
+      max-width:760px; margin:0 0 2rem;
+    }
+
+    /* メリット/デメリット表 ===================================== */
+    .merit-grid{
+      display:grid; gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+    .merit-card{
+      padding: 22px 24px;
+      border-radius: 14px;
+      border: 1px solid #E5E7EB;
+      background:#fff;
+    }
+    .merit-card.is-pro{border-left: 5px solid var(--color-primary, #0066FF);}
+    .merit-card.is-con{border-left: 5px solid var(--color-coral, #FF7A59);}
+    .merit-card h3{
+      font-size:1.1rem; font-weight:700; margin:0 0 .8rem;
+      display:flex; align-items:center; gap:.5rem;
+    }
+    .merit-card h3 .badge{
+      font-size:.72rem; padding:2px 10px;border-radius:999px;
+      font-weight:700; letter-spacing:.05em;
+    }
+    .merit-card.is-pro h3 .badge{background:#E6F0FF;color:var(--color-primary,#0066FF);}
+    .merit-card.is-con h3 .badge{background:#FFF1EC;color:var(--color-coral,#FF7A59);}
+    .merit-card ul{padding-left:1.2rem;margin:0;line-height:1.85;color:#374151;}
+    .merit-card li{margin-bottom:.4rem;}
+
+    /* タイミング ===================================== */
+    .timing-grid{
+      display:grid; gap:16px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    .timing-card{
+      padding:20px; border-radius:12px; background:#F9FAFB;
+      border:1px solid #E5E7EB;
+    }
+    .timing-card__role{
+      display:inline-block; font-size:.78rem; font-weight:700;
+      padding: 3px 12px; border-radius:999px; margin-bottom:.6rem;
+      background: var(--color-primary,#0066FF); color:#fff;
+    }
+    .timing-card.is-side .timing-card__role{background:#10B981;}
+    .timing-card.is-leave .timing-card__role{background:var(--color-secondary,#8A2BE2);}
+    .timing-card h3{font-size:1.05rem;margin:0 0 .5rem;}
+    .timing-card p{font-size:.93rem;color:#4B5563;line-height:1.75;margin:0;}
+    .timing-card .deadline{
+      display:block; margin-top:.7rem; font-size:.85rem;
+      color:#6B7280; padding-top:.7rem; border-top:1px dashed #D1D5DB;
+    }
+
+    /* 4ステップ ===================================== */
+    .steps{
+      display:grid; gap:18px;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      counter-reset: step;
+    }
+    .step-card{
+      position:relative; padding: 24px 22px 22px;
+      background:#fff; border-radius:14px;
+      border:1px solid #E5E7EB;
+      box-shadow: 0 1px 2px rgba(0,0,0,.03);
+    }
+    .step-card::before{
+      counter-increment: step;
+      content: "STEP " counter(step);
+      position:absolute; top:-10px; left:18px;
+      background: linear-gradient(90deg, var(--color-primary,#0066FF), var(--color-secondary,#8A2BE2));
+      color:#fff; font-size:.72rem; font-weight:700; letter-spacing:.06em;
+      padding: 4px 12px; border-radius: 999px;
+    }
+    .step-card__mock{
+      aspect-ratio: 4/3; border-radius:8px;
+      background:
+        linear-gradient(180deg, #F3F4F6 0%, #E5E7EB 100%);
+      border:1px solid #E5E7EB;
+      display:flex; align-items:center; justify-content:center;
+      font-size:2rem; margin-bottom:1rem;
+      color: var(--color-primary,#0066FF);
+    }
+    .step-card h3{font-size:1rem;margin:0 0 .4rem;font-weight:700;}
+    .step-card p{font-size:.88rem;color:#4B5563;margin:0;line-height:1.7;}
+
+    /* メインCTA ===================================== */
+    .main-cta{
+      max-width: 980px; margin: clamp(56px,8vw,80px) auto;
+      padding: clamp(36px, 5vw, 56px) 24px;
+      background: linear-gradient(135deg, #FFF8F4 0%, #FFEEE6 100%);
+      border-radius: 24px; text-align:center;
+      border: 2px solid var(--color-coral, #FF7A59);
+    }
+    .main-cta h2{
+      font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+      margin:0 0 1rem; color:#111827; font-weight:800;
+    }
+    .main-cta p{font-size:1.05rem;color:#4B5563;line-height:1.85;margin:0 0 2rem;}
+    .main-cta__btn{
+      display:inline-flex; align-items:center; gap:.6rem;
+      padding: 18px 44px;
+      background: linear-gradient(90deg, var(--color-coral,#FF7A59) 0%, #FF5C2D 100%);
+      color:#fff; font-size:1.15rem; font-weight:800;
+      text-decoration:none; border-radius:999px;
+      box-shadow: 0 8px 24px rgba(255,122,89,.4);
+      transition: all .25s ease;
+    }
+    .main-cta__btn:hover{
+      transform: translateY(-3px);
+      box-shadow: 0 14px 32px rgba(255,122,89,.5);
+    }
+    .main-cta__sub{
+      margin-top:1rem; font-size:.85rem; color:#6B7280;
+    }
+
+    /* 4点セット ===================================== */
+    .docset{
+      display:grid; gap:14px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .docset__item{
+      padding:18px 20px; border-radius:12px; background:#fff;
+      border:1px solid #E5E7EB;
+    }
+    .docset__item .num{
+      display:inline-block; width:28px;height:28px;
+      border-radius:50%; background: var(--color-primary,#0066FF);
+      color:#fff; text-align:center; line-height:28px;
+      font-weight:700; font-size:.9rem; margin-right:.5rem;
+    }
+    .docset__item h4{margin:.6rem 0 .3rem;font-size:1rem;}
+    .docset__item p{margin:0;font-size:.86rem;color:#4B5563;line-height:1.7;}
+
+    /* 副業バレ対策 ===================================== */
+    .bare-block{
+      background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%);
+      padding: 32px; border-radius: 16px;
+      border-left: 5px solid var(--color-secondary, #8A2BE2);
+    }
+    .bare-block h3{margin:0 0 1rem;font-size:1.2rem;color:#111827;}
+    .bare-block ol{padding-left:1.4rem;line-height:1.95;color:#374151;}
+    .bare-block li{margin-bottom:.5rem;}
+    .bare-block .warn{
+      margin-top:1.2rem;padding:14px 18px;
+      background:#fff;border-radius:10px;
+      font-size:.92rem; color:#374151; line-height:1.75;
+    }
+
+    /* FAQ ===================================== */
+    .faq-list{display:flex;flex-direction:column;gap:10px;}
+    .faq-item{
+      border:1px solid #E5E7EB; border-radius:12px;
+      background:#fff; overflow:hidden;
+    }
+    .faq-item summary{
+      list-style:none; padding: 16px 22px;
+      font-weight:700; cursor:pointer;
+      display:flex; align-items:center; gap:12px;
+      color:#111827; font-size:1rem;
+    }
+    .faq-item summary::-webkit-details-marker{display:none;}
+    .faq-item summary::before{
+      content:"Q"; flex-shrink:0;
+      width:28px;height:28px;border-radius:50%;
+      background: var(--color-primary,#0066FF);color:#fff;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:800; font-size:.85rem;
+    }
+    .faq-item summary::after{
+      content:"+"; margin-left:auto;
+      font-size:1.4rem; color: var(--color-primary,#0066FF);
+      transition: transform .25s ease;
+    }
+    .faq-item[open] summary::after{transform: rotate(45deg);}
+    .faq-item__body{
+      padding: 4px 22px 20px 62px;
+      color:#374151; line-height:1.85; font-size:.95rem;
+    }
+
+    /* 関連リンク ===================================== */
+    .related-grid{
+      display:grid; gap:16px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .related-card{
+      display:block; padding: 22px;
+      background:#fff; border:1px solid #E5E7EB;
+      border-radius: 14px; text-decoration:none;
+      color:#111827; transition: all .2s ease;
+    }
+    .related-card:hover{
+      transform:translateY(-3px);
+      box-shadow:0 8px 20px rgba(0,0,0,.07);
+      border-color: var(--color-primary,#0066FF);
+    }
+    .related-card .label{
+      font-size:.76rem; color:var(--color-primary,#0066FF);
+      font-weight:700; letter-spacing:.05em;
+    }
+    .related-card h4{margin:.4rem 0 .4rem;font-size:1.05rem;}
+    .related-card p{margin:0;font-size:.85rem;color:#6B7280;}
+
+    @media (max-width: 640px){
+      .open-hero__stats{gap:12px 24px;}
+      .step-card{padding-top:30px;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ========== ヘッダー ========== -->
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <a href="index.html" class="brand-logo" aria-label="AIで一人個人事業の教科書 トップへ">
+      <img src="assets/svg/logo.svg" alt="AIで一人個人事業の教科書" />
+    </a>
+
+    <button class="nav-toggle" type="button"
+            aria-controls="globalNav" aria-expanded="false" aria-label="メニューを開く">
+      <span class="bar" aria-hidden="true"></span>
+    </button>
+
+    <nav id="globalNav" class="global-nav" aria-label="主要ナビゲーション">
+      <a href="index.html">トップ</a>
+      <a href="textbook.html">教科書</a>
+      <a href="simulator/index.html">シミュレータ</a>
+      <a href="open.html" aria-current="page">開業届</a>
+      <a href="downloads.html">資料DL</a>
+      <a href="resources.html">用語集</a>
+      <a href="simulator/index.html" class="is-cta">試算する</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ========== ヒーロー ========== -->
+<section class="open-hero">
+  <div class="open-hero__inner">
+    <span class="open-hero__eyebrow">弥生「開業届」サービス連携</span>
+    <h1 class="open-hero__title">
+      <span class="accent">15分・無料</span>で<br>
+      開業届を出そう
+    </h1>
+    <p class="open-hero__lead">
+      行政書士に頼むと2〜5万円かかる開業届と青色申告承認申請書が、<br>
+      弥生のオンラインサービスならスマホ15分・<strong>完全無料</strong>で完結します。
+    </p>
+    <div class="open-hero__stats">
+      <div class="open-hero__stat"><strong>15分</strong>所要時間</div>
+      <div class="open-hero__stat"><strong>0円</strong>サービス利用料</div>
+      <div class="open-hero__stat"><strong>65万</strong>青色申告控除</div>
+    </div>
+    <p class="open-hero__note">
+      実際の入力画面・操作手順は<a href="https://www.yayoi-kk.co.jp/products/kaigyo/" target="_blank" rel="noopener noreferrer">弥生「開業届」公式サイト</a>でご確認ください。
+    </p>
+  </div>
+</section>
+
+<!-- ========== メリット/デメリット ========== -->
+<section class="section" id="merit">
+  <h2 class="section__title">開業届のメリット／デメリット</h2>
+  <p class="section__lead">「出した方が得？」を 4 分でジャッジ。デメリットも正直に書きます。</p>
+  <div class="merit-grid">
+    <div class="merit-card is-pro">
+      <h3>メリット <span class="badge">PRO</span></h3>
+      <ul>
+        <li><strong>青色申告65万控除</strong>が使える（年9〜30万の節税）</li>
+        <li>赤字の <strong>3年繰越控除</strong>（純損失の繰越）</li>
+        <li><strong>専従者給与</strong>を経費化できる</li>
+        <li>屋号で <strong>銀行口座</strong>が作れる（信用補完）</li>
+        <li>事業所得として認定 → <strong>雑所得認定リスク回避</strong></li>
+        <li>小規模企業共済・倒産防止共済への加入可</li>
+      </ul>
+    </div>
+    <div class="merit-card is-con">
+      <h3>デメリット <span class="badge">CON</span></h3>
+      <ul>
+        <li><strong>失業給付がもらえなくなる</strong>（開業届=就労中）</li>
+        <li>会社員の場合、<strong>住民税で副業が会社にバレる</strong>リスク</li>
+        <li>確定申告の <strong>事務負担</strong>（弥生で軽減可）</li>
+        <li>社保被扶養者の場合 <strong>扶養から外れる</strong>可能性</li>
+        <li>青色申請をセットで出さないと <strong>白色しか使えない</strong></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 出すべきタイミング ========== -->
+<section class="section" id="timing" style="background:#F9FAFB;border-radius:24px;">
+  <h2 class="section__title">出すべきタイミング</h2>
+  <p class="section__lead">原則は「事業を始めた日から1ヶ月以内」。立場別の判断基準はこちら。</p>
+  <div class="timing-grid">
+    <div class="timing-card">
+      <span class="timing-card__role">専業</span>
+      <h3>独立してすぐ</h3>
+      <p>会社を退職して個人事業に専念するなら、<strong>退職日翌日〜1ヶ月以内</strong>に提出。同時に青色申請も出して65万控除を初年から取りに行きます。</p>
+      <span class="deadline">期限：開業日から1ヶ月以内</span>
+    </div>
+    <div class="timing-card is-side">
+      <span class="timing-card__role">副業</span>
+      <h3>売上が継続して出始めたら</h3>
+      <p>副業所得が <strong>20万円超</strong>または継続的な事業性が出てきたタイミングで提出。雑所得認定回避と青色控除の両取り。</p>
+      <span class="deadline">推奨：年間売上100万円超を目処</span>
+    </div>
+    <div class="timing-card is-leave">
+      <span class="timing-card__role">独立</span>
+      <h3>会社員からの独立</h3>
+      <p>失業給付を受け取る場合は <strong>給付満了後</strong>に提出。再就職手当を狙うなら、給付の3分の1〜2を受給後に提出することで部分受給も可能。</p>
+      <span class="deadline">注意：開業届を先に出すと失業給付ゼロ</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 4ステップ ========== -->
+<section class="section" id="steps">
+  <h2 class="section__title">弥生「開業届」サービスの4ステップ</h2>
+  <p class="section__lead">スマホ・PCどちらでもOK。所要時間は約15分です。</p>
+  <div class="steps">
+    <div class="step-card">
+      <div class="step-card__mock">📝</div>
+      <h3>弥生IDを作成</h3>
+      <p>メールアドレスで弥生IDを無料登録。クレカ登録などは不要。</p>
+    </div>
+    <div class="step-card">
+      <div class="step-card__mock">💬</div>
+      <h3>質問に答える</h3>
+      <p>屋号・事業内容・開業日などを画面の質問に沿って入力。専門用語は補足付き。</p>
+    </div>
+    <div class="step-card">
+      <div class="step-card__mock">📄</div>
+      <h3>書類が自動生成</h3>
+      <p>開業届と青色申告承認申請書が同時に完成。PDFでダウンロード。</p>
+    </div>
+    <div class="step-card">
+      <div class="step-card__mock">🚀</div>
+      <h3>e-Tax or 持参で提出</h3>
+      <p>マイナンバーカードがあれば <strong>e-Taxで完全オンライン</strong>。なくても税務署持参で完了。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== メインCTA ========== -->
+<aside class="main-cta">
+  <h2>今すぐ15分で開業届を作る</h2>
+  <p>
+    弥生「開業届」サービスは <strong>完全無料</strong>。<br>
+    青色申告承認申請書も同時に作成できます。
+  </p>
+  <a class="main-cta__btn" href="https://www.yayoi-kk.co.jp/kigyo/starting/" target="_blank" rel="noopener noreferrer">
+    弥生で開業届を作る →
+  </a>
+  <p class="main-cta__sub">※外部サイト（弥生株式会社）が開きます／登録無料</p>
+</aside>
+
+<!-- ========== 4点セット ========== -->
+<section class="section" id="docs">
+  <h2 class="section__title">一緒に出す書類4点セット</h2>
+  <p class="section__lead">開業届だけでは不十分。<strong>同時提出</strong>で控除と特例をフル活用しましょう。</p>
+  <div class="docset">
+    <div class="docset__item">
+      <span class="num">1</span><strong>個人事業の開業届出書</strong>
+      <h4>提出期限：開業日から1ヶ月以内</h4>
+      <p>これがメイン。職業・屋号・開業日・事業の概要を記入。</p>
+    </div>
+    <div class="docset__item">
+      <span class="num">2</span><strong>青色申告承認申請書</strong>
+      <h4>提出期限：開業日から2ヶ月以内</h4>
+      <p>65万控除に必須。簿記方式は <strong>「複式簿記」</strong> を選択。</p>
+    </div>
+    <div class="docset__item">
+      <span class="num">3</span><strong>青色事業専従者給与に関する届出書</strong>
+      <h4>提出期限：開業日から2ヶ月以内</h4>
+      <p>配偶者がいるなら必須。後出し禁止。</p>
+    </div>
+    <div class="docset__item">
+      <span class="num">4</span><strong>給与支払事務所等の開設届出書</strong>
+      <h4>提出期限：開設日から1ヶ月以内</h4>
+      <p>専従者給与を出す or 従業員を雇う場合に必要。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 副業バレ対策 ========== -->
+<section class="section" id="bare">
+  <h2 class="section__title">副業バレ対策（住民税の普通徴収）</h2>
+  <p class="section__lead">会社員の副業で開業届を出す場合、<strong>住民税の徴収方法</strong>でバレるリスクが急上昇します。対策はシンプル。</p>
+  <div class="bare-block">
+    <h3>確定申告書の「住民税」欄を必ず<strong>普通徴収</strong>に</h3>
+    <ol>
+      <li>確定申告書 第二表「給与・公的年金等以外の所得に係る住民税の徴収方法」</li>
+      <li>「自分で納付（普通徴収）」に必ず○を付ける</li>
+      <li>これにより副業分の住民税通知が <strong>会社ではなく自宅に届く</strong></li>
+      <li>会社の経理は副業所得分の住民税増を見ずに済む</li>
+    </ol>
+    <p class="warn">
+      ※特別徴収（給与天引き）のままだと会社に住民税通知書が届き、給与に対して住民税が異常に高くなることで副業がバレる原因No.1になります。<strong>必ずチェックを入れてください。</strong>
+    </p>
+  </div>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section class="section" id="faq">
+  <h2 class="section__title">よくある質問（FAQ）</h2>
+  <div class="faq-list">
+    <details class="faq-item">
+      <summary>開業届を出すお金や手数料はかかりますか？</summary>
+      <div class="faq-item__body">
+        開業届の提出自体は <strong>完全無料</strong>です。弥生「開業届」サービスもサービス利用料0円。行政書士に依頼すると2〜5万円かかりますが、自分で作成・提出すれば全くお金はかかりません。
+      </div>
+    </details>
+    <details class="faq-item">
+      <summary>開業日はいつにすればいいですか？</summary>
+      <div class="faq-item__body">
+        基本は <strong>「自分が事業を始めようと決めた日」</strong>でOK。最初の取引日でも、サイト公開日でも、契約締結日でもかまいません。届出は開業日から1ヶ月以内なので、過去1ヶ月以内で都合のいい日を選びましょう。
+      </div>
+    </details>
+    <details class="faq-item">
+      <summary>屋号は必須ですか？</summary>
+      <div class="faq-item__body">
+        任意です。空欄で出すこともできます。ただし、<strong>屋号付き銀行口座</strong>を作る、信用補完のため、後で振込先を屋号にしたい場合などは付けておくとスムーズ。AIに「○○業の屋号案を50個出して」と聞けば候補が出ます。
+      </div>
+    </details>
+    <details class="faq-item">
+      <summary>会社員の副業でも開業届は出せますか？</summary>
+      <div class="faq-item__body">
+        出せます。法律上の制限はありません。ただし会社の <strong>就業規則で副業が禁止</strong>されている場合は内規違反のリスクがあります。出す場合は副業所得が20万円超または継続的な事業性が出てきたタイミングが目安です。
+      </div>
+    </details>
+    <details class="faq-item">
+      <summary>e-Taxを使うのにマイナンバーカードは必須？</summary>
+      <div class="faq-item__body">
+        <strong>必須ではありません</strong>。税務署窓口で発行する「ID・パスワード方式」でもe-Tax申告できます。ただしマイナンバーカード方式の方が長期的に楽。今後の確定申告も含めて検討するなら、カード取得をおすすめします。
+      </div>
+    </details>
+    <details class="faq-item">
+      <summary>開業届を出すと社会保険の扶養から外れますか？</summary>
+      <div class="faq-item__body">
+        健保組合により判定基準が異なります。多くは <strong>事業所得130万円超</strong>で扶養から外れますが、一部の組合は「開業届を出した時点」で外す場合も。事前に配偶者の健保組合に確認しましょう。
+      </div>
+    </details>
+    <details class="faq-item">
+      <summary>提出した後に屋号や住所を変えたい場合は？</summary>
+      <div class="faq-item__body">
+        「個人事業の開業・廃業等届出書」を <strong>「変更」</strong>として再提出するだけです。費用ゼロ・即日OK。屋号変更も自由にできます。住所が異動して管轄税務署が変わる場合は、転居後の税務署に提出します。
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ========== 関連リンク ========== -->
+<section class="section" id="related">
+  <h2 class="section__title">あわせて読みたい</h2>
+  <div class="related-grid">
+    <a class="related-card" href="index.html#chapter3">
+      <span class="label">教科書 第3章</span>
+      <h4>10の落とし穴と防御</h4>
+      <p>雑所得認定・インボイス・失業給付制限など、開業届にまつわるリスクを総ざらい。</p>
+    </a>
+    <a class="related-card" href="simulator/index.html">
+      <span class="label">シミュレータ</span>
+      <h4>開業前 vs 開業後の手取り比較</h4>
+      <p>あなたの売上・所得を入れるだけで、青色65万控除の節税効果がリアルタイム計算。</p>
+    </a>
+    <a class="related-card" href="downloads.html">
+      <span class="label">資料DL</span>
+      <h4>開業届テンプレ集</h4>
+      <p>記入例・チェックリスト・PPT版の教科書を無料ダウンロード。</p>
+    </a>
+    <a class="related-card" href="resources.html#glossary">
+      <span class="label">用語集</span>
+      <h4>個人事業の専門用語50</h4>
+      <p>青色申告・専従者給与・みなし譲渡など、初心者がつまずく用語を網羅。</p>
+    </a>
+  </div>
+</section>
+
+<!-- ========== フッター ========== -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <img src="assets/svg/logo.svg" alt="" height="36">
+      <p>2026年4月時点の数字・制度に基づきます。最新の制度変更は税務署・自治体・各機関の公式情報をご確認ください。</p>
+    </div>
+    <nav class="site-footer__nav" aria-label="フッターナビ">
+      <a href="index.html">トップ</a>
+      <a href="simulator/index.html">シミュレータ</a>
+      <a href="open.html">開業届</a>
+      <a href="downloads.html">資料DL</a>
+      <a href="resources.html">リソース</a>
+    </nav>
+    <p class="site-footer__copy">© 2026 AIで一人個人事業の教科書</p>
+  </div>
+</footer>
+
+<script src="assets/js/common.js" defer></script>
+</body>
+</html>

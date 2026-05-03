@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80" role="img" aria-labelledby="ch6Title">
+  <title id="ch6Title">第6章 仕事の取り方（握手）</title>
+  <path d="M14 40 Q22 32 30 36 L40 42 Q44 44 48 42 L58 36 Q66 32 70 38" fill="none" stroke="#0066FF" stroke-width="3" stroke-linecap="round"/>
+  <path d="M22 38 L22 52 Q22 56 26 56 L34 56 Q38 56 38 52 L38 42" fill="none" stroke="#0066FF" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M58 38 L58 52 Q58 56 54 56 L46 56 Q42 56 42 52 L42 42" fill="none" stroke="#FF7A59" stroke-width="2.5" stroke-linejoin="round"/>
+  <circle cx="40" cy="42" r="3" fill="#8A2BE2"/>
+</svg>
