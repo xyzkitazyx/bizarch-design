@@ -72,7 +72,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./aisolobiz/
           server-dir: ${{ secrets.FTP_SERVER_DIR_AISOLOBIZ }}
-          dangerous-clean-slate: true # ★一時的に強制クリーン+全アップ。次回pushで false に戻す
+          dangerous-clean-slate: false
           exclude: |
             **/test_node.js
             **/build_textbook.py
