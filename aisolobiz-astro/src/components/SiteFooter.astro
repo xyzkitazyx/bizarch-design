@@ -1,0 +1,90 @@
+---
+/**
+ * SiteFooter - 共通フッター
+ * 既存 aisolobiz/index.html の <footer class="site-footer"> をコンポーネント化。
+ * Phase 2 で CMS から footerColumns を取得する想定。
+ */
+
+export interface FooterLink {
+  href: string;
+  label: string;
+}
+
+export interface FooterColumn {
+  heading: string;
+  links: FooterLink[];
+}
+
+interface Props {
+  columns?: FooterColumn[];
+  copyrightBrand?: string;
+  disclaimer?: string;
+}
+
+const {
+  copyrightBrand = 'AI × SOLO BUSINESS 教科書',
+  disclaimer = '本サイトの数字は2026年4月時点・東京23区基準の概算です。',
+  columns = [
+    {
+      heading: 'サイト一覧',
+      links: [
+        { href: '/textbook', label: '教科書トップ' },
+        { href: '/textbook#chapter1', label: '12章リスト' },
+        { href: '/simulator/', label: '収支シミュレータ' },
+        { href: '/open', label: '第5章 開業届' },
+      ],
+    },
+    {
+      heading: '巻末ツール',
+      links: [
+        { href: '/resources#glossary', label: '用語集' },
+        { href: '/textbook#chapter1', label: '手取り早見表' },
+        { href: '/resources#kokuho', label: '国保自治体早見表' },
+        { href: '/resources#tools', label: 'AIツールリンク集' },
+      ],
+    },
+    {
+      heading: '関連',
+      links: [
+        { href: '/coming-soon?page=corporate', label: '法人版の教科書' },
+        { href: '/coming-soon?page=about', label: '著者プロフィール' },
+        { href: '/downloads', label: '資料ダウンロード' },
+        { href: '/coming-soon?page=contact', label: 'お問い合わせ' },
+      ],
+    },
+    {
+      heading: '免責',
+      links: [
+        { href: '/textbook#preface', label: '数字の前提' },
+        { href: '/coming-soon?page=privacy', label: 'プライバシー' },
+        { href: '/coming-soon?page=terms', label: '利用規約' },
+        { href: '/coming-soon?page=changelog', label: '更新履歴' },
+      ],
+    },
+  ],
+} = Astro.props;
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      {columns.map((col) => (
+        <div>
+          <h4>{col.heading}</h4>
+          <ul>
+            {col.links.map((link) => (
+              <li><a href={link.href}>{link.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; <span data-year>{year}</span> <span class="brand">{copyrightBrand}</span></span>
+      <span>{disclaimer}</span>
+    </div>
+  </div>
+</footer>

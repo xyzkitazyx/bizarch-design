@@ -1,0 +1,255 @@
+---
+/**
+ * QuickSimulator - 即試算ウィジェット（軽量版）
+ * common.js の data-quick-sim 部分が JS でハンドリングする想定。
+ */
+
+interface Props {
+  eyebrow?: string;
+  titleHtml?: string;
+  lead?: string;
+  formTitle?: string;
+  noteHtml?: string;
+  ctaHref?: string;
+  ctaLabel?: string;
+}
+
+const {
+  eyebrow = 'QUICK SIM',
+  titleHtml = '<span class="hl">1分で試算</span>。手取りはいくら残る？',
+  lead = 'モード（副業／専業）と年商・経費（・本業給与）を入れるだけ。詳細はシミュレータで業種・控除も含めて精緻化できます。',
+  formTitle = '条件を入れる',
+  noteHtml = '※ 軽量版：所得税（累進＋復興2.1%）＋住民税10%＋（専業のみ）国保概算＋国民年金21万。基礎48万＋青色65万を控除。詳細控除（共済・iDeCo・専従者）は<a href="/simulator/">シミュレータ</a>でどうぞ。',
+  ctaHref = '/simulator/',
+  ctaLabel = '詳細シミュレータで精緻化',
+} = Astro.props;
+---
+
+<section class="section section--alt" id="quick-sim" aria-labelledby="qsTitle">
+  <div class="container">
+    <p class="section-eyebrow" data-reveal>{eyebrow}</p>
+    <h2 id="qsTitle" class="section-title" data-reveal set:html={titleHtml} />
+    <p class="section-lead" data-reveal>{lead}</p>
+
+    <div class="qsim-wrap" data-quick-sim data-reveal>
+      <div class="qsim-form">
+        <div class="qsim-form-title">{formTitle}</div>
+
+        <div class="qsim-mode" role="tablist" aria-label="モード切替">
+          <button type="button" data-mode="solo" class="is-active" aria-pressed="true">専業</button>
+          <button type="button" data-mode="side" aria-pressed="false">副業</button>
+        </div>
+
+        <div class="qsim-row">
+          <label for="qs-revenue">年商</label>
+          <span class="qsim-input">
+            <input
+              id="qs-revenue"
+              data-input="revenue"
+              type="number"
+              inputmode="numeric"
+              min="0"
+              max="100000"
+              step="10"
+              value="800"
+            />
+            <span>万円</span>
+          </span>
+        </div>
+        <div class="qsim-row">
+          <label for="qs-expense">経費</label>
+          <span class="qsim-input">
+            <input
+              id="qs-expense"
+              data-input="expense"
+              type="number"
+              inputmode="numeric"
+              min="0"
+              max="100000"
+              step="10"
+              value="200"
+            />
+            <span>万円</span>
+          </span>
+        </div>
+        <div class="qsim-row" data-row-salary style="display:none;">
+          <label for="qs-salary">本業給与</label>
+          <span class="qsim-input">
+            <input
+              id="qs-salary"
+              data-input="salary"
+              type="number"
+              inputmode="numeric"
+              min="0"
+              max="100000"
+              step="10"
+              value="500"
+            />
+            <span>万円</span>
+          </span>
+        </div>
+
+        <p class="qsim-note" set:html={noteHtml} />
+      </div>
+
+      <div class="qsim-result">
+        <span class="qsim-net">YOUR NET</span>
+        <span class="qsim-net-amt"><span data-out="net">0</span></span>
+
+        <div class="qsim-grid" aria-live="polite">
+          <div><span>事業所得</span><b><span data-out="biz-income">0</span> 万</b></div>
+          <div><span>課税所得</span><b><span data-out="taxable">0</span> 万</b></div>
+          <div><span>所得税</span><b><span data-out="income-tax">0</span> 万</b></div>
+          <div><span>住民税</span><b><span data-out="resident-tax">0</span> 万</b></div>
+          <div><span>税合計</span><b><span data-out="total-tax">0</span> 万</b></div>
+        </div>
+
+        <p class="qsim-note" data-out="note"></p>
+        <a href={ctaHref} class="btn btn--primary qsim-cta">
+          <span aria-hidden="true">🧮</span> {ctaLabel}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .qsim-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    background: #fff;
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-xl);
+    padding: 36px;
+  }
+  @media (max-width: 900px) {
+    .qsim-wrap { grid-template-columns: 1fr; padding: 24px; gap: 24px; }
+  }
+  .qsim-form-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--c-text);
+    margin-bottom: 14px;
+  }
+  .qsim-mode {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    background: var(--c-surface-3);
+    border-radius: var(--r-md);
+    padding: 4px;
+    margin-bottom: 16px;
+  }
+  .qsim-mode button {
+    font-weight: 700;
+    font-size: 0.92rem;
+    padding: 10px 14px;
+    border: none;
+    border-radius: var(--r-sm);
+    background: transparent;
+    color: var(--c-text-mute);
+    transition: background var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
+  }
+  .qsim-mode :global(button.is-active) {
+    background: var(--grad-brand);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.25);
+  }
+  .qsim-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--c-border);
+  }
+  .qsim-row:last-of-type { border-bottom: none; }
+  .qsim-row label {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--c-text);
+  }
+  .qsim-input {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .qsim-input input {
+    width: 110px;
+    padding: 8px 10px;
+    border: 1px solid var(--c-border-soft);
+    border-radius: var(--r-sm);
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .qsim-input input:focus {
+    outline: none;
+    border-color: transparent;
+    box-shadow: 0 0 0 2px var(--c-blue);
+  }
+  .qsim-input span {
+    font-size: 0.82rem;
+    color: var(--c-text-mute);
+  }
+
+  .qsim-result {
+    background: linear-gradient(135deg, rgba(0, 102, 255, 0.04), rgba(138, 43, 226, 0.04));
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-lg);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .qsim-net {
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    font-weight: 700;
+    color: var(--c-blue);
+    text-transform: uppercase;
+  }
+  .qsim-net-amt {
+    font-weight: 900;
+    font-size: clamp(2.2rem, 5vw, 3rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    background: var(--grad-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .qsim-net-amt::after {
+    content: '万円／年';
+    font-size: 1rem;
+    color: var(--c-text-mute);
+    margin-left: 6px;
+    -webkit-text-fill-color: var(--c-text-mute);
+  }
+  .qsim-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 18px;
+    font-size: 0.86rem;
+    color: var(--c-text-sub);
+  }
+  .qsim-grid > div {
+    display: flex;
+    justify-content: space-between;
+  }
+  .qsim-grid b {
+    font-weight: 800;
+    color: var(--c-text);
+    font-variant-numeric: tabular-nums;
+  }
+  .qsim-note {
+    font-size: 0.74rem;
+    color: var(--c-text-mute);
+    margin-top: 4px;
+    line-height: 1.55;
+  }
+  .qsim-cta { margin-top: 8px; }
+</style>

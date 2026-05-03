@@ -1,0 +1,29 @@
+# build
+dist/
+.astro/
+
+# deps
+node_modules/
+
+# data (本番データはコミットしない)
+data/*.json
+data/users.json
+data/error.log
+data/_backup/
+data/backups/
+!data/sites.json
+media/
+uploads/
+
+# env
+.env
+.env.local
+
+# editor
+.vscode/
+.idea/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

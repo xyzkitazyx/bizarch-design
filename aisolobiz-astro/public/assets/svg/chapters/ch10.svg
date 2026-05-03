@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80" role="img" aria-labelledby="ch10Title">
+  <title id="ch10Title">第10章 落とし穴10選</title>
+  <path d="M40 10 L72 64 L8 64 Z" fill="#FFFFFF" stroke="#FF7A59" stroke-width="2.5" stroke-linejoin="round"/>
+  <line x1="40" y1="28" x2="40" y2="46" stroke="#FF7A59" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="40" cy="54" r="2.5" fill="#FF7A59"/>
+  <ellipse cx="40" cy="72" rx="14" ry="3" fill="#0066FF" opacity="0.2"/>
+  <ellipse cx="40" cy="72" rx="14" ry="3" fill="none" stroke="#0066FF" stroke-width="1.5" stroke-dasharray="2,2"/>
+</svg>

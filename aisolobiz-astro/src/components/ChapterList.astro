@@ -1,0 +1,103 @@
+---
+/**
+ * ChapterList - 12章リスト
+ */
+
+interface Chapter {
+  no: string;
+  href: string;
+  iconSrc: string;
+  title: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  titleHtml?: string;
+  lead?: string;
+  chapters?: Chapter[];
+}
+
+const {
+  eyebrow = '12 CHAPTERS',
+  titleHtml = '教科書は<span class="hl">何が読める？</span>',
+  lead = 'Part 1【お金・道具・仕事】→ Part 2【実行】→ Part 3【守り】→ Part 4【出口】→ Part 5【成長】の5部構成。',
+  chapters = [
+    { no: 'CH 01', href: '/textbook#chapter1', iconSrc: '/assets/svg/chapters/ch1.svg', title: '手取り早見表（副業6×専業6）' },
+    { no: 'CH 02', href: '/textbook#chapter2', iconSrc: '/assets/svg/chapters/ch2.svg', title: '節税効果の3比較' },
+    { no: 'CH 03', href: '/textbook#chapter3', iconSrc: '/assets/svg/chapters/ch3.svg', title: 'AIツール3階層' },
+    { no: 'CH 04', href: '/textbook#chapter4', iconSrc: '/assets/svg/chapters/ch4.svg', title: '業種カタログ＋7問診断' },
+    { no: 'CH 05', href: '/textbook#chapter5', iconSrc: '/assets/svg/chapters/ch5.svg', title: '15分で開業' },
+    { no: 'CH 06', href: '/textbook#chapter6', iconSrc: '/assets/svg/chapters/ch6.svg', title: '仕事の取り方（5チャネル）' },
+    { no: 'CH 07', href: '/textbook#chapter7', iconSrc: '/assets/svg/chapters/ch7.svg', title: '固定費とキャッシュフロー' },
+    { no: 'CH 08', href: '/textbook#chapter8', iconSrc: '/assets/svg/chapters/ch8.svg', title: '経費術' },
+    { no: 'CH 09', href: '/textbook#chapter9', iconSrc: '/assets/svg/chapters/ch9.svg', title: '確定申告の最短ルート' },
+    { no: 'CH 10', href: '/textbook#chapter10', iconSrc: '/assets/svg/chapters/ch10.svg', title: '落とし穴10選' },
+    { no: 'CH 11', href: '/textbook#chapter11', iconSrc: '/assets/svg/chapters/ch11.svg', title: 'やめる／休む／ピボット' },
+    { no: 'CH 12', href: '/textbook#chapter12', iconSrc: '/assets/svg/chapters/ch12.svg', title: '卒業ロード（→法人版）' },
+  ],
+} = Astro.props;
+---
+
+<section class="section" id="chapters" aria-labelledby="chTitle">
+  <div class="container">
+    <p class="section-eyebrow" data-reveal>{eyebrow}</p>
+    <h2 id="chTitle" class="section-title" data-reveal set:html={titleHtml} />
+    <p class="section-lead" data-reveal>{lead}</p>
+
+    <div class="ch-grid">
+      {chapters.map((ch) => (
+        <a class="ch-card" href={ch.href} data-reveal>
+          <img src={ch.iconSrc} alt="" />
+          <div>
+            <span class="ch-no">{ch.no}</span>
+            <h3>{ch.title}</h3>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .ch-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 1024px) { .ch-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 720px) { .ch-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .ch-grid { grid-template-columns: 1fr; } }
+  .ch-card {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 18px 16px;
+    background: #fff;
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-md);
+    transition: border-color var(--t-mid), transform var(--t-mid), box-shadow var(--t-mid);
+  }
+  .ch-card:hover {
+    border-color: rgba(0, 102, 255, 0.25);
+    transform: translateY(-2px);
+    box-shadow: var(--sh-soft);
+  }
+  .ch-card img {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+  }
+  .ch-card .ch-no {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: var(--c-blue);
+  }
+  .ch-card h3 {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--c-text);
+    line-height: 1.5;
+    margin-top: 2px;
+  }
+</style>

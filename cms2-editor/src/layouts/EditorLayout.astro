@@ -1,0 +1,21 @@
+---
+import '@/styles/global.css';
+export interface Props {
+  title?: string;
+  bodyClass?: string;
+}
+const { title = 'bizarch-design CMS2 Editor', bodyClass = '' } = Astro.props;
+---
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/favicon.svg`} />
+    <title>{title}</title>
+  </head>
+  <body class={bodyClass}>
+    <slot />
+  </body>
+</html>

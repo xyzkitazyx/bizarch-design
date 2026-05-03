@@ -1,0 +1,22 @@
+---
+import EditorLayout from '@/layouts/EditorLayout.astro';
+import GrapesEditor from '@/components/GrapesEditor.tsx';
+import { SITES } from '@/lib/api';
+
+// SSG: 既知の3サイトを事前生成
+// URL: /editor/site/{name}/  （Day 2 で1階層化）
+export function getStaticPaths() {
+  return SITES.map((s) => ({ params: { name: s.id } }));
+}
+
+const { name } = Astro.params;
+const meta = SITES.find((s) => s.id === name);
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+if (!meta) {
+  return Astro.redirect(`${baseUrl}/dashboard/`);
+}
+---
+<EditorLayout title={`${meta.name} | bizarch CMS2 Editor`} bodyClass="bg-editor-bg overflow-hidden">
+  <GrapesEditor siteId={name!} baseUrl={baseUrl} client:only="react" />
+</EditorLayout>

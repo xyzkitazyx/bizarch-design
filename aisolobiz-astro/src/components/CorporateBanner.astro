@@ -1,0 +1,72 @@
+---
+/**
+ * CorporateBanner - 法人成りCTAバナー
+ */
+
+interface Props {
+  titleHtml?: string;
+  bodyHtml?: string;
+  ctaHref?: string;
+  ctaLabel?: string;
+  ctaIcon?: string;
+}
+
+const {
+  titleHtml = '<b>法人成りライン</b>を超えたら、法人版へ。',
+  bodyHtml = '課税所得 <b>600万円</b> または年商 <b>800〜1,000万円</b> を継続的に超えるなら、法人成りで税負担が逆転します。姉妹サイト「AIで一人法人の教科書」で、設立コスト・役員報酬最適化・社保・退職金まで網羅しています。',
+  ctaHref = '/coming-soon?page=corporate',
+  ctaLabel = '法人版の教科書へ',
+  ctaIcon = '🏢',
+} = Astro.props;
+---
+
+<section class="section" aria-labelledby="houjinTitle">
+  <div class="container">
+    <div class="houjin-cta" data-reveal>
+      <div class="houjin-text">
+        <h3 id="houjinTitle" set:html={titleHtml} />
+        <p set:html={bodyHtml} />
+      </div>
+      <a href={ctaHref} class="btn btn--coral btn--lg">
+        <span aria-hidden="true">{ctaIcon}</span> {ctaLabel}
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .houjin-cta {
+    background: linear-gradient(135deg, rgba(0, 102, 255, 0.06), rgba(138, 43, 226, 0.06));
+    border: 1px solid rgba(138, 43, 226, 0.2);
+    border-radius: var(--r-xl);
+    padding: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .houjin-cta .houjin-text {
+    flex: 1;
+    min-width: 280px;
+  }
+  .houjin-cta h3 {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--c-text);
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .houjin-cta p {
+    font-size: 0.92rem;
+    color: var(--c-text-sub);
+    line-height: 1.75;
+  }
+  .houjin-cta .houjin-text :global(b) {
+    background: var(--grad-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 900;
+  }
+</style>

@@ -1,0 +1,111 @@
+---
+/**
+ * DiagnoseSection - 7問業種診断（8業種タイル）
+ */
+
+interface IndustryTile {
+  href: string;
+  iconSrc: string;
+  label: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  titleHtml?: string;
+  lead?: string;
+  intro?: string;
+  industries?: IndustryTile[];
+  ctaHref?: string;
+  ctaLabel?: string;
+}
+
+const {
+  eyebrow = '7Q DIAGNOSE',
+  titleHtml = '<span class="hl">7問</span>であなたに合う業種を当てる',
+  lead = '8業種から「あなたが今すぐ稼げる業種」を診断。詳細は第4章「業種カタログ」で。',
+  intro = '診断対象の8業種：',
+  industries = [
+    { href: '/textbook#chapter4', iconSrc: '/assets/svg/industry/dev.svg', label: '受託開発' },
+    { href: '/textbook#chapter4', iconSrc: '/assets/svg/industry/ax.svg', label: 'AXコンサル' },
+    { href: '/textbook#chapter4', iconSrc: '/assets/svg/industry/biz.svg', label: '業務設計' },
+    { href: '/textbook#chapter4', iconSrc: '/assets/svg/industry/ba.svg', label: 'BAコンサル' },
+    { href: '/textbook#chapter4', iconSrc: '/assets/svg/industry/keiei.svg', label: '経営コンサル' },
+    { href: '/textbook#chapter4', iconSrc: '/assets/svg/industry/ad.svg', label: '広告運用' },
+    { href: '/textbook#chapter4', iconSrc: '/assets/svg/industry/web.svg', label: 'ウェブ制作' },
+    { href: '/textbook#chapter4', iconSrc: '/assets/svg/industry/design.svg', label: 'ウェブデザイン' },
+  ],
+  ctaHref = '/textbook#chapter4',
+  ctaLabel = '7問診断を始める（第4章）',
+} = Astro.props;
+---
+
+<section class="section section--alt" id="diagnose" aria-labelledby="diagTitle">
+  <div class="container">
+    <p class="section-eyebrow" data-reveal>{eyebrow}</p>
+    <h2 id="diagTitle" class="section-title" data-reveal set:html={titleHtml} />
+    <p class="section-lead" data-reveal>{lead}</p>
+
+    <div class="diag-card" data-reveal>
+      <p class="diag-intro">{intro}</p>
+      <div class="diag-grid">
+        {industries.map((ind) => (
+          <a class="diag-tile" href={ind.href}>
+            <img src={ind.iconSrc} alt="" />
+            <span>{ind.label}</span>
+          </a>
+        ))}
+      </div>
+      <div class="diag-cta-wrap">
+        <a href={ctaHref} class="btn btn--primary">
+          <span aria-hidden="true">🎯</span> {ctaLabel}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .diag-card {
+    background: linear-gradient(135deg, rgba(0, 102, 255, 0.04), rgba(138, 43, 226, 0.04));
+    border: 1px solid rgba(0, 102, 255, 0.15);
+    border-radius: var(--r-xl);
+    padding: 36px 36px;
+  }
+  @media (max-width: 768px) { .diag-card { padding: 28px 22px; } }
+  .diag-intro {
+    font-size: 0.95rem;
+    color: var(--c-text-sub);
+    margin-bottom: 14px;
+  }
+  .diag-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin: 24px 0 24px;
+  }
+  @media (max-width: 900px) { .diag-grid { grid-template-columns: repeat(2, 1fr); } }
+  .diag-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 18px 10px;
+    background: #fff;
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-md);
+    text-align: center;
+    transition: border-color var(--t-mid), transform var(--t-mid), box-shadow var(--t-mid);
+  }
+  .diag-tile:hover {
+    border-color: rgba(0, 102, 255, 0.25);
+    transform: translateY(-2px);
+    box-shadow: var(--sh-soft);
+  }
+  .diag-tile img { width: 56px; height: 56px; }
+  .diag-tile span {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--c-text);
+  }
+  .diag-cta-wrap { text-align: center; }
+</style>

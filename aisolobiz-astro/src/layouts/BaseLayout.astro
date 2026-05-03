@@ -1,0 +1,76 @@
+---
+/**
+ * BaseLayout - 全ページ共通レイアウト
+ * <html>, <head>, ヘッダー, フッター, common.js 読込を一括。
+ */
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  themeColor?: string;
+  /** main 要素に id を付けたい場合（既存 index.html は id="top"） */
+  mainId?: string;
+  /** body のクラス（既定: bg-blueprint） */
+  bodyClass?: string;
+}
+
+const {
+  title = 'AIで一人個人事業の教科書｜30秒で結論・1分で試算・15分で開業届',
+  description = 'AIで個人事業、本当にやれる？——30秒Q&A・6つの壁ダッシュボード・手取り早見表・節税3比較・15分で開業届。8業種×AI活用率の数字で答える、副業から専業・法人成りまでのガイド。',
+  ogImage = '/assets/images/ogp.png',
+  themeColor = '#0066FF',
+  mainId = 'top',
+  bodyClass = 'bg-blueprint',
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content={themeColor} />
+
+    <!-- OGP / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Google Fonts: Noto Sans JP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <slot name="head" />
+  </head>
+  <body class={bodyClass}>
+    <SiteHeader currentPath={currentPath} />
+
+    <main id={mainId}>
+      <slot />
+    </main>
+
+    <SiteFooter />
+
+    <!-- 共通JS（ハンバーガー / スクロール / 即試算ウィジェット） -->
+    <script src="/assets/js/common.js" is:inline defer></script>
+  </body>
+</html>

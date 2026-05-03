@@ -1,0 +1,19 @@
+---
+import EditorLayout from '@/layouts/EditorLayout.astro';
+import LoginForm from '@/components/LoginForm.tsx';
+---
+<EditorLayout title="ログイン | bizarch CMS2">
+  <main class="min-h-screen bg-blueprint flex items-center justify-center px-4 py-10 relative overflow-hidden">
+    {/* 装飾：グラデのオーブ */}
+    <div class="absolute -top-40 -left-40 w-96 h-96 rounded-full opacity-20 blur-3xl"
+         style="background: radial-gradient(circle, #0066FF 0%, transparent 70%);" />
+    <div class="absolute -bottom-40 -right-40 w-96 h-96 rounded-full opacity-20 blur-3xl"
+         style="background: radial-gradient(circle, #8A2BE2 0%, transparent 70%);" />
+
+    <LoginForm client:load />
+
+    <footer class="absolute bottom-4 text-center text-[11px] text-gray-400 font-mono">
+      cms2.bizarch-design.com / editor v0.2 (Day 2)
+    </footer>
+  </main>
+</EditorLayout>

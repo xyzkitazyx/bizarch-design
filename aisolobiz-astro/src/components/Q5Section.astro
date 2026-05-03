@@ -1,0 +1,106 @@
+---
+/**
+ * Q5Section - 30秒Q&A（5問即答）
+ */
+
+interface QaItem {
+  num: string;
+  q: string;
+  a: string;
+  tag: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  titleHtml?: string;
+  lead?: string;
+  items?: QaItem[];
+}
+
+const {
+  eyebrow = '30 SEC OVERVIEW',
+  titleHtml = 'まず<span class="hl">5問だけ</span>、即答します。',
+  lead = '哲学・抽象論はゼロ。短気な読者のために、結論から数字で答えるプロローグです。',
+  items = [
+    { num: 'Q1', q: 'AIで独立、本当にできる？', a: 'YES。月6万の副業から月100万超の専業まで実例。8業種すべてに月100万到達者が実在します。', tag: '月6〜100万円' },
+    { num: 'Q2', q: 'AIツール代はいくら？', a: '月5千／2万／5万円の3階層で十分。売上に対するツール費比率は5%以内が目安です。', tag: '月5千〜5万' },
+    { num: 'Q3', q: 'どんな仕事をどれくらい？', a: '8業種×AI活用率で「月◯時間で月◯万」が早見表化。Web制作なら月60時間で月50万。', tag: '8業種カタログ' },
+    { num: 'Q4', q: '税金で持っていかれる？', a: '青色65万＋経費＋iDeCo＋小規模共済で年200万円超の控除。手取りは年100万円以上変わります。', tag: '控除410万超' },
+    { num: 'Q5', q: '何から始める？', a: '弥生「開業届」で15分・無料・スマホ完結。紙の手書きや税務署窓口の時代は終わっています。', tag: '15分・無料' },
+  ],
+} = Astro.props;
+---
+
+<section class="section" aria-labelledby="qaTitle">
+  <div class="container">
+    <p class="section-eyebrow" data-reveal>{eyebrow}</p>
+    <h2 id="qaTitle" class="section-title" data-reveal set:html={titleHtml} />
+    <p class="section-lead" data-reveal>{lead}</p>
+
+    <div class="qa-grid">
+      {items.map((item) => (
+        <article class="qa-card" data-reveal>
+          <span class="qa-num">{item.num}</span>
+          <h3 class="qa-q">{item.q}</h3>
+          <p class="qa-a">{item.a}</p>
+          <span class="qa-tag">{item.tag}</span>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .qa-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+  }
+  @media (max-width: 1024px) { .qa-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 640px) { .qa-grid { grid-template-columns: 1fr; } }
+  .qa-card {
+    background: #fff;
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-md);
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: border-color var(--t-mid), box-shadow var(--t-mid), transform var(--t-mid);
+    position: relative;
+  }
+  .qa-card:hover {
+    border-color: rgba(0, 102, 255, 0.25);
+    box-shadow: var(--sh-mid);
+    transform: translateY(-2px);
+  }
+  .qa-num {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    color: var(--c-blue);
+  }
+  .qa-q {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--c-text);
+    line-height: 1.5;
+  }
+  .qa-a {
+    font-size: 0.82rem;
+    color: var(--c-text-sub);
+    line-height: 1.7;
+  }
+  .qa-tag {
+    display: inline-block;
+    margin-top: auto;
+    padding: 3px 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-radius: 999px;
+    background: var(--grad-warm);
+    color: var(--c-coral);
+    border: 1px solid rgba(255, 122, 89, 0.3);
+    align-self: flex-start;
+  }
+</style>

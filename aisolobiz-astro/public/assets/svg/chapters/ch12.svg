@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80" role="img" aria-labelledby="ch12Title">
+  <title id="ch12Title">第12章 卒業ロード</title>
+  <path d="M14 36 L40 22 L66 36 L40 50 Z" fill="#0066FF" stroke="#0066FF" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M22 40 L22 52 Q22 56 26 58 Q40 64 54 58 Q58 56 58 52 L58 40" fill="none" stroke="#0066FF" stroke-width="2.5" stroke-linejoin="round"/>
+  <line x1="62" y1="36" x2="62" y2="56" stroke="#FF7A59" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="62" cy="58" r="3" fill="#FF7A59"/>
+  <path d="M40 50 L40 22" stroke="#8A2BE2" stroke-width="1.5" stroke-dasharray="2,2"/>
+</svg>

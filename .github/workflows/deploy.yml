@@ -83,3 +83,38 @@ jobs:
             **/_generation_log.json
             **/予備/**
             **/.git*
+
+      # 9. cms2-editor（自作CMSビジュアルエディタ）のビルド+デプロイ
+      - name: Install cms2-editor deps
+        working-directory: ./cms2-editor
+        run: npm ci
+
+      - name: Build cms2-editor
+        working-directory: ./cms2-editor
+        run: npm run build
+
+      - name: Deploy cms2-editor /editor/ to XSERVER
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./cms2-editor/dist/
+          server-dir: ${{ secrets.FTP_SERVER_DIR_CMS2_EDITOR }}
+          dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/node_modules/**
+
+      - name: Deploy cms2-editor PHP API to XSERVER
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./cms2-editor/api/
+          server-dir: ${{ secrets.FTP_SERVER_DIR_CMS2_API }}
+          dangerous-clean-slate: false
+          exclude: |
+            **/test_*.php
+            **/.git*

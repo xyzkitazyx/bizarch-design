@@ -1,0 +1,80 @@
+---
+/**
+ * トップページ
+ * 既存 aisolobiz/index.html を 8 コンポーネントに分解した Astro 版。
+ *
+ * Phase 2 で CMS から各セクションのデータを fetch する想定。
+ * 例:
+ *   const cms = await fetchTopPage();
+ *   <HeroSection {...cms.hero} />
+ *   <Q5Section items={cms.qa} />
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/HeroSection.astro';
+import Q5Section from '../components/Q5Section.astro';
+import MenuCards from '../components/MenuCards.astro';
+import WallsDashboard from '../components/WallsDashboard.astro';
+import DiagnoseSection from '../components/DiagnoseSection.astro';
+import ChapterList from '../components/ChapterList.astro';
+import QuickSimulator from '../components/QuickSimulator.astro';
+import CorporateBanner from '../components/CorporateBanner.astro';
+---
+
+<BaseLayout
+  title="AIで一人個人事業の教科書｜30秒で結論・1分で試算・15分で開業届"
+  description="AIで個人事業、本当にやれる？——30秒Q&A・6つの壁ダッシュボード・手取り早見表・節税3比較・15分で開業届。8業種×AI活用率の数字で答える、副業から専業・法人成りまでのガイド。"
+>
+  <HeroSection />
+  <Q5Section />
+  <MenuCards />
+  <WallsDashboard />
+  <DiagnoseSection />
+  <ChapterList />
+  <QuickSimulator />
+  <CorporateBanner />
+</BaseLayout>
+
+<style is:global>
+  /* index.html と同等の main オフセット（fixed ヘッダ分） */
+  main { padding-top: 64px; }
+
+  /* 共通 reveal アニメーション（共通CSSに無いので追加） */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* aria-disabled (準備中バッジ) */
+  a[aria-disabled='true'] {
+    opacity: 0.45;
+    cursor: default;
+    pointer-events: none;
+    filter: grayscale(35%);
+    position: relative;
+  }
+  a[aria-disabled='true']::after {
+    content: '準備中';
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 6px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--c-text-mute);
+    background: var(--c-surface-3);
+    border: 1px solid var(--c-border-soft);
+    border-radius: 999px;
+    letter-spacing: 0.04em;
+    vertical-align: 1px;
+  }
+  .btn[aria-disabled='true'] { opacity: 0.5; }
+  .global-nav a[aria-current='page'] {
+    color: var(--c-blue);
+    background: rgba(0, 102, 255, 0.08);
+    font-weight: 800;
+  }
+</style>

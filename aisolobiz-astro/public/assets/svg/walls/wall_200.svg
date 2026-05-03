@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-labelledby="w200Title">
+  <title id="w200Title">200万円の壁</title>
+  <rect x="0" y="0" width="200" height="200" fill="#FFFFFF"/>
+  <line x1="20" y1="170" x2="180" y2="170" stroke="#111827" stroke-width="2"/>
+  <!-- ハードル -->
+  <line x1="40" y1="170" x2="40" y2="80" stroke="#8A2BE2" stroke-width="3.5"/>
+  <line x1="160" y1="170" x2="160" y2="80" stroke="#8A2BE2" stroke-width="3.5"/>
+  <line x1="35" y1="80" x2="165" y2="80" stroke="#8A2BE2" stroke-width="4"/>
+  <!-- 飛び越える人（矢印） -->
+  <path d="M70 150 Q100 60 130 150" fill="none" stroke="#FF7A59" stroke-width="3" stroke-linecap="round" stroke-dasharray="4,3"/>
+  <circle cx="100" cy="78" r="6" fill="#FF7A59"/>
+  <path d="M122 144 L130 150 L122 156" fill="none" stroke="#FF7A59" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="100" y="50" font-family="'Noto Sans JP', sans-serif" font-size="26" font-weight="900" fill="#8A2BE2" text-anchor="middle">200万</text>
+  <text x="100" y="190" font-family="'Noto Sans JP', sans-serif" font-size="11" font-weight="700" fill="#111827" text-anchor="middle">専業転換の判断ライン</text>
+</svg>

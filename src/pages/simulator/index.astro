@@ -1,0 +1,48 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SimulatorApp from '../../components/SimulatorApp';
+---
+
+<Layout
+  title="シミュレーター"
+  description="AIで一人起業の教科書 シミュレーター。業種・年商・役員報酬パターンを入力するだけで、最適な節税戦略と経営者総手取りを即座に試算できます。"
+>
+  <!-- Hero / Section Header -->
+  <section class="relative overflow-hidden">
+    <!-- Background gradient orbs -->
+    <div
+      class="absolute top-0 -left-40 w-[480px] h-[480px] bg-electric-blue/10 rounded-full blur-3xl animate-pulse pointer-events-none"
+      aria-hidden="true"
+    >
+    </div>
+    <div
+      class="absolute top-32 -right-32 w-[480px] h-[480px] bg-deep-purple/10 rounded-full blur-3xl animate-pulse pointer-events-none"
+      style="animation-delay: 1s;"
+      aria-hidden="true"
+    >
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-10 text-center">
+      <p class="text-sm font-medium tracking-widest text-electric-blue uppercase mb-4">
+        Tax × Salary Simulator
+      </p>
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-4">
+        一人起業の<span class="text-gradient">節税×手取り</span>を、瞬時に。
+      </h1>
+      <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+        業種・年商・役員報酬パターンを選ぶだけで、3つの最適化戦略と
+        詳細P&amp;L・感度分析がリアルタイムで再計算されます。
+      </p>
+      <p class="text-[11px] text-gray-400 mt-3 tracking-widest">
+        v1.0 / 2026-04 基準 / 東京23区・資本金1,000万円以下前提
+      </p>
+    </div>
+  </section>
+
+  <!-- Simulator Body -->
+  <section class="bg-blueprint">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 pt-4">
+      <SimulatorApp client:load />
+    </div>
+  </section>
+</Layout>

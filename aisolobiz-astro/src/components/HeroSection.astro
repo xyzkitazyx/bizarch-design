@@ -1,0 +1,211 @@
+---
+/**
+ * HeroSection - トップページのヒーロー
+ * 「AIで個人事業、やれる。」 + 3つの数字 + 2つのCTA
+ */
+
+interface HeroBullet {
+  emphasis: string;
+  text: string;
+}
+
+interface HeroCta {
+  href: string;
+  label: string;
+  icon?: string;
+  variant?: 'primary' | 'ghost';
+}
+
+interface Props {
+  eyebrow?: string;
+  titleHtml?: string;
+  subtitleHtml?: string;
+  bullets?: HeroBullet[];
+  ctas?: HeroCta[];
+  meta?: string;
+  imageSrc?: string;
+}
+
+const {
+  eyebrow = 'AI × SOLO BUSINESS / 2026 EDITION',
+  titleHtml = '<span class="grad">AIで個人事業</span>、<br />やれる。',
+  subtitleHtml = '短気なあなたのための、数字で答える教科書。<br />副業6万から専業1,500万まで、税・社保・節税を全部表にしました。',
+  bullets = [
+    { emphasis: '30秒', text: 'で結論' },
+    { emphasis: '1分', text: 'で試算' },
+    { emphasis: '15分', text: 'で開業届' },
+  ],
+  ctas = [
+    { href: '/simulator/', label: 'シミュレータで試算', icon: '🧮', variant: 'primary' },
+    { href: '#textbook', label: '教科書を読む', icon: '📖', variant: 'ghost' },
+  ],
+  meta = '※ 数字の前提：2026年4月時点・東京23区基準。所得税は累進＋復興2.1%、青色65万、基礎48万、国保13.7%＋均等割66,000円で概算。',
+  imageSrc = '/assets/images/hero.png',
+} = Astro.props;
+---
+
+<section class="hero" aria-labelledby="heroTitle">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <span class="hero-eyebrow"><span class="dot" aria-hidden="true"></span>{eyebrow}</span>
+        <h1 id="heroTitle" class="hero-title" set:html={titleHtml} />
+        <p class="hero-sub" set:html={subtitleHtml} />
+        <ul class="hero-bullets" aria-label="3つの数字">
+          {bullets.map((b) => (
+            <li><b>{b.emphasis}</b>{b.text}</li>
+          ))}
+        </ul>
+        <div class="hero-cta">
+          {ctas.map((cta) => (
+            <a
+              href={cta.href}
+              class:list={['btn', 'btn--lg', cta.variant === 'ghost' ? 'btn--ghost' : 'btn--primary']}
+            >
+              {cta.icon && <span aria-hidden="true">{cta.icon}</span>} {cta.label}
+            </a>
+          ))}
+        </div>
+        <p class="hero-meta">{meta}</p>
+      </div>
+
+      <div class="hero-visual" data-video-placeholder aria-hidden="true">
+        <img src={imageSrc} alt="" data-hero-image loading="eager" decoding="async" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding: 56px 0 72px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 12% 18%, rgba(0, 102, 255, 0.1), transparent 45%),
+      radial-gradient(circle at 88% 82%, rgba(138, 43, 226, 0.1), transparent 45%),
+      linear-gradient(rgba(0, 102, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 102, 255, 0.025) 1px, transparent 1px);
+    background-size: auto, auto, 40px 40px, 40px 40px;
+    z-index: -1;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  @media (max-width: 1024px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: rgba(0, 102, 255, 0.08);
+    border: 1px solid rgba(0, 102, 255, 0.2);
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--c-blue);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .hero-eyebrow .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--c-coral);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  .hero-title {
+    font-weight: 900;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    color: var(--c-text);
+    margin-bottom: 18px;
+  }
+  .hero-title :global(.grad) {
+    background: var(--grad-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--c-text-sub);
+    line-height: 1.85;
+    margin-bottom: 16px;
+    max-width: 580px;
+  }
+  .hero-bullets {
+    display: flex;
+    gap: 18px 24px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .hero-bullets li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--c-text);
+  }
+  .hero-bullets li b {
+    background: var(--grad-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 1.1rem;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+  }
+  .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-meta {
+    margin-top: 18px;
+    font-size: 0.78rem;
+    color: var(--c-text-mute);
+  }
+  .hero-visual {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    background:
+      linear-gradient(135deg, rgba(0, 102, 255, 0.08), rgba(138, 43, 226, 0.08)),
+      repeating-linear-gradient(45deg, rgba(0, 102, 255, 0.04) 0 1px, transparent 1px 16px);
+    border: 1px solid rgba(0, 102, 255, 0.15);
+    box-shadow: 0 30px 60px -20px rgba(0, 102, 255, 0.2), 0 12px 24px -10px rgba(138, 43, 226, 0.15);
+  }
+  .hero-visual img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.04);
+    transition: opacity 0.7s ease, transform 1.2s ease;
+  }
+  .hero-visual :global(img.is-loaded) {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .hero-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(0, 102, 255, 0.04));
+  }
+</style>

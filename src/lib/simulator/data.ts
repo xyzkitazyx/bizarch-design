@@ -1,0 +1,387 @@
+/**
+ * AIで一人起業の教科書（法人版）シミュレーター用 計算データ。
+ * 東京23区・資本金1,000万円以下の中小企業前提・2026年4月時点
+ *
+ * data.json (886行のscript.jsの相棒) をTypeScriptで型安全に再定義
+ */
+
+export type IndustryKey =
+  | '受託開発'
+  | 'AXコンサル'
+  | '業務設計コンサル'
+  | 'BAコンサル'
+  | '経営コンサル'
+  | '広告運用'
+  | 'ウェブ制作'
+  | 'ウェブデザイン'
+  | 'カスタム';
+
+export interface IndustryDefault {
+  default_revenue: number;
+  default_sga: number;
+  default_salary_monthly: number;
+  comment: string;
+}
+
+export interface BusinessTaxBracket {
+  upToYen: number | null;
+  rate: number;
+}
+
+export interface DefenseTaxConfig {
+  deduction_yen: number;
+  rate: number;
+  comment: string;
+}
+
+export interface TaxRates {
+  comment: string;
+  corp_below_8m: number;
+  corp_above_8m: number;
+  corp_threshold_yen: number;
+  local_per_capita_yen: number;
+  local_income_rate: number;
+  local_income_rate_excess: number;
+  local_excess_threshold_corptax_yen: number;
+  business_tax_brackets: BusinessTaxBracket[];
+  special_business_tax_rate: number;
+  defense_tax: DefenseTaxConfig;
+}
+
+export interface SocialInsuranceRates {
+  comment: string;
+  kenpo: number;
+  child_support: number;
+  kaigo: number;
+  kosei: number;
+  kenpo_max_yen: number;
+  kosei_max_yen: number;
+  kosei_min_yen: number;
+  kenpo_min_yen: number;
+}
+
+export interface SyuhoRow {
+  grade: number;
+  lowerYen: number;
+  upperYen: number | null;
+  syuhoYen: number;
+}
+
+export interface SyuhoTable {
+  comment: string;
+  kenpo: SyuhoRow[];
+  kosei: SyuhoRow[];
+}
+
+export interface SalaryDeductionBracket {
+  upToYen: number | null;
+  fixedYen: number | null;
+  rate: number;
+  constYen: number;
+}
+
+export interface BasicDeductionBracket {
+  upToYen: number | null;
+  amountYen: number;
+}
+
+export interface IncomeTaxBracket {
+  upToYen: number | null;
+  rate: number;
+  deductionYen: number;
+}
+
+export interface ResidentTax {
+  comment: string;
+  income_rate: number;
+  per_capita_yen: number;
+  basic_deduction_yen: number;
+  adjustment_deduction_yen: number;
+}
+
+export interface ConsumptionTax {
+  comment: string;
+  free_threshold_yen: number;
+  rate: number;
+  simplified_service_rate: number;
+  two_percent_special_ends_at: string;
+}
+
+export interface SimulatorData {
+  version: string;
+  validFrom: string;
+  validUntil: string;
+  comment: string;
+  industries: Record<IndustryKey, IndustryDefault>;
+  tax_rates: TaxRates;
+  social_insurance: SocialInsuranceRates;
+  syuho_table: SyuhoTable;
+  salary_deduction: { comment: string; brackets: SalaryDeductionBracket[] };
+  basic_deduction: { comment: string; brackets: BasicDeductionBracket[] };
+  income_tax_rates: { comment: string; brackets: IncomeTaxBracket[]; reconstruction_rate: number };
+  resident_tax: ResidentTax;
+  consumption_tax: ConsumptionTax;
+}
+
+export const INDUSTRIES: Record<IndustryKey, IndustryDefault> = {
+  受託開発: {
+    default_revenue: 1000,
+    default_sga: 200,
+    default_salary_monthly: 50,
+    comment: 'AI活用エンジニア・月単価78万・想定年商1,000-2,000万',
+  },
+  AXコンサル: {
+    default_revenue: 2000,
+    default_sga: 300,
+    default_salary_monthly: 100,
+    comment: 'AI Transformation支援。月額顧問4社×20万+PoC案件・想定年商2,000-3,500万',
+  },
+  業務設計コンサル: {
+    default_revenue: 1500,
+    default_sga: 250,
+    default_salary_monthly: 85,
+    comment: 'BPR・業務改善。フリーコンサル月単価100-150万・想定年商1,800-2,500万',
+  },
+  BAコンサル: {
+    default_revenue: 2000,
+    default_sga: 300,
+    default_salary_monthly: 120,
+    comment: 'ビジネスアーキテクト。希少×高単価・想定年商2,000-3,000万',
+  },
+  経営コンサル: {
+    default_revenue: 1000,
+    default_sga: 200,
+    default_salary_monthly: 50,
+    comment: '中小企業向け顧問4社×20万・想定年商1,000-2,000万',
+  },
+  広告運用: {
+    default_revenue: 800,
+    default_sga: 100,
+    default_salary_monthly: 40,
+    comment: 'Google/Meta/LINE運用代行。1社月15-20万円×5-7社・想定年商600-1,500万',
+  },
+  ウェブ制作: {
+    default_revenue: 800,
+    default_sga: 150,
+    default_salary_monthly: 40,
+    comment: 'LP・コーポレートサイト制作。LP×4本/月×15-20万・想定年商800-1,500万',
+  },
+  ウェブデザイン: {
+    default_revenue: 1000,
+    default_sga: 180,
+    default_salary_monthly: 55,
+    comment: 'UI/UXデザイン。月額60-90万・想定年商1,200-1,800万',
+  },
+  カスタム: {
+    default_revenue: 1000,
+    default_sga: 200,
+    default_salary_monthly: 50,
+    comment: '任意の業種で手動入力',
+  },
+};
+
+export const TAX_RATES: TaxRates = {
+  comment: '法人税等（2026年4月時点・東京23区・資本金1,000万円以下）',
+  corp_below_8m: 0.15,
+  corp_above_8m: 0.232,
+  corp_threshold_yen: 8000000,
+  local_per_capita_yen: 70000,
+  local_income_rate: 0.07,
+  local_income_rate_excess: 0.104,
+  local_excess_threshold_corptax_yen: 10000000,
+  business_tax_brackets: [
+    { upToYen: 4000000, rate: 0.035 },
+    { upToYen: 8000000, rate: 0.053 },
+    { upToYen: null, rate: 0.07 },
+  ],
+  special_business_tax_rate: 0.37,
+  defense_tax: {
+    deduction_yen: 5000000,
+    rate: 0.04,
+    comment: '2026年4月新設・基準法人税額500万円控除',
+  },
+};
+
+export const SOCIAL_INSURANCE: SocialInsuranceRates = {
+  comment: '協会けんぽ東京・2026年3月分から',
+  kenpo: 0.0985,
+  child_support: 0.0023,
+  kaigo: 0.0162,
+  kosei: 0.183,
+  kenpo_max_yen: 1390000,
+  kosei_max_yen: 650000,
+  kosei_min_yen: 88000,
+  kenpo_min_yen: 58000,
+};
+
+export const KENPO_GRADES: SyuhoRow[] = [
+  { grade: 1, lowerYen: 0, upperYen: 63000, syuhoYen: 58000 },
+  { grade: 2, lowerYen: 63000, upperYen: 73000, syuhoYen: 68000 },
+  { grade: 3, lowerYen: 73000, upperYen: 83000, syuhoYen: 78000 },
+  { grade: 4, lowerYen: 83000, upperYen: 93000, syuhoYen: 88000 },
+  { grade: 5, lowerYen: 93000, upperYen: 101000, syuhoYen: 98000 },
+  { grade: 6, lowerYen: 101000, upperYen: 107000, syuhoYen: 104000 },
+  { grade: 7, lowerYen: 107000, upperYen: 114000, syuhoYen: 110000 },
+  { grade: 8, lowerYen: 114000, upperYen: 122000, syuhoYen: 118000 },
+  { grade: 9, lowerYen: 122000, upperYen: 130000, syuhoYen: 126000 },
+  { grade: 10, lowerYen: 130000, upperYen: 138000, syuhoYen: 134000 },
+  { grade: 11, lowerYen: 138000, upperYen: 146000, syuhoYen: 142000 },
+  { grade: 12, lowerYen: 146000, upperYen: 155000, syuhoYen: 150000 },
+  { grade: 13, lowerYen: 155000, upperYen: 165000, syuhoYen: 160000 },
+  { grade: 14, lowerYen: 165000, upperYen: 175000, syuhoYen: 170000 },
+  { grade: 15, lowerYen: 175000, upperYen: 185000, syuhoYen: 180000 },
+  { grade: 16, lowerYen: 185000, upperYen: 195000, syuhoYen: 190000 },
+  { grade: 17, lowerYen: 195000, upperYen: 210000, syuhoYen: 200000 },
+  { grade: 18, lowerYen: 210000, upperYen: 230000, syuhoYen: 220000 },
+  { grade: 19, lowerYen: 230000, upperYen: 250000, syuhoYen: 240000 },
+  { grade: 20, lowerYen: 250000, upperYen: 270000, syuhoYen: 260000 },
+  { grade: 21, lowerYen: 270000, upperYen: 290000, syuhoYen: 280000 },
+  { grade: 22, lowerYen: 290000, upperYen: 310000, syuhoYen: 300000 },
+  { grade: 23, lowerYen: 310000, upperYen: 330000, syuhoYen: 320000 },
+  { grade: 24, lowerYen: 330000, upperYen: 350000, syuhoYen: 340000 },
+  { grade: 25, lowerYen: 350000, upperYen: 370000, syuhoYen: 360000 },
+  { grade: 26, lowerYen: 370000, upperYen: 395000, syuhoYen: 380000 },
+  { grade: 27, lowerYen: 395000, upperYen: 425000, syuhoYen: 410000 },
+  { grade: 28, lowerYen: 425000, upperYen: 455000, syuhoYen: 440000 },
+  { grade: 29, lowerYen: 455000, upperYen: 485000, syuhoYen: 470000 },
+  { grade: 30, lowerYen: 485000, upperYen: 515000, syuhoYen: 500000 },
+  { grade: 31, lowerYen: 515000, upperYen: 545000, syuhoYen: 530000 },
+  { grade: 32, lowerYen: 545000, upperYen: 575000, syuhoYen: 560000 },
+  { grade: 33, lowerYen: 575000, upperYen: 605000, syuhoYen: 590000 },
+  { grade: 34, lowerYen: 605000, upperYen: 635000, syuhoYen: 620000 },
+  { grade: 35, lowerYen: 635000, upperYen: 665000, syuhoYen: 650000 },
+  { grade: 36, lowerYen: 665000, upperYen: 695000, syuhoYen: 680000 },
+  { grade: 37, lowerYen: 695000, upperYen: 730000, syuhoYen: 710000 },
+  { grade: 38, lowerYen: 730000, upperYen: 770000, syuhoYen: 750000 },
+  { grade: 39, lowerYen: 770000, upperYen: 810000, syuhoYen: 790000 },
+  { grade: 40, lowerYen: 810000, upperYen: 855000, syuhoYen: 830000 },
+  { grade: 41, lowerYen: 855000, upperYen: 905000, syuhoYen: 880000 },
+  { grade: 42, lowerYen: 905000, upperYen: 955000, syuhoYen: 930000 },
+  { grade: 43, lowerYen: 955000, upperYen: 1005000, syuhoYen: 980000 },
+  { grade: 44, lowerYen: 1005000, upperYen: 1055000, syuhoYen: 1030000 },
+  { grade: 45, lowerYen: 1055000, upperYen: 1115000, syuhoYen: 1090000 },
+  { grade: 46, lowerYen: 1115000, upperYen: 1175000, syuhoYen: 1150000 },
+  { grade: 47, lowerYen: 1175000, upperYen: 1235000, syuhoYen: 1210000 },
+  { grade: 48, lowerYen: 1235000, upperYen: 1295000, syuhoYen: 1270000 },
+  { grade: 49, lowerYen: 1295000, upperYen: 1355000, syuhoYen: 1330000 },
+  { grade: 50, lowerYen: 1355000, upperYen: null, syuhoYen: 1390000 },
+];
+
+export const KOSEI_GRADES: SyuhoRow[] = [
+  { grade: 1, lowerYen: 0, upperYen: 93000, syuhoYen: 88000 },
+  { grade: 2, lowerYen: 93000, upperYen: 101000, syuhoYen: 98000 },
+  { grade: 3, lowerYen: 101000, upperYen: 107000, syuhoYen: 104000 },
+  { grade: 4, lowerYen: 107000, upperYen: 114000, syuhoYen: 110000 },
+  { grade: 5, lowerYen: 114000, upperYen: 122000, syuhoYen: 118000 },
+  { grade: 6, lowerYen: 122000, upperYen: 130000, syuhoYen: 126000 },
+  { grade: 7, lowerYen: 130000, upperYen: 138000, syuhoYen: 134000 },
+  { grade: 8, lowerYen: 138000, upperYen: 146000, syuhoYen: 142000 },
+  { grade: 9, lowerYen: 146000, upperYen: 155000, syuhoYen: 150000 },
+  { grade: 10, lowerYen: 155000, upperYen: 165000, syuhoYen: 160000 },
+  { grade: 11, lowerYen: 165000, upperYen: 175000, syuhoYen: 170000 },
+  { grade: 12, lowerYen: 175000, upperYen: 185000, syuhoYen: 180000 },
+  { grade: 13, lowerYen: 185000, upperYen: 195000, syuhoYen: 190000 },
+  { grade: 14, lowerYen: 195000, upperYen: 210000, syuhoYen: 200000 },
+  { grade: 15, lowerYen: 210000, upperYen: 230000, syuhoYen: 220000 },
+  { grade: 16, lowerYen: 230000, upperYen: 250000, syuhoYen: 240000 },
+  { grade: 17, lowerYen: 250000, upperYen: 270000, syuhoYen: 260000 },
+  { grade: 18, lowerYen: 270000, upperYen: 290000, syuhoYen: 280000 },
+  { grade: 19, lowerYen: 290000, upperYen: 310000, syuhoYen: 300000 },
+  { grade: 20, lowerYen: 310000, upperYen: 330000, syuhoYen: 320000 },
+  { grade: 21, lowerYen: 330000, upperYen: 350000, syuhoYen: 340000 },
+  { grade: 22, lowerYen: 350000, upperYen: 370000, syuhoYen: 360000 },
+  { grade: 23, lowerYen: 370000, upperYen: 395000, syuhoYen: 380000 },
+  { grade: 24, lowerYen: 395000, upperYen: 425000, syuhoYen: 410000 },
+  { grade: 25, lowerYen: 425000, upperYen: 455000, syuhoYen: 440000 },
+  { grade: 26, lowerYen: 455000, upperYen: 485000, syuhoYen: 470000 },
+  { grade: 27, lowerYen: 485000, upperYen: 515000, syuhoYen: 500000 },
+  { grade: 28, lowerYen: 515000, upperYen: 545000, syuhoYen: 530000 },
+  { grade: 29, lowerYen: 545000, upperYen: 575000, syuhoYen: 560000 },
+  { grade: 30, lowerYen: 575000, upperYen: 605000, syuhoYen: 590000 },
+  { grade: 31, lowerYen: 605000, upperYen: 635000, syuhoYen: 620000 },
+  { grade: 32, lowerYen: 635000, upperYen: null, syuhoYen: 650000 },
+];
+
+export const SALARY_DEDUCTION_BRACKETS: SalaryDeductionBracket[] = [
+  { upToYen: 1625000, fixedYen: 740000, rate: 0, constYen: 0 },
+  { upToYen: 1800000, fixedYen: null, rate: 0.40, constYen: -100000 },
+  { upToYen: 3600000, fixedYen: null, rate: 0.30, constYen: 80000 },
+  { upToYen: 6600000, fixedYen: null, rate: 0.20, constYen: 440000 },
+  { upToYen: 8500000, fixedYen: null, rate: 0.10, constYen: 1100000 },
+  { upToYen: null, fixedYen: 1950000, rate: 0, constYen: 0 },
+];
+
+export const BASIC_DEDUCTION_BRACKETS: BasicDeductionBracket[] = [
+  { upToYen: 1320000, amountYen: 1040000 },
+  { upToYen: 3360000, amountYen: 880000 },
+  { upToYen: 4890000, amountYen: 680000 },
+  { upToYen: 6550000, amountYen: 630000 },
+  { upToYen: 23500000, amountYen: 620000 },
+  { upToYen: 24000000, amountYen: 480000 },
+  { upToYen: 24500000, amountYen: 320000 },
+  { upToYen: 25000000, amountYen: 160000 },
+  { upToYen: null, amountYen: 0 },
+];
+
+export const INCOME_TAX_BRACKETS: IncomeTaxBracket[] = [
+  { upToYen: 1950000, rate: 0.05, deductionYen: 0 },
+  { upToYen: 3300000, rate: 0.10, deductionYen: 97500 },
+  { upToYen: 6950000, rate: 0.20, deductionYen: 427500 },
+  { upToYen: 9000000, rate: 0.23, deductionYen: 636000 },
+  { upToYen: 18000000, rate: 0.33, deductionYen: 1536000 },
+  { upToYen: 40000000, rate: 0.40, deductionYen: 2796000 },
+  { upToYen: null, rate: 0.45, deductionYen: 4796000 },
+];
+
+export const RECONSTRUCTION_RATE = 0.021;
+
+export const RESIDENT_TAX: ResidentTax = {
+  comment: '住民税（東京・所得割10%＋均等割5,000円・基礎控除43万円・調整控除2,500円）',
+  income_rate: 0.10,
+  per_capita_yen: 5000,
+  basic_deduction_yen: 430000,
+  adjustment_deduction_yen: 2500,
+};
+
+export const CONSUMPTION_TAX: ConsumptionTax = {
+  comment: '消費税（一人法人・東京）',
+  free_threshold_yen: 10000000,
+  rate: 0.10,
+  simplified_service_rate: 0.50,
+  two_percent_special_ends_at: '2026-09-30',
+};
+
+/** 全データを1オブジェクトとして集約（script.jsのDATAと同じ形） */
+export const SIMULATOR_DATA: SimulatorData = {
+  version: '2026-04',
+  validFrom: '2026-04-01',
+  validUntil: '2027-03-31',
+  comment:
+    'AIで一人起業の教科書（法人版）シミュレーター用 計算データ。東京23区・資本金1,000万円以下の中小企業前提。',
+  industries: INDUSTRIES,
+  tax_rates: TAX_RATES,
+  social_insurance: SOCIAL_INSURANCE,
+  syuho_table: {
+    comment:
+      '標準報酬月額等級表。lowerYen以上 ~ upperYen未満（最終等級はupperYen=null）。',
+    kenpo: KENPO_GRADES,
+    kosei: KOSEI_GRADES,
+  },
+  salary_deduction: {
+    comment: '給与所得控除（2026年版・最低74万・上限195万・収入帯別）',
+    brackets: SALARY_DEDUCTION_BRACKETS,
+  },
+  basic_deduction: {
+    comment: '基礎控除（所得税・2026年版、合計所得帯別）',
+    brackets: BASIC_DEDUCTION_BRACKETS,
+  },
+  income_tax_rates: {
+    comment: '所得税の累進税率（5-45%・控除額あり）',
+    brackets: INCOME_TAX_BRACKETS,
+    reconstruction_rate: RECONSTRUCTION_RATE,
+  },
+  resident_tax: RESIDENT_TAX,
+  consumption_tax: CONSUMPTION_TAX,
+};
+
+export const MAN = 10000;

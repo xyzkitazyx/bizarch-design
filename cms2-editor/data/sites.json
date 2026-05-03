@@ -1,0 +1,34 @@
+{
+  "sites": [
+    {
+      "id": "aisolobiz",
+      "name": "AIで一人起業.biz",
+      "domain": "aisolobiz.bizarch-design.com",
+      "themeColor": "#0066FF",
+      "deployTarget": {
+        "type": "ftp",
+        "path": "/aisolobiz.bizarch-design.com/public_html/"
+      }
+    },
+    {
+      "id": "aistartup",
+      "name": "AI Startup Studio",
+      "domain": "aistartup.bizarch-design.com",
+      "themeColor": "#8A2BE2",
+      "deployTarget": {
+        "type": "ftp",
+        "path": "/aistartup.bizarch-design.com/public_html/"
+      }
+    },
+    {
+      "id": "corp",
+      "name": "bizarch-design 本体",
+      "domain": "bizarch-design.com",
+      "themeColor": "#FF7A59",
+      "deployTarget": {
+        "type": "ftp",
+        "path": "/bizarch-design.com/public_html/"
+      }
+    }
+  ]
+}

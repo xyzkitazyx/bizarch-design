@@ -1,0 +1,118 @@
+---
+/**
+ * WallsDashboard - 6つの壁ダッシュボード
+ */
+
+interface WallItem {
+  badge: string;
+  badgeType: 'side' | 'solo';
+  textHtml: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  titleHtml?: string;
+  lead?: string;
+  svgSrc?: string;
+  items?: WallItem[];
+}
+
+const {
+  eyebrow = '6 WALLS DASHBOARD',
+  titleHtml = '個人事業主が越える<span class="hl">6つの壁</span>',
+  lead = '副業者が気にする5つの壁＋専業者の3つの壁を1ページに圧縮。あなたの現在地で「次どこを越えるか」がわかります。',
+  svgSrc = '/assets/svg/walls/walls_overview.svg',
+  items = [
+    { badge: '103万', badgeType: 'side', textHtml: '<b>配偶者控除</b>が減り始める。副業者は配偶者の年収側で判定。' },
+    { badge: '130万', badgeType: 'side', textHtml: '<b>社保被扶養者</b>から外れる。事業所得は経費控除後で見る健保が多数。' },
+    { badge: '200万', badgeType: 'side', textHtml: '<b>住民税申告不要</b>（給与＋20万以下）が使えなくなる副業ゾーン。' },
+    { badge: '48万', badgeType: 'solo', textHtml: '<b>基礎控除</b>満額帯（合計所得2,400万以下）。専業のスタートライン。' },
+    { badge: '1,000万', badgeType: 'solo', textHtml: '<b>消費税</b>の課税事業者ライン。インボイス2割特例の試算は必須。' },
+    { badge: '課税600万', badgeType: 'solo', textHtml: '<b>法人成り</b>検討ライン。年商800〜1,000万超で必ず試算。' },
+  ],
+} = Astro.props;
+---
+
+<section class="section" id="walls" aria-labelledby="wallsTitle">
+  <div class="container">
+    <p class="section-eyebrow" data-reveal>{eyebrow}</p>
+    <h2 id="wallsTitle" class="section-title" data-reveal set:html={titleHtml} />
+    <p class="section-lead" data-reveal>{lead}</p>
+
+    <div class="walls-wrap">
+      <div class="walls-svg" data-reveal>
+        <img src={svgSrc} alt="6つの壁ダッシュボード（副業/専業の年収階段）" />
+      </div>
+
+      <ul class="walls-list" data-reveal>
+        {items.map((item) => (
+          <li class="item">
+            <span class:list={['badge', item.badgeType === 'side' ? 'b-side' : 'b-solo']}>
+              {item.badge}
+            </span>
+            <span class="item-text" set:html={item.textHtml} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .walls-wrap {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 32px;
+    align-items: center;
+  }
+  @media (max-width: 1024px) { .walls-wrap { grid-template-columns: 1fr; } }
+  .walls-svg {
+    background: #fff;
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-lg);
+    padding: 16px;
+    overflow: hidden;
+  }
+  .walls-svg img { width: 100%; height: auto; display: block; }
+  .walls-list { display: flex; flex-direction: column; gap: 12px; }
+  .walls-list .item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 16px;
+    background: #fff;
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-md);
+    transition: border-color var(--t-mid), background var(--t-mid);
+  }
+  .walls-list .item:hover {
+    border-color: rgba(0, 102, 255, 0.2);
+    background: rgba(0, 102, 255, 0.02);
+  }
+  .walls-list .badge {
+    flex-shrink: 0;
+    font-size: 0.78rem;
+    font-weight: 900;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+  }
+  .walls-list .badge.b-side {
+    background: rgba(0, 102, 255, 0.1);
+    color: var(--c-blue);
+  }
+  .walls-list .badge.b-solo {
+    background: rgba(138, 43, 226, 0.1);
+    color: var(--c-purple);
+  }
+  .walls-list .item-text {
+    font-size: 0.85rem;
+    color: var(--c-text-sub);
+    line-height: 1.65;
+  }
+  .walls-list .item-text :global(b) {
+    color: var(--c-text);
+    font-weight: 800;
+  }
+</style>

@@ -1,0 +1,73 @@
+---
+/**
+ * SiteHeader - 共通ヘッダー
+ * 既存 aisolobiz/index.html の <header class="site-header"> をコンポーネント化。
+ * Phase 2 で CMS から navItems を取得する想定なので、props として受け取れる形にしている。
+ */
+
+export interface NavItem {
+  href: string;
+  label: string;
+  current?: boolean;
+  cta?: boolean;
+}
+
+interface Props {
+  /** 現在ページパス（aria-current 判定用） */
+  currentPath?: string;
+  /** ナビ項目（未指定時はデフォルト 7 リンクを表示） */
+  navItems?: NavItem[];
+  /** ロゴパス（既定: /assets/svg/logo.svg） */
+  logoSrc?: string;
+}
+
+const {
+  currentPath = '/',
+  logoSrc = '/assets/svg/logo.svg',
+  navItems = [
+    { href: '/', label: 'トップ' },
+    { href: '/textbook', label: '教科書' },
+    { href: '/simulator/', label: 'シミュレータ' },
+    { href: '/open', label: '開業届' },
+    { href: '/downloads', label: '資料DL' },
+    { href: '/resources', label: '用語集' },
+    { href: '/simulator/', label: '試算する', cta: true },
+  ],
+} = Astro.props;
+
+// current フラグを currentPath から付与（cta は除く）
+const navWithCurrent = navItems.map((item) => ({
+  ...item,
+  current: !item.cta && item.href === currentPath,
+}));
+---
+
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <a href="/" class="brand-logo" aria-label="AIで一人個人事業の教科書 トップへ">
+      <img src={logoSrc} alt="AIで一人個人事業の教科書" />
+    </a>
+
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-controls="globalNav"
+      aria-expanded="false"
+      aria-label="メニューを開く"
+    >
+      <span class="bar" aria-hidden="true"></span>
+    </button>
+
+    <nav id="globalNav" class="global-nav" aria-label="主要ナビゲーション">
+      {navWithCurrent.map((item) => (
+        <a
+          href={item.href}
+          class:list={[item.cta && 'is-cta']}
+          aria-current={item.current ? 'page' : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>

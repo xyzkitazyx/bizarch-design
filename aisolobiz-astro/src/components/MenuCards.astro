@@ -1,0 +1,116 @@
+---
+/**
+ * MenuCards - 3つの入り口カード
+ */
+
+interface MenuCard {
+  icon: string;
+  title: string;
+  desc: string;
+  link: { href: string; label: string };
+}
+
+interface Props {
+  eyebrow?: string;
+  titleHtml?: string;
+  lead?: string;
+  cards?: MenuCard[];
+}
+
+const {
+  eyebrow = '3 ENTRANCES',
+  titleHtml = 'まず<span class="hl">どこから</span>入る？',
+  lead = 'あなたの今のフェーズで、最短ルートが変わります。3つの入り口を用意しました。',
+  cards = [
+    { icon: '📖', title: '教科書を読む', desc: '12章＋巻末で、副業から法人成りまで網羅。表と数字だけで、抽象論ゼロの設計です。', link: { href: '#chapters', label: '12章を見る →' } },
+    { icon: '🧮', title: 'シミュレータで試算', desc: 'あなたの売上・経費・モードを入れるだけ。手取り・税・社保・6つの壁判定が瞬時に出ます。', link: { href: '/simulator/', label: 'シミュレータへ →' } },
+    { icon: '📝', title: '15分で開業届', desc: '弥生の開業届で、開業届＋青色申告承認＋専従者給与の3点を同時に出すのが鉄則。', link: { href: '/open', label: '15分で開業届を出す →' } },
+  ],
+} = Astro.props;
+---
+
+<section class="section section--alt" id="textbook" aria-labelledby="entryTitle">
+  <div class="container">
+    <p class="section-eyebrow" data-reveal>{eyebrow}</p>
+    <h2 id="entryTitle" class="section-title" data-reveal set:html={titleHtml} />
+    <p class="section-lead" data-reveal>{lead}</p>
+
+    <div class="entry-grid">
+      {cards.map((card) => (
+        <article class="entry-card" data-reveal>
+          <div class="entry-icon" aria-hidden="true">{card.icon}</div>
+          <h3>{card.title}</h3>
+          <p>{card.desc}</p>
+          <a class="entry-link" href={card.link.href}>{card.link.label}</a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .entry-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 900px) { .entry-grid { grid-template-columns: 1fr; } }
+  .entry-card {
+    background: #fff;
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-lg);
+    padding: 32px 28px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color var(--t-mid), box-shadow var(--t-mid), transform var(--t-mid);
+  }
+  .entry-card:hover {
+    border-color: rgba(0, 102, 255, 0.25);
+    box-shadow: var(--sh-mid);
+    transform: translateY(-3px);
+  }
+  .entry-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--grad-brand);
+    opacity: 0.85;
+  }
+  .entry-card .entry-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--r-md);
+    background: var(--grad-warm);
+    display: grid;
+    place-items: center;
+    font-size: 1.6rem;
+  }
+  .entry-card h3 {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: var(--c-text);
+    margin-top: 4px;
+  }
+  .entry-card p {
+    font-size: 0.88rem;
+    color: var(--c-text-sub);
+    line-height: 1.75;
+    flex: 1;
+  }
+  .entry-card .entry-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--c-blue);
+    margin-top: 8px;
+  }
+  .entry-card .entry-link:hover { color: var(--c-purple); }
+</style>

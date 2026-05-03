@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-labelledby="devTitle">
+  <title id="devTitle">受託開発</title>
+  <rect x="6" y="10" width="52" height="44" rx="4" fill="none" stroke="#0066FF" stroke-width="2"/>
+  <line x1="6" y1="20" x2="58" y2="20" stroke="#0066FF" stroke-width="2"/>
+  <circle cx="12" cy="15" r="1.5" fill="#FF7A59"/>
+  <circle cx="17" cy="15" r="1.5" fill="#8A2BE2"/>
+  <circle cx="22" cy="15" r="1.5" fill="#0066FF"/>
+  <path d="M22 32 L16 38 L22 44" fill="none" stroke="#0066FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M42 32 L48 38 L42 44" fill="none" stroke="#0066FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="36" y1="28" x2="28" y2="48" stroke="#FF7A59" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

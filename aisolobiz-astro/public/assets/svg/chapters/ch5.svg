@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80" role="img" aria-labelledby="ch5Title">
+  <title id="ch5Title">第5章 15分で開業</title>
+  <circle cx="40" cy="44" r="26" fill="none" stroke="#0066FF" stroke-width="2.5"/>
+  <line x1="40" y1="44" x2="40" y2="26" stroke="#0066FF" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="40" y1="44" x2="54" y2="44" stroke="#FF7A59" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="40" cy="44" r="3" fill="#0066FF"/>
+  <path d="M28 14 L34 8 L46 8 L52 14" fill="none" stroke="#0066FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="40" y="64" font-family="'Noto Sans JP', sans-serif" font-size="9" font-weight="900" fill="#8A2BE2" text-anchor="middle">15分</text>
+</svg>
