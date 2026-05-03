@@ -1,0 +1,50 @@
+name: Cleanup misplaced files (manual)
+
+# このワークフローは手動実行専用。
+# GitHub Actions 画面 → 左サイドバー「Cleanup misplaced files」→「Run workflow」で起動。
+# aisolobiz / aistartup の誤配置ファイルを一掃。
+
+on:
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Delete misplaced aisolobiz/aistartup files via FTP
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "$FTP_SERVER" <<'EOF'
+            set ftp:ssl-allow no
+            set xfer:clobber on
+
+            # ===== aisolobiz の誤配置（ルート直下）=====
+            rm -r -f /assets || true
+            rm -r -f /simulator || true
+            rm -f /index.html || true
+            rm -f /textbook.html || true
+            rm -f /open.html || true
+            rm -f /downloads.html || true
+            rm -f /resources.html || true
+            rm -f /coming-soon.html || true
+            rm -f /.ftp-deploy-sync-state.json || true
+
+            # ===== aistartup の誤配置（bizarch-design.com 内）=====
+            rm -r -f /bizarch-design.com/public_html/aistartup.bizarch-design.com || true
+
+            # 確認用ログ（ルートと bizarch-design.com/public_html を表示）
+            cls
+            cls /bizarch-design.com/public_html
+
+            bye
+          EOF
+
+      - name: Done
+        run: echo "Cleanup workflow finished. Verify on xserver file manager."
