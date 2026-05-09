@@ -1,22 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80" role="img" aria-labelledby="logoTitle">
-  <title id="logoTitle">AI個人事業の教科書 ロゴ（v3 改善版）</title>
+  <title id="logoTitle">AI個人事業の教科書 ロゴ（v2 紺紫コンパス・太字版）</title>
   <defs>
     <linearGradient id="lgGrad" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#1E2A78"/>
       <stop offset="55%" stop-color="#3D2C8D"/>
       <stop offset="100%" stop-color="#5B2A86"/>
     </linearGradient>
+    <linearGradient id="lgGold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#C9A14A" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#D4A744"/>
+      <stop offset="100%" stop-color="#C9A14A" stop-opacity="0"/>
+    </linearGradient>
   </defs>
-  <!-- アイコン：羅針盤＋ゴールド中心 -->
   <g transform="translate(8,8)">
     <circle cx="32" cy="32" r="29" fill="none" stroke="url(#lgGrad)" stroke-width="2.6"/>
     <path d="M32 4 L34.5 30 L60 32 L34.5 34 L32 60 L29.5 34 L4 32 L29.5 30 Z" fill="url(#lgGrad)"/>
     <circle cx="32" cy="32" r="2.4" fill="#D4A744"/>
   </g>
-  <!-- ブランド名（太さ700・旧版相当） -->
-  <text x="84" y="38" font-family="'Noto Sans JP', sans-serif" font-size="24" font-weight="700" fill="#0F1530" letter-spacing="1">AI個人事業の教科書</text>
-  <!-- ゴールドアクセントライン（旧版同様にしっかり実線で表示） -->
-  <line x1="84" y1="48" x2="296" y2="48" stroke="#D4A744" stroke-width="1.5" stroke-linecap="round"/>
-  <!-- タグライン -->
+  <text x="84" y="38" font-family="'Noto Sans JP', sans-serif" font-size="24" font-weight="800" fill="#0F1530" letter-spacing="1">AI個人事業の教科書</text>
+  <line x1="84" y1="48" x2="304" y2="48" stroke="url(#lgGold)" stroke-width="1.2"/>
   <text x="84" y="66" font-family="'Noto Sans JP', sans-serif" font-size="11" font-weight="500" fill="#6B7280" letter-spacing="3">AI × SOLO BUSINESS</text>
 </svg>
